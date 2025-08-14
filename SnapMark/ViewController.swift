@@ -9,11 +9,10 @@ import Cocoa
 
 class ViewController: NSViewController {
 
-    @IBOutlet weak var imageHeight: NSLayoutConstraint!
-    @IBOutlet weak var imageWidth: NSLayoutConstraint!
     @IBOutlet weak var theImageView: NSImageView!
+    @IBOutlet weak var documentView: NSView!
     
-    
+    @IBOutlet weak var contentScrollView: NSScrollView!
     var captureController:ScreenCaptureController? = ScreenCaptureController()
     
     override func viewDidLoad() {
@@ -38,15 +37,13 @@ class ViewController: NSViewController {
     @IBAction func newSnap(_ sender: NSButton) {
 
         guard let mainWindow = self.view.window else { return }
-        
-//        controller = ScreenCaptureController()
         controller?.onCaptureComplete = { [weak self] image in
             self?.theImageView.image = nil
             self?.theImageView.image = image
+            self?.theImageView.frame.size = image.size
+            self?.documentView.frame.size = image.size
         }
-        
         controller?.startCapture(from: mainWindow)
-        
     }
     
 }

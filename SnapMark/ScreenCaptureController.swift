@@ -52,8 +52,8 @@ class ScreenCaptureController: NSObject {
             onCaptureComplete?(nsImage)
         }
 
-        
         overlayWindow?.orderOut(nil)
+        selectionView = nil
         mainWindow?.makeKeyAndOrderFront(nil)
     }
 }

@@ -711,43 +711,81 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r8p-Te-4av">
-                                <rect key="frame" x="197" y="233" width="86" height="32"/>
-                                <buttonCell key="cell" type="push" title="新增截圖" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="abA-1l-DsM">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="newSnap:" target="XfG-lQ-9wD" id="Hdj-Kx-1I0"/>
-                                </connections>
-                            </button>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="wxs-Hf-RFQ">
-                                <rect key="frame" x="30" y="30" width="420" height="200"/>
-                                <subviews>
-                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ErN-f7-VSQ">
-                                        <rect key="frame" x="0.0" y="-5" width="420" height="212"/>
-                                        <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" image="NSTouchBarDeleteTemplate" id="Hus-R3-WCL"/>
-                                    </imageView>
-                                </subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="cjk-N8-lLZ">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="270"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="ErN-f7-VSQ" secondAttribute="trailing" id="L3B-Vm-PE1"/>
-                                    <constraint firstItem="ErN-f7-VSQ" firstAttribute="leading" secondItem="wxs-Hf-RFQ" secondAttribute="leading" id="k2m-zK-Qat"/>
-                                    <constraint firstItem="ErN-f7-VSQ" firstAttribute="top" secondItem="wxs-Hf-RFQ" secondAttribute="top" id="lkt-e7-48q"/>
-                                    <constraint firstAttribute="bottom" secondItem="ErN-f7-VSQ" secondAttribute="bottom" id="rC4-mm-JOg"/>
+                                    <constraint firstAttribute="width" constant="50" id="y3G-qT-Y6G"/>
                                 </constraints>
                             </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="u2x-4v-ZxW">
+                                <rect key="frame" x="50" y="220" width="430" height="50"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r8p-Te-4av">
+                                        <rect key="frame" x="3" y="8" width="86" height="32"/>
+                                        <buttonCell key="cell" type="push" title="新增截圖" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="abA-1l-DsM">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="newSnap:" target="XfG-lQ-9wD" id="Hdj-Kx-1I0"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="r8p-Te-4av" firstAttribute="centerY" secondItem="u2x-4v-ZxW" secondAttribute="centerY" id="brN-Ok-85F"/>
+                                    <constraint firstItem="r8p-Te-4av" firstAttribute="leading" secondItem="u2x-4v-ZxW" secondAttribute="leading" constant="10" id="ctb-mQ-xK4"/>
+                                    <constraint firstAttribute="height" constant="50" id="xNt-gU-wpP"/>
+                                </constraints>
+                            </customView>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32J-s3-3Zy">
+                                <rect key="frame" x="50" y="0.0" width="430" height="220"/>
+                                <clipView key="contentView" id="ddn-6g-BX3">
+                                    <rect key="frame" x="0.0" y="0.0" width="415" height="205"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view autoresizesSubviews="NO" appearanceType="aqua" id="Gnf-mE-Mhf">
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="1000"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="azm-qx-4uP">
+                                                    <rect key="frame" x="250" y="500" width="0.0" height="0.0"/>
+                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="kcb-6g-1Tb"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="azm-qx-4uP" firstAttribute="centerY" secondItem="Gnf-mE-Mhf" secondAttribute="centerY" id="3MB-sg-Fgu"/>
+                                                <constraint firstItem="azm-qx-4uP" firstAttribute="centerX" secondItem="Gnf-mE-Mhf" secondAttribute="centerX" id="suE-90-6dU"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="7W4-fe-Ios">
+                                    <rect key="frame" x="0.0" y="205" width="415" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="W7F-pA-Pfw">
+                                    <rect key="frame" x="415" y="0.0" width="15" height="205"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="wxs-Hf-RFQ" secondAttribute="bottom" constant="30" id="Hkx-6W-IC9"/>
-                            <constraint firstItem="r8p-Te-4av" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="10" id="NMo-r2-pKv"/>
-                            <constraint firstItem="r8p-Te-4av" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="QAa-W5-OBv"/>
-                            <constraint firstAttribute="trailing" secondItem="wxs-Hf-RFQ" secondAttribute="trailing" constant="30" id="ibv-1b-zF9"/>
-                            <constraint firstItem="wxs-Hf-RFQ" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="30" id="rqa-mQ-d75"/>
-                            <constraint firstItem="wxs-Hf-RFQ" firstAttribute="top" secondItem="r8p-Te-4av" secondAttribute="bottom" constant="10" id="weH-Zi-lEd"/>
+                            <constraint firstAttribute="bottom" secondItem="32J-s3-3Zy" secondAttribute="bottom" id="3TV-jM-z17"/>
+                            <constraint firstAttribute="trailing" secondItem="32J-s3-3Zy" secondAttribute="trailing" id="HAs-9U-g0u"/>
+                            <constraint firstItem="cjk-N8-lLZ" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="PI2-Jb-ANY"/>
+                            <constraint firstItem="u2x-4v-ZxW" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="U80-aN-kxj"/>
+                            <constraint firstItem="32J-s3-3Zy" firstAttribute="top" secondItem="u2x-4v-ZxW" secondAttribute="bottom" id="Ugs-JY-Muf"/>
+                            <constraint firstAttribute="trailing" secondItem="u2x-4v-ZxW" secondAttribute="trailing" id="Uj1-CE-6iJ"/>
+                            <constraint firstAttribute="bottom" secondItem="cjk-N8-lLZ" secondAttribute="bottom" id="cN8-8F-fE9"/>
+                            <constraint firstItem="32J-s3-3Zy" firstAttribute="leading" secondItem="cjk-N8-lLZ" secondAttribute="trailing" id="fO2-4o-inP"/>
+                            <constraint firstItem="u2x-4v-ZxW" firstAttribute="leading" secondItem="cjk-N8-lLZ" secondAttribute="trailing" id="lPl-Vx-mKR"/>
+                            <constraint firstItem="cjk-N8-lLZ" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="rgV-gd-WMc"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="theImageView" destination="ErN-f7-VSQ" id="3Vm-ju-NnP"/>
+                        <outlet property="contentScrollView" destination="32J-s3-3Zy" id="aXg-BR-hHh"/>
+                        <outlet property="documentView" destination="Gnf-mE-Mhf" id="hw0-wg-PCj"/>
+                        <outlet property="theImageView" destination="azm-qx-4uP" id="9HK-gz-Jaf"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -755,7 +793,4 @@
             <point key="canvasLocation" x="-66" y="886"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="NSTouchBarDeleteTemplate" width="18" height="21"/>
-    </resources>
 </document>
