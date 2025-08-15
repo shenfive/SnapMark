@@ -10,7 +10,7 @@ import Cocoa
 class ViewController: NSViewController {
 
     @IBOutlet weak var theImageView: NSImageView!
-    @IBOutlet weak var documentView: NSView!
+    @IBOutlet weak var documentView: SnapEditView!
     
     @IBOutlet weak var ratioSlider: NSSlider!
     @IBOutlet weak var ratioLabel: NSTextField!
@@ -20,20 +20,29 @@ class ViewController: NSViewController {
     @IBOutlet weak var contentWidth: NSLayoutConstraint!
     @IBOutlet weak var contentScrollView: NSScrollView!
     
-    var captureController:ScreenCaptureController? = ScreenCaptureController()
+    //拮取畫面控制器
+    var controller:ScreenCaptureController? = ScreenCaptureController()
     
+    //編輯中的影像
     var editingImage:NSImage = NSImage()
     
+    //頁面的 Window
     var window:NSWindow!
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //顯示比例按制
         ratioSlider.target = self
         ratioSlider.isContinuous = true
         ratioSlider.action = #selector(ratioSliderDidChange(_:))
-
         
+        //編輯區關連
+        documentView.theImageView = self.theImageView
+
+        //初始化編輯區
         if let image = theImageView.image{
             editingImage = image
             setImage()
@@ -41,8 +50,8 @@ class ViewController: NSViewController {
      
     }
     
+    //外部視窗大小改變
     @objc func windowDidResize(_ notification: Notification) {
-        print("Window resized to: \(window.frame.size)")
         setImage()
     }
 
@@ -51,6 +60,8 @@ class ViewController: NSViewController {
         guard let window = view.window else {return}
         self.window = window
         view.window?.title = NSLocalizedString("SnapMark", comment: "Window 標題")
+        
+        //抓取外部視窗動作
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(windowDidResize(_:)),
@@ -59,8 +70,8 @@ class ViewController: NSViewController {
         )
     }
     
+    
 
-    var controller:ScreenCaptureController? = ScreenCaptureController()
     
 
     @objc func ratioSliderDidChange(_ sender:NSSlider){
