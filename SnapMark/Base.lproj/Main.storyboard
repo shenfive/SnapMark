@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -691,7 +690,7 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <value key="minSize" type="size" width="480" height="270"/>
+                        <value key="minSize" type="size" width="480" height="300"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
@@ -702,24 +701,90 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="75" y="247"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="SnapMark" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="666" height="395"/>
+                        <rect key="frame" x="0.0" y="0.0" width="732" height="437"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView appearanceType="aqua" translatesAutoresizingMaskIntoConstraints="NO" id="cjk-N8-lLZ">
-                                <rect key="frame" x="0.0" y="80" width="50" height="315"/>
+                                <rect key="frame" x="0.0" y="80" width="60" height="357"/>
                                 <subviews>
                                     <box boxType="custom" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="VtD-Tu-rv3">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="315"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="357"/>
                                         <view key="contentView" id="vCb-2o-2Cr">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="315"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="357"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5YH-8c-p1P">
+                                                    <rect key="frame" x="13" y="271" width="34" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="標注" id="x6b-xM-ahs">
+                                                        <font key="font" usesAppearanceFont="YES"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="DCs-Sj-CvL">
+                                                    <rect key="frame" x="10" y="213" width="40" height="48"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="arrow2" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="wBb-uu-J8h">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="BWl-KN-wTu"/>
+                                                        <constraint firstAttribute="height" constant="48" id="XG6-ZP-YDt"/>
+                                                    </constraints>
+                                                </button>
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="bJe-Mp-Zdy">
+                                                    <rect key="frame" x="10" y="107" width="40" height="48"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="arrow2" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="K9r-uj-erS">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="48" id="6Ww-NG-anl"/>
+                                                        <constraint firstAttribute="width" constant="40" id="SYd-Hy-JH4"/>
+                                                    </constraints>
+                                                </button>
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="7uw-pG-3UI">
+                                                    <rect key="frame" x="10" y="54" width="40" height="48"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="arrow2" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="PMJ-Fm-qYd">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="48" id="KHg-ED-rPT"/>
+                                                        <constraint firstAttribute="width" constant="40" id="rIB-LL-j1e"/>
+                                                    </constraints>
+                                                </button>
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="ogG-mf-IO8">
+                                                    <rect key="frame" x="10" y="160" width="40" height="48"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="arrow2" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="CDL-c1-STM">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="9fq-gO-hVM"/>
+                                                        <constraint firstAttribute="height" constant="48" id="jhl-o9-nv7"/>
+                                                    </constraints>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="DCs-Sj-CvL" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="80d-ut-zZz"/>
+                                                <constraint firstItem="7uw-pG-3UI" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="AeK-fU-Y9Z"/>
+                                                <constraint firstItem="DCs-Sj-CvL" firstAttribute="top" secondItem="5YH-8c-p1P" secondAttribute="bottom" constant="10" id="GUT-gS-6kG"/>
+                                                <constraint firstItem="5YH-8c-p1P" firstAttribute="centerY" secondItem="vCb-2o-2Cr" secondAttribute="centerY" constant="-100" id="IbO-ho-JhB"/>
+                                                <constraint firstItem="7uw-pG-3UI" firstAttribute="top" secondItem="bJe-Mp-Zdy" secondAttribute="bottom" constant="5" id="L7V-tG-nM0"/>
+                                                <constraint firstItem="ogG-mf-IO8" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="ORa-fP-OZe"/>
+                                                <constraint firstItem="bJe-Mp-Zdy" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="WyI-Xw-OYa"/>
+                                                <constraint firstItem="bJe-Mp-Zdy" firstAttribute="top" secondItem="ogG-mf-IO8" secondAttribute="bottom" constant="5" id="h8K-pB-u8O"/>
+                                                <constraint firstItem="5YH-8c-p1P" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="su6-ia-dre"/>
+                                                <constraint firstItem="ogG-mf-IO8" firstAttribute="top" secondItem="DCs-Sj-CvL" secondAttribute="bottom" constant="5" id="ycP-6Z-FcD"/>
+                                            </constraints>
                                         </view>
                                         <color key="borderColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="fillColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -730,11 +795,11 @@
                                     <constraint firstAttribute="trailing" secondItem="VtD-Tu-rv3" secondAttribute="trailing" id="P0J-YK-hlc"/>
                                     <constraint firstItem="VtD-Tu-rv3" firstAttribute="top" secondItem="cjk-N8-lLZ" secondAttribute="top" id="SOp-AH-7Mk"/>
                                     <constraint firstAttribute="bottom" secondItem="VtD-Tu-rv3" secondAttribute="bottom" id="tID-sV-Lnc"/>
-                                    <constraint firstAttribute="width" constant="50" id="y3G-qT-Y6G"/>
+                                    <constraint firstAttribute="width" constant="60" id="y3G-qT-Y6G"/>
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="u2x-4v-ZxW">
-                                <rect key="frame" x="50" y="345" width="616" height="50"/>
+                                <rect key="frame" x="60" y="387" width="672" height="50"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r8p-Te-4av">
                                         <rect key="frame" x="3" y="8" width="86" height="32"/>
@@ -791,19 +856,19 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="fS6-gH-cjm">
-                                <rect key="frame" x="50" y="80" width="616" height="265"/>
+                                <rect key="frame" x="60" y="80" width="672" height="307"/>
                                 <subviews>
                                     <box boxType="custom" cornerRadius="10" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="moI-dT-oUM">
-                                        <rect key="frame" x="0.0" y="0.0" width="616" height="265"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="672" height="307"/>
                                         <view key="contentView" id="crZ-mw-a5U">
-                                            <rect key="frame" x="1" y="1" width="614" height="263"/>
+                                            <rect key="frame" x="1" y="1" width="670" height="305"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
-                                        <color key="borderColor" name="AccentColor"/>
+                                        <color key="borderColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                                         <color key="fillColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </box>
                                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32J-s3-3Zy">
-                                        <rect key="frame" x="180" y="5" width="256" height="256"/>
+                                        <rect key="frame" x="208" y="26" width="256" height="256"/>
                                         <clipView key="contentView" id="ddn-6g-BX3">
                                             <rect key="frame" x="0.0" y="0.0" width="241" height="241"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -845,16 +910,16 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="m9Q-4i-xPk">
-                                <rect key="frame" x="0.0" y="0.0" width="666" height="80"/>
+                                <rect key="frame" x="0.0" y="0.0" width="732" height="80"/>
                                 <subviews>
                                     <scrollView wantsLayer="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xa7-5N-Azs">
-                                        <rect key="frame" x="100" y="10" width="556" height="60"/>
+                                        <rect key="frame" x="100" y="10" width="622" height="60"/>
                                         <clipView key="contentView" id="dNi-8L-g3B">
-                                            <rect key="frame" x="1" y="1" width="554" height="43"/>
+                                            <rect key="frame" x="1" y="1" width="620" height="43"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <collectionView id="nFU-5N-N8D">
-                                                    <rect key="frame" x="0.0" y="0.0" width="554" height="158"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="620" height="158"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="xsh-LG-BXS">
                                                         <size key="itemSize" width="50" height="50"/>
@@ -864,7 +929,7 @@
                                             </subviews>
                                         </clipView>
                                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mwa-jN-mxr">
-                                            <rect key="frame" x="1" y="44" width="554" height="15"/>
+                                            <rect key="frame" x="1" y="44" width="620" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="C4A-T8-Gbi">
@@ -911,14 +976,12 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="168" y="782.5"/>
+            <point key="canvasLocation" x="75" y="844"/>
         </scene>
     </scenes>
     <resources>
+        <image name="arrow2" width="667" height="500"/>
         <image name="rectangle.landscape.rotate" catalog="system" width="20" height="18"/>
         <image name="start2" width="256" height="256"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
 </document>

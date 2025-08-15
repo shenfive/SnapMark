@@ -38,7 +38,7 @@ class SelectionView: NSView {
         let height = abs(startInScreen.y - endInScreen.y) - 2
         
         let originX = min(startInScreen.x, endInScreen.x) + 1
-        let originY = screenHeight - ( min(startInScreen.y, endInScreen.y) + height ) + 1
+        let originY = screenHeight - ( min(startInScreen.y, endInScreen.y) + height )
         let selectedRect = CGRect(x: originX, y: originY, width: width, height: height)
 
         print("Selected rect in screen coordinates: \(selectedRect)")
