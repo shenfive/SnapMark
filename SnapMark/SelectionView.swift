@@ -36,8 +36,9 @@ class SelectionView: NSView {
         // 計算左下角座標與大小
         let width = abs(startInScreen.x - endInScreen.x) - 2
         let height = abs(startInScreen.y - endInScreen.y) - 2
+        
         let originX = min(startInScreen.x, endInScreen.x) + 1
-        let originY = screenHeight - height - min(startInScreen.y, endInScreen.y) + 1
+        let originY = screenHeight - ( min(startInScreen.y, endInScreen.y) + height ) + 1
         let selectedRect = CGRect(x: originX, y: originY, width: width, height: height)
 
         print("Selected rect in screen coordinates: \(selectedRect)")

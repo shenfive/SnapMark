@@ -24,12 +24,15 @@ class ViewController: NSViewController {
     
     var editingImage:NSImage = NSImage()
     
+    var window:NSWindow!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ratioSlider.target = self
         ratioSlider.isContinuous = true
         ratioSlider.action = #selector(ratioSliderDidChange(_:))
+
         
         if let image = theImageView.image{
             editingImage = image
@@ -37,26 +40,32 @@ class ViewController: NSViewController {
         }
      
     }
+    
+    @objc func windowDidResize(_ notification: Notification) {
+        print("Window resized to: \(window.frame.size)")
+        setImage()
+    }
 
     override func viewDidAppear() {
         super.viewDidAppear()
+        guard let window = view.window else {return}
+        self.window = window
         view.window?.title = NSLocalizedString("SnapMark", comment: "Window 標題")
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(windowDidResize(_:)),
+            name: NSWindow.didResizeNotification,
+            object: self.window
+        )
     }
     
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
 
     var controller:ScreenCaptureController? = ScreenCaptureController()
     
 
     @objc func ratioSliderDidChange(_ sender:NSSlider){
-        print(sender.doubleValue)
         let value = sender.doubleValue * 100
         ratioLabel.stringValue = String(format: "%.1f%%", value).replacingOccurrences(of: ".0%", with: "%")
-
         setImage()
     }
     
@@ -67,12 +76,13 @@ class ViewController: NSViewController {
     
     func setImage(){
         if let newImage = resizedImage(editingImage, scale: ratioSlider.doubleValue){
-            contentWidth.constant = min(contentContainerView.frame.width, newImage.size.width)
-            contentHeight.constant = min(contentContainerView.frame.height, newImage.size.height)
-            documentView.frame.size = newImage.size
-            theImageView.image = newImage
-            theImageView.frame = documentView.bounds
-  
+            self.contentWidth.constant = min(self.contentContainerView.frame.width - 16, newImage.size.width - 1) + 16
+            self.contentHeight.constant = min(self.contentContainerView.frame.height - 16, newImage.size.height - 1) + 16
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                self.documentView.frame.size = newImage.size
+                self.theImageView.image = newImage
+                self.theImageView.frame = self.documentView.bounds
+            }
         }
     }
     
@@ -104,4 +114,3 @@ class ViewController: NSViewController {
 
     
 }
-
