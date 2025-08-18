@@ -14,28 +14,47 @@ class SnapEditView: NSView {
     var endPoint: NSPoint = .zero
     var onSelectionComplete: ((CGRect) -> Void)?
     var newView:NSBox!
+    var arrowView:ArrowView!
+
+    var endAction:(()->())? = nil
     
     override func mouseDown(with event: NSEvent) {
 
         startPoint = convert(event.locationInWindow, from: nil)
         print("startPoint:\(startPoint)")
-        newView = NSBox(frame: NSRect(origin: startPoint, size: NSSize(width: 50, height: 50)))
+        newView = NSBox(frame: NSRect(origin: startPoint, size: NSSize(width: 1, height: 1)))
+        arrowView = ArrowView()
+        arrowView.frame = newView.bounds
+        newView.addSubview(arrowView)
         newView.boxType = .custom
-        newView.fillColor = NSColor.systemMint
-        newView.borderColor = NSColor.clear
+        newView.fillColor = NSColor.clear
+        newView.borderColor = NSColor.white
+        
         addSubview(newView, positioned: .above, relativeTo: nil)
         
     }
 
     override func mouseDragged(with event: NSEvent) {
         endPoint = convert(event.locationInWindow, from: nil)
-        print("endPoint:\(endPoint)")
-        newView.frame.origin = endPoint
+        
+        // 計算左下角座標與大小
+        let width = abs(startPoint.x - endPoint.x)
+        let height = abs(startPoint.y - endPoint.y)
+        
+        let originX = min(startPoint.x, endPoint.x)
+        let originY = min(startPoint.y, endPoint.y)
+        
+        arrowView.startPoint = startPoint
+        arrowView.endPoint = endPoint
+        
+        newView.frame = NSRect(x: originX, y: originY, width: width, height: height)
+        arrowView.frame = newView.contentView!.bounds
     }
 
     override func mouseUp(with event: NSEvent) {
         endPoint = convert(event.locationInWindow, from: nil)
-        newView.removeFromSuperview()
+        endAction?()
+        newView.borderColor = NSColor.clear
     }
 
 
