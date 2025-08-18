@@ -15,16 +15,18 @@ class SnapEditView: NSView {
     var onSelectionComplete: ((CGRect) -> Void)?
     var newView:NSBox!
     var arrowView:ArrowView!
+    var color:NSColor!
 
     var endAction:(()->())? = nil
     
     override func mouseDown(with event: NSEvent) {
-
+        NSColorPanel.shared.close()
         startPoint = convert(event.locationInWindow, from: nil)
         print("startPoint:\(startPoint)")
-        newView = NSBox(frame: NSRect(origin: startPoint, size: NSSize(width: 1, height: 1)))
+        newView = NSBox(frame: NSRect(origin: startPoint, size: NSSize(width: 10, height: 10)))
         arrowView = ArrowView()
         arrowView.frame = newView.bounds
+        arrowView.color = color
         newView.addSubview(arrowView)
         newView.boxType = .custom
         newView.fillColor = NSColor.clear
@@ -38,8 +40,8 @@ class SnapEditView: NSView {
         endPoint = convert(event.locationInWindow, from: nil)
         
         // 計算左下角座標與大小
-        let width = abs(startPoint.x - endPoint.x)
-        let height = abs(startPoint.y - endPoint.y)
+        let width = max(10,abs(startPoint.x - endPoint.x))
+        let height = max(10,abs(startPoint.y - endPoint.y))
         
         let originX = min(startPoint.x, endPoint.x)
         let originY = min(startPoint.y, endPoint.y)

@@ -19,6 +19,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var contentHeight: NSLayoutConstraint!
     @IBOutlet weak var contentWidth: NSLayoutConstraint!
     @IBOutlet weak var contentScrollView: NSScrollView!
+    @IBOutlet weak var colorWell: NSColorWell!
     
     //拮取畫面控制器
     var controller:ScreenCaptureController? = ScreenCaptureController()
@@ -41,6 +42,7 @@ class ViewController: NSViewController {
         
         //編輯區關連
         documentView.theImageView = self.theImageView
+        documentView.color = colorWell.color
 
         //初始化編輯區
         if let image = theImageView.image{
@@ -83,6 +85,10 @@ class ViewController: NSViewController {
     @IBAction func resetRatio(_ sender: Any) {
         ratioSlider.doubleValue = 1.0
         ratioSliderDidChange(ratioSlider)
+    }
+    
+    @IBAction func changeColor(_ sender: Any) {
+        documentView.color = colorWell.color
     }
     
     func setImage(){

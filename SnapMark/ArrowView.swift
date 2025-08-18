@@ -13,6 +13,7 @@ class ArrowView: NSView {
     var lineWidth = 4.0
     var startPoint = CGPoint(x: 0, y: 0)
     var endPoint = CGPoint(x: 0, y: 0)
+    var color:NSColor = NSColor.systemRed
     
 
     
@@ -20,7 +21,8 @@ class ArrowView: NSView {
         super.draw(dirtyRect)
         
         // 設定線條顏色
-        NSColor.systemRed.set()
+        color.set()
+
         
         var lineStartPoint = CGPoint(x: 0, y:0)
         var lineEndPoint = CGPoint(x: 0, y: 0)
