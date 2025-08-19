@@ -49,6 +49,17 @@ class ViewController: NSViewController {
             editingImage = image
             setImage()
         }
+        
+        documentView.endAction = {
+            let newRect = NSRect(x: self.documentView.newView.frame.minX - 20,
+                                 y: self.documentView.newView.frame.minY - 20,
+                                 width: self.documentView.newView.frame.width + 40,
+                                 height: self.documentView.newView.frame.height + 40)
+            let cView = ControlView(frame: newRect)
+            cView.componentView = $0
+            cView.componentType = .ARROW
+            self.documentView.addSubview(cView)
+        }
      
     }
     

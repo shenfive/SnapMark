@@ -17,7 +17,7 @@ class SnapEditView: NSView {
     var arrowView:ArrowView!
     var color:NSColor!
 
-    var endAction:(()->())? = nil
+    var endAction:((ArrowView)->())? = nil
     
     override func mouseDown(with event: NSEvent) {
         NSColorPanel.shared.close()
@@ -55,7 +55,7 @@ class SnapEditView: NSView {
 
     override func mouseUp(with event: NSEvent) {
         endPoint = convert(event.locationInWindow, from: nil)
-        endAction?()
+        endAction?(arrowView)
         newView.borderColor = NSColor.clear
     }
 

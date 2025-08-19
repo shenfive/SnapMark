@@ -734,7 +734,7 @@
                                                 </textField>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="DCs-Sj-CvL">
                                                     <rect key="frame" x="15" y="191" width="50" height="50"/>
-                                                    <buttonCell key="cell" type="square" title="Arrow" bezelStyle="shadowlessSquare" image="arrow2" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="wBb-uu-J8h">
+                                                    <buttonCell key="cell" type="square" title="Arrow" bezelStyle="shadowlessSquare" image="arrow2" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="wBb-uu-J8h">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
@@ -760,7 +760,7 @@
                                                 </button>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="QwF-xk-ozj">
                                                     <rect key="frame" x="15" y="136" width="50" height="50"/>
-                                                    <buttonCell key="cell" type="square" title="text" bezelStyle="shadowlessSquare" image="rectangle.and.pencil.and.ellipsis.rtl" catalog="system" imagePosition="above" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="GYY-bW-8FS">
+                                                    <buttonCell key="cell" type="square" title="Text" bezelStyle="shadowlessSquare" image="Icon_Add_Text_Disabled" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GYY-bW-8FS">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
@@ -777,24 +777,14 @@
                                                     </constraints>
                                                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </colorWell>
-                                                <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2xm-GX-35Q">
-                                                    <rect key="frame" x="13" y="23" width="54" height="56"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="8pZ-Tl-xyw"/>
-                                                        <constraint firstAttribute="height" constant="50" id="bwy-2A-ZYH"/>
-                                                    </constraints>
-                                                    <sliderCell key="cell" alignment="left" maxValue="100" doubleValue="50" sliderType="circular" id="fBE-TU-Dba"/>
-                                                </slider>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="DCs-Sj-CvL" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="80d-ut-zZz"/>
                                                 <constraint firstItem="Ucr-bq-llc" firstAttribute="top" secondItem="QwF-xk-ozj" secondAttribute="bottom" constant="5" id="FuO-5u-EVB"/>
                                                 <constraint firstItem="DCs-Sj-CvL" firstAttribute="top" secondItem="5YH-8c-p1P" secondAttribute="bottom" constant="10" id="GUT-gS-6kG"/>
-                                                <constraint firstItem="2xm-GX-35Q" firstAttribute="top" secondItem="Ucr-bq-llc" secondAttribute="bottom" constant="5" id="GmG-UY-bcF"/>
                                                 <constraint firstItem="5YH-8c-p1P" firstAttribute="centerY" secondItem="vCb-2o-2Cr" secondAttribute="centerY" constant="-80" id="IbO-ho-JhB"/>
                                                 <constraint firstItem="r8p-Te-4av" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="SyO-ud-Bnb"/>
                                                 <constraint firstItem="QwF-xk-ozj" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="Tna-YX-dMj"/>
-                                                <constraint firstItem="2xm-GX-35Q" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="bwb-dW-YT8"/>
                                                 <constraint firstItem="QwF-xk-ozj" firstAttribute="top" secondItem="DCs-Sj-CvL" secondAttribute="bottom" constant="5" id="lnI-8f-L4X"/>
                                                 <constraint firstItem="Ucr-bq-llc" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="mle-GB-3oa"/>
                                                 <constraint firstItem="r8p-Te-4av" firstAttribute="top" secondItem="vCb-2o-2Cr" secondAttribute="top" constant="10" id="r5Z-cv-a8S"/>
@@ -910,9 +900,9 @@
                                             <font key="font" metaFont="cellTitle"/>
                                         </sliderCell>
                                     </slider>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="ywf-PC-uBO">
-                                        <rect key="frame" x="10" y="26" width="40" height="49"/>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="rectangle.landscape.rotate" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="bfl-pL-eaJ">
+                                    <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ywf-PC-uBO">
+                                        <rect key="frame" x="10" y="30" width="40" height="40"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Icon_Add_Frame_1_1_Normal" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="bfl-pL-eaJ">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -985,10 +975,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Icon_Add_Frame_1_1_Normal" width="40" height="40"/>
+        <image name="Icon_Add_Text_Disabled" width="28" height="19"/>
         <image name="arrow2" width="667" height="500"/>
         <image name="dot.scope.display" catalog="system" width="24" height="19"/>
-        <image name="rectangle.and.pencil.and.ellipsis.rtl" catalog="system" width="21" height="15"/>
-        <image name="rectangle.landscape.rotate" catalog="system" width="20" height="18"/>
         <image name="start2" width="256" height="256"/>
     </resources>
 </document>

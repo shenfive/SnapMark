@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ControlView" customModule="SnapMark" customModuleProvider="target">
+            <connections>
+                <outlet property="cont1" destination="bet-bj-jHk" id="NGm-qt-7gf"/>
+                <outlet property="cont2" destination="qj5-j0-7qK" id="FdE-Pg-CEt"/>
+                <outlet property="cont3" destination="4c4-sH-G2V" id="iTe-Jo-hjg"/>
+                <outlet property="cont4" destination="MSU-kd-ifu" id="KYI-c3-ARs"/>
+                <outlet property="cont6" destination="OM6-l7-kxM" id="HMa-X3-TvS"/>
+                <outlet property="cont7" destination="6TD-gc-u9k" id="Pv5-00-MNT"/>
+                <outlet property="cont8" destination="NfL-C2-ilu" id="HMm-Yo-vkg"/>
+                <outlet property="cont9" destination="nOQ-4g-4Xk" id="gnQ-4l-ouF"/>
+                <outlet property="contentArea" destination="HKM-Vp-Wd8" id="ILD-Nv-rJb"/>
+                <outlet property="rotateLB" destination="UPE-Ka-B3S" id="2m5-eR-qWv"/>
+                <outlet property="rotateLT" destination="DEJ-mv-ICw" id="5Uv-Sx-z1X"/>
+                <outlet property="rotateRB" destination="TPc-Ap-E5M" id="iZq-3b-xad"/>
+                <outlet property="rotateRT" destination="bSR-ji-fkt" id="kEM-6e-7h7"/>
+                <outlet property="size1" destination="vfr-ny-Y7y" id="lU4-Wu-zVQ"/>
+                <outlet property="size2" destination="e3O-xc-4XU" id="xcO-vr-EIG"/>
+                <outlet property="size3" destination="iiV-2V-Lwb" id="bhP-7I-pQI"/>
+                <outlet property="size4" destination="C55-wJ-SXO" id="OaS-Z1-fR2"/>
+                <outlet property="size6" destination="QUO-Jy-qbv" id="AhI-jd-KGB"/>
+                <outlet property="size7" destination="RtN-6K-ddW" id="Wk3-YQ-pcY"/>
+                <outlet property="size8" destination="INO-cD-80k" id="gyG-J0-pkK"/>
+                <outlet property="size9" destination="t05-jp-aWE" id="PjV-13-Bub"/>
+                <outlet property="view" destination="c22-O7-iKe" id="gPY-PM-DQQ"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="593" height="375"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="HKM-Vp-Wd8">
+                    <rect key="frame" x="20" y="20" width="553" height="335"/>
+                </customView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bet-bj-jHk">
+                    <rect key="frame" x="15" y="343" width="17" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="17" id="4DR-fe-EN6"/>
+                        <constraint firstAttribute="height" constant="17" id="enS-t4-pyi"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="X3D-Dy-TYp"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qj5-j0-7qK">
+                    <rect key="frame" x="288" y="343" width="17" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="17" id="CvD-vt-za9"/>
+                        <constraint firstAttribute="height" constant="17" id="WuD-8m-snb"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="Gcz-zI-HAH"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4c4-sH-G2V">
+                    <rect key="frame" x="561" y="343" width="17" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="9rV-pw-ufl"/>
+                        <constraint firstAttribute="width" constant="17" id="hli-eI-GjT"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="A02-yM-eBJ"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MSU-kd-ifu">
+                    <rect key="frame" x="15" y="179" width="17" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="RhA-cE-ghQ"/>
+                        <constraint firstAttribute="width" constant="17" id="pMV-aZ-iGB"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="wvO-Yf-FTN"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OM6-l7-kxM">
+                    <rect key="frame" x="561" y="179" width="17" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="SOg-NT-qBS"/>
+                        <constraint firstAttribute="width" constant="17" id="nfy-lm-tgF"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="pMr-Fg-pQb"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6TD-gc-u9k">
+                    <rect key="frame" x="15" y="15" width="17" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="vDx-zF-BZA"/>
+                        <constraint firstAttribute="width" constant="17" id="xww-Le-AXo"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="NXX-09-9aT"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NfL-C2-ilu">
+                    <rect key="frame" x="288" y="15" width="17" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="chW-UX-6z8"/>
+                        <constraint firstAttribute="width" constant="17" id="nUL-hC-iMN"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="9EZ-fJ-zsQ"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nOQ-4g-4Xk">
+                    <rect key="frame" x="561" y="15" width="17" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="17" id="C8I-kd-eAR"/>
+                        <constraint firstAttribute="height" constant="17" id="DFh-z1-Mh7"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="c0d-3I-lhv"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vfr-ny-Y7y">
+                    <rect key="frame" x="4" y="332" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="Dat-bC-bSe"/>
+                        <constraint firstAttribute="width" constant="40" id="SG4-lm-6O8"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_size_lt_rb" id="Mlw-zk-bDJ"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e3O-xc-4XU">
+                    <rect key="frame" x="277" y="332" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="QfZ-b3-kgM"/>
+                        <constraint firstAttribute="height" constant="40" id="dxn-Y8-T3g"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_size_tb" id="88A-Qe-aOu"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iiV-2V-Lwb">
+                    <rect key="frame" x="550" y="332" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="sI2-Nw-c8S"/>
+                        <constraint firstAttribute="width" constant="40" id="uzR-Zg-tZo"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_size_lb_rt" id="J3A-dE-FMc"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C55-wJ-SXO">
+                    <rect key="frame" x="4" y="168" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="XoO-7I-6Nb"/>
+                        <constraint firstAttribute="height" constant="40" id="hF6-8s-6dV"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_size_lr" id="PYY-2L-z14"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QUO-Jy-qbv">
+                    <rect key="frame" x="550" y="168" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="MVE-PB-lMy"/>
+                        <constraint firstAttribute="height" constant="40" id="kks-yQ-Hfp"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_size_lr" id="zm6-wi-av1"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RtN-6K-ddW">
+                    <rect key="frame" x="4" y="4" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="faV-uy-k3r"/>
+                        <constraint firstAttribute="height" constant="40" id="vog-tw-oja"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_size_lb_rt" id="Dqy-6C-npZ"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="INO-cD-80k">
+                    <rect key="frame" x="277" y="4" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="ZVV-Iz-8H3"/>
+                        <constraint firstAttribute="width" constant="40" id="aMX-ea-byb"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_size_tb" id="VFC-RF-QPf"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="t05-jp-aWE">
+                    <rect key="frame" x="555" y="4" width="30" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="97H-t4-aKq"/>
+                        <constraint firstAttribute="height" constant="40" id="zFu-O7-Wdd"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_size_lt_rb" id="F2l-cU-FN2"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UPE-Ka-B3S">
+                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="Lt0-oh-siT"/>
+                        <constraint firstAttribute="width" constant="40" id="Wp9-fO-jup"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_rotate_lb" id="pjn-Rt-nHk"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TPc-Ap-E5M">
+                    <rect key="frame" x="553" y="0.0" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="4C4-uH-qdA"/>
+                        <constraint firstAttribute="width" constant="40" id="VXE-FH-2pP"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_rotate_rb" id="BZP-qY-YLn"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bSR-ji-fkt">
+                    <rect key="frame" x="553" y="335" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="Vrk-Nx-gzu"/>
+                        <constraint firstAttribute="height" constant="40" id="zyF-vL-AzQ"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_rotate_rt" id="ncf-mK-Ftd"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DEJ-mv-ICw">
+                    <rect key="frame" x="0.0" y="335" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="b7I-uP-Ktu"/>
+                        <constraint firstAttribute="height" constant="40" id="gwi-Gj-Irc"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_rotate_lt" id="dgM-BF-oAU"/>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="C55-wJ-SXO" firstAttribute="centerX" secondItem="MSU-kd-ifu" secondAttribute="centerX" id="2Uc-xQ-wjf"/>
+                <constraint firstItem="HKM-Vp-Wd8" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="20" id="38n-IJ-EDa"/>
+                <constraint firstAttribute="bottom" secondItem="NfL-C2-ilu" secondAttribute="bottom" constant="15" id="3MQ-yB-3S3"/>
+                <constraint firstAttribute="bottom" secondItem="nOQ-4g-4Xk" secondAttribute="bottom" constant="15" id="3aX-BR-01a"/>
+                <constraint firstItem="RtN-6K-ddW" firstAttribute="centerY" secondItem="6TD-gc-u9k" secondAttribute="centerY" id="3vr-1p-AVQ"/>
+                <constraint firstItem="bSR-ji-fkt" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="5lP-Hh-Wal"/>
+                <constraint firstAttribute="trailing" secondItem="TPc-Ap-E5M" secondAttribute="trailing" id="6ss-Wp-Xr0"/>
+                <constraint firstItem="HKM-Vp-Wd8" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="8g0-vy-Nns"/>
+                <constraint firstItem="RtN-6K-ddW" firstAttribute="centerX" secondItem="6TD-gc-u9k" secondAttribute="centerX" id="8nv-dT-aHs"/>
+                <constraint firstItem="vfr-ny-Y7y" firstAttribute="centerX" secondItem="bet-bj-jHk" secondAttribute="centerX" id="Bkp-sE-Mn2"/>
+                <constraint firstItem="e3O-xc-4XU" firstAttribute="centerY" secondItem="qj5-j0-7qK" secondAttribute="centerY" id="E0i-zN-08c"/>
+                <constraint firstItem="UPE-Ka-B3S" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="FLt-V5-3mI"/>
+                <constraint firstItem="DEJ-mv-ICw" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="I5s-Kh-iip"/>
+                <constraint firstAttribute="bottom" secondItem="UPE-Ka-B3S" secondAttribute="bottom" id="KlG-Ev-FcW"/>
+                <constraint firstAttribute="bottom" secondItem="HKM-Vp-Wd8" secondAttribute="bottom" constant="20" id="MU3-QX-0yH"/>
+                <constraint firstAttribute="trailing" secondItem="HKM-Vp-Wd8" secondAttribute="trailing" constant="20" id="Mgy-dl-uFi"/>
+                <constraint firstItem="NfL-C2-ilu" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="MqE-rS-jId"/>
+                <constraint firstAttribute="bottom" secondItem="6TD-gc-u9k" secondAttribute="bottom" constant="15" id="ONQ-tQ-kP4"/>
+                <constraint firstItem="OM6-l7-kxM" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="OOH-qz-BK5"/>
+                <constraint firstItem="4c4-sH-G2V" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="15" id="SMo-qe-5NF"/>
+                <constraint firstAttribute="trailing" secondItem="bSR-ji-fkt" secondAttribute="trailing" id="TyM-fS-VSg"/>
+                <constraint firstItem="QUO-Jy-qbv" firstAttribute="centerX" secondItem="OM6-l7-kxM" secondAttribute="centerX" id="U95-sx-tss"/>
+                <constraint firstItem="e3O-xc-4XU" firstAttribute="centerX" secondItem="qj5-j0-7qK" secondAttribute="centerX" id="U9M-zV-13i"/>
+                <constraint firstItem="DEJ-mv-ICw" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="Wa5-jn-J9Y"/>
+                <constraint firstItem="bet-bj-jHk" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="15" id="XFj-C2-nbJ"/>
+                <constraint firstItem="INO-cD-80k" firstAttribute="centerY" secondItem="NfL-C2-ilu" secondAttribute="centerY" id="d4c-d3-uqA"/>
+                <constraint firstItem="C55-wJ-SXO" firstAttribute="centerY" secondItem="MSU-kd-ifu" secondAttribute="centerY" id="gQH-TH-Jc8"/>
+                <constraint firstItem="t05-jp-aWE" firstAttribute="centerX" secondItem="nOQ-4g-4Xk" secondAttribute="centerX" id="gnn-dp-fQo"/>
+                <constraint firstAttribute="trailing" secondItem="nOQ-4g-4Xk" secondAttribute="trailing" constant="15" id="h3o-3v-afh"/>
+                <constraint firstAttribute="trailing" secondItem="OM6-l7-kxM" secondAttribute="trailing" constant="15" id="hZT-4M-vIQ"/>
+                <constraint firstItem="bet-bj-jHk" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="15" id="ifb-75-hEt"/>
+                <constraint firstItem="t05-jp-aWE" firstAttribute="centerY" secondItem="nOQ-4g-4Xk" secondAttribute="centerY" id="kdg-ne-EtG"/>
+                <constraint firstItem="iiV-2V-Lwb" firstAttribute="centerY" secondItem="4c4-sH-G2V" secondAttribute="centerY" id="lJ5-iA-Lda"/>
+                <constraint firstItem="qj5-j0-7qK" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="15" id="mzz-Pb-M1o"/>
+                <constraint firstItem="MSU-kd-ifu" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="15" id="prQ-FK-gKo"/>
+                <constraint firstItem="qj5-j0-7qK" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="qPG-3K-3rA"/>
+                <constraint firstItem="QUO-Jy-qbv" firstAttribute="centerY" secondItem="OM6-l7-kxM" secondAttribute="centerY" id="r5x-3U-tAm"/>
+                <constraint firstItem="6TD-gc-u9k" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="15" id="t0L-ja-uVR"/>
+                <constraint firstItem="vfr-ny-Y7y" firstAttribute="centerY" secondItem="bet-bj-jHk" secondAttribute="centerY" id="tbQ-xZ-g3i"/>
+                <constraint firstItem="MSU-kd-ifu" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="tkF-xz-Tb1"/>
+                <constraint firstItem="iiV-2V-Lwb" firstAttribute="centerX" secondItem="4c4-sH-G2V" secondAttribute="centerX" id="uSi-r0-9Qz"/>
+                <constraint firstAttribute="bottom" secondItem="TPc-Ap-E5M" secondAttribute="bottom" id="uvW-2R-Ue2"/>
+                <constraint firstAttribute="trailing" secondItem="4c4-sH-G2V" secondAttribute="trailing" constant="15" id="xWj-3j-HpH"/>
+                <constraint firstItem="INO-cD-80k" firstAttribute="centerX" secondItem="NfL-C2-ilu" secondAttribute="centerX" id="zsj-hL-Vxb"/>
+            </constraints>
+            <point key="canvasLocation" x="173.5" y="126.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="icon_controlpoint_8point" width="17" height="17"/>
+        <image name="icon_controlpoint_rotate_lb" width="60" height="60"/>
+        <image name="icon_controlpoint_rotate_lt" width="60" height="60"/>
+        <image name="icon_controlpoint_rotate_rb" width="60" height="60"/>
+        <image name="icon_controlpoint_rotate_rt" width="60" height="60"/>
+        <image name="icon_controlpoint_size_lb_rt" width="40" height="40"/>
+        <image name="icon_controlpoint_size_lr" width="40" height="40"/>
+        <image name="icon_controlpoint_size_lt_rb" width="40" height="40"/>
+        <image name="icon_controlpoint_size_tb" width="40" height="40"/>
+    </resources>
+</document>
