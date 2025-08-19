@@ -332,7 +332,7 @@ class ControlView: NSView {
             self.view.frame = self.bounds
 
             moveComponentOffset(offsetX:offsetX,offsetY: offsetY)
-        case "1"://左上角
+        case "1":
             let rect = NSRect(x:startViewRect.minX + offsetX,
                                 y:startViewRect.minY,
                                 width: startViewRect.width - offsetX,
@@ -340,7 +340,7 @@ class ControlView: NSView {
             self.frame = rect
             self.view.frame = self.bounds
             moveComponentOffset(offsetX:offsetX,offsetWidth: -offsetX,offsetHeight: offsetY)
-        case "2"://
+        case "2":
             let rect = NSRect(x:startViewRect.minX,
                                 y:startViewRect.minY,
                                 width: startViewRect.width,
@@ -358,6 +358,24 @@ class ControlView: NSView {
             self.view.frame = self.bounds
             print("f:\(self.frame)")
             moveComponentOffset(offsetWidth: offsetX,offsetHeight: offsetY)
+        case "4":
+            let rect = NSRect(x:startViewRect.minX + offsetX,
+                                y:startViewRect.minY,
+                                width: startViewRect.width - offsetX,
+                                height: startViewRect.height )
+            self.frame = rect
+            self.view.frame = self.bounds
+            print("f:\(self.frame)")
+            moveComponentOffset(offsetX: offsetX,offsetWidth: -offsetX)
+        case "6":
+            let rect = NSRect(x:startViewRect.minX,
+                                y:startViewRect.minY,
+                                width: startViewRect.width + offsetX,
+                                height: startViewRect.height )
+            self.frame = rect
+            self.view.frame = self.bounds
+            print("f:\(self.frame)")
+            moveComponentOffset(offsetWidth: offsetX)
         default:
             break
         }
