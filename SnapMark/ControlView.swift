@@ -310,7 +310,6 @@ class ControlView: NSView {
             actionID = "9"
             size9.isHidden = false}
 
-
         print("Mouse down ID:\(actionID)")
     }
 
@@ -323,14 +322,12 @@ class ControlView: NSView {
         print("OF:\(offsetX):\(offsetY)")
         switch actionID{
         case "5": // 移動
-
             let rect = NSRect(x:startViewRect.minX + offsetX,
                                 y:startViewRect.minY + offsetY,
                                 width: startViewRect.width,
                                 height: startViewRect.height)
             self.frame = rect
             self.view.frame = self.bounds
-
             moveComponentOffset(offsetX:offsetX,offsetY: offsetY)
         case "1":
             let rect = NSRect(x:startViewRect.minX + offsetX,
@@ -376,6 +373,33 @@ class ControlView: NSView {
             self.view.frame = self.bounds
             print("f:\(self.frame)")
             moveComponentOffset(offsetWidth: offsetX)
+        case "7":
+            let rect = NSRect(x:startViewRect.minX + offsetX,
+                                y:startViewRect.minY + offsetY,
+                                width: startViewRect.width - offsetX,
+                                height: startViewRect.height - offsetY)
+            self.frame = rect
+            self.view.frame = self.bounds
+            print("f:\(self.frame)")
+            moveComponentOffset(offsetX: offsetX,offsetY: offsetY, offsetWidth: -offsetX, offsetHeight: -offsetY)
+        case "8":
+            let rect = NSRect(x:startViewRect.minX,
+                                y:startViewRect.minY + offsetY,
+                                width: startViewRect.width,
+                                height: startViewRect.height - offsetY)
+            self.frame = rect
+            self.view.frame = self.bounds
+            print("f:\(self.frame)")
+            moveComponentOffset(offsetY: offsetY,  offsetHeight: -offsetY)
+        case "9":
+            let rect = NSRect(x:startViewRect.minX,
+                                y:startViewRect.minY + offsetY,
+                                width: startViewRect.width + offsetX,
+                                height: startViewRect.height - offsetY)
+            self.frame = rect
+            self.view.frame = self.bounds
+            print("f:\(self.frame)")
+            moveComponentOffset(offsetY:offsetY,offsetWidth: offsetX,  offsetHeight: -offsetY)
         default:
             break
         }

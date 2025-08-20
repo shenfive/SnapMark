@@ -7,6 +7,9 @@
 
 import Cocoa
 
+
+
+
 class ViewController: NSViewController {
 
     @IBOutlet weak var theImageView: NSImageView!
@@ -21,6 +24,14 @@ class ViewController: NSViewController {
     @IBOutlet weak var contentScrollView: NSScrollView!
     @IBOutlet weak var colorWell: NSColorWell!
     
+    @IBOutlet weak var modeImage: NSImageView!
+    @IBOutlet weak var selectLineButton: NSPopUpButton!
+    
+    @IBOutlet weak var arrowModeButton: NSButton!
+    @IBOutlet weak var textModeButton: NSButton!
+    @IBOutlet weak var boxModeButton: NSButton!
+    @IBOutlet weak var modeArrowPosition: NSLayoutConstraint!
+    
     //拮取畫面控制器
     var controller:ScreenCaptureController? = ScreenCaptureController()
     
@@ -31,9 +42,13 @@ class ViewController: NSViewController {
     var window:NSWindow!
     
 
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //選擇線粗細
+        
         
         //顯示比例按制
         ratioSlider.target = self
@@ -43,6 +58,7 @@ class ViewController: NSViewController {
         //編輯區關連
         documentView.theImageView = self.theImageView
         documentView.color = colorWell.color
+        documentView.editMode = .ARROW
 
         //初始化編輯區
         if let image = theImageView.image{
@@ -62,18 +78,19 @@ class ViewController: NSViewController {
         }
      
     }
+
     
     //外部視窗大小改變
     @objc func windowDidResize(_ notification: Notification) {
         setImage()
+      
     }
 
     override func viewDidAppear() {
         super.viewDidAppear()
         guard let window = view.window else {return}
         self.window = window
-        view.window?.title = NSLocalizedString("SnapMark", comment: "Window 標題")
-        
+        view.window?.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
         //抓取外部視窗動作
         NotificationCenter.default.addObserver(
             self,
@@ -81,7 +98,11 @@ class ViewController: NSViewController {
             name: NSWindow.didResizeNotification,
             object: self.window
         )
+        
     }
+    
+
+
     
     
 
@@ -106,10 +127,12 @@ class ViewController: NSViewController {
         if let newImage = resizedImage(editingImage, scale: ratioSlider.doubleValue){
             self.contentWidth.constant = min(self.contentContainerView.frame.width - 16, newImage.size.width - 1) + 16
             self.contentHeight.constant = min(self.contentContainerView.frame.height - 16, newImage.size.height - 1) + 16
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+            self.setModeDisplayUI()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.001){
                 self.documentView.frame.size = newImage.size
                 self.theImageView.image = newImage
                 self.theImageView.frame = self.documentView.bounds
+        
             }
         }
     }
@@ -124,9 +147,38 @@ class ViewController: NSViewController {
         controller?.startCapture(from: mainWindow)
     }
     
-    func resizedImage(_ image: NSImage, scale: Double) -> NSImage? {
-        guard scale > 0.01, scale <= 2.0 else { return nil }
+    
+    @IBAction func setArrowMode(_ sender: Any) {
+        documentView.editMode = .ARROW
+        setModeDisplayUI()
+    }
+    
+    @IBAction func setTextMode(_ sender: Any) {
 
+        documentView.editMode = .TEXT
+        setModeDisplayUI()
+    }
+    @IBAction func setBoxMode(_ sender: Any) {
+        documentView.editMode = .BOX
+        setModeDisplayUI()
+    }
+    
+    func setModeDisplayUI(){
+        var sender = NSButton()
+        switch documentView.editMode {
+        case .TEXT:
+            sender = textModeButton
+        case .ARROW:
+            sender = arrowModeButton
+        case .BOX:
+            sender = boxModeButton
+        }
+        
+        modeArrowPosition.constant = sender.frame.minY + 20
+    }
+    
+    
+    func resizedImage(_ image: NSImage, scale: Double) -> NSImage? {
         let newSize = NSSize(width: image.size.width * scale,
                              height: image.size.height * scale)
 
