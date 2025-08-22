@@ -847,7 +847,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="push" title="2 pt" bezelStyle="rounded" alignment="right" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" altersStateOfSelectedItem="NO" selectedItem="60i-k1-GuZ" id="SLs-7A-Jnj">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="menu"/>
+                                            <font key="font" metaFont="message"/>
                                             <menu key="menu" id="VI1-43-9MT">
                                                 <items>
                                                     <menuItem title="2 pt" id="60i-k1-GuZ"/>
@@ -856,6 +856,31 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
+                                        <connections>
+                                            <action selector="changeLineWidth:" target="XfG-lQ-9wD" id="SPJ-zT-5UQ"/>
+                                        </connections>
+                                    </popUpButton>
+                                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j81-cg-RFC">
+                                        <rect key="frame" x="153" y="14" width="115" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="push" title="0 pt" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="07T-z7-Mkf" id="EaO-Zv-YqM">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="message"/>
+                                            <menu key="menu" id="HgL-4L-Ypb">
+                                                <items>
+                                                    <menuItem title="0 pt" state="on" id="07T-z7-Mkf"/>
+                                                    <menuItem title="5 pt" id="YQ8-7Q-IfZ" userLabel="5 pt">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="10 pt" id="xii-LT-YRb"/>
+                                                    <menuItem title="20 pt" id="UDJ-px-EG7"/>
+                                                    <menuItem title="Pill-Shape" id="CzY-E1-4mU" userLabel="Pill-Shape"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="changeConerRadius:" target="XfG-lQ-9wD" id="MsW-Fc-SLl"/>
+                                        </connections>
                                     </popUpButton>
                                 </subviews>
                                 <constraints>
@@ -1023,6 +1048,7 @@
                         <outlet property="modeImage" destination="VhU-UG-sr4" id="VFN-oj-NMk"/>
                         <outlet property="ratioLabel" destination="Tsc-aF-psN" id="dW8-Js-Q6q"/>
                         <outlet property="ratioSlider" destination="RuO-DC-pqt" id="qKI-V4-4rk"/>
+                        <outlet property="selectConerRadius" destination="j81-cg-RFC" id="SRj-nh-FSd"/>
                         <outlet property="selectLineButton" destination="790-pu-JyM" id="cKT-xx-21k"/>
                         <outlet property="textModeButton" destination="QwF-xk-ozj" id="Jzt-Wz-8d1"/>
                         <outlet property="theImageView" destination="azm-qx-4uP" id="9HK-gz-Jaf"/>
@@ -1030,7 +1056,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="109.5" y="925"/>
+            <point key="canvasLocation" x="75.5" y="927"/>
         </scene>
     </scenes>
     <resources>

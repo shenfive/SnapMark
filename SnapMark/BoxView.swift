@@ -10,6 +10,9 @@ import Cocoa
 class BoxView: NSView {
 
     var color:NSColor!
+    var lineWidth = 2.0
+    var cornerRadius = 8.0
+    var ratio = 1.0
     
 
     @IBOutlet weak var theBoxView: NSView!
@@ -20,8 +23,11 @@ class BoxView: NSView {
 
         theBoxView.wantsLayer = true
         theBoxView.layer?.borderColor = color.cgColor
-        theBoxView.layer?.borderWidth = 2.0
-        theBoxView.layer?.cornerRadius = 8.0
+        theBoxView.layer?.borderWidth = lineWidth * ratio
+        theBoxView.layer?.cornerRadius = cornerRadius
+        if cornerRadius == 100000.1{
+            theBoxView.layer?.cornerRadius = min(theBoxView.frame.height,theBoxView.frame.width) / 2
+        }
     }
     
     

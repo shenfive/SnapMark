@@ -10,12 +10,14 @@ import Cocoa
 
 class ArrowView: NSView {
     
-    var lineWidth = 4.0
+    var boardWidth = 4.0
     var startPoint = CGPoint(x: 0, y: 0)
     var endPoint = CGPoint(x: 0, y: 0)
     var color:NSColor = NSColor.systemRed
-    
+    var ratio:Double = 1
 
+    
+    
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -30,15 +32,15 @@ class ArrowView: NSView {
         let dx = endPoint.x - startPoint.x
         let dy = endPoint.y - startPoint.y
         
-        lineStartPoint = CGPoint(x:dx >= 0 ? 0:bounds.width, y: dy >= 0 ? 0:bounds.height)
-        lineEndPoint = CGPoint(x: dx >= 0 ?bounds.width:0, y: dy >= 0 ? bounds.height:0)
+        lineStartPoint = CGPoint(x:(dx >= 0 ? 0:bounds.width) * ratio, y:( dy >= 0 ? 0:bounds.height) * ratio)
+        lineEndPoint = CGPoint(x: (dx >= 0 ?bounds.width:0) * ratio, y: (dy >= 0 ? bounds.height:0) * ratio)
 
         
         // 建立主線 path
         let path = NSBezierPath()
         path.move(to: lineStartPoint)
         path.line(to: lineEndPoint)
-        path.lineWidth = lineWidth
+        path.lineWidth = boardWidth * ratio
         path.stroke()
         
         
@@ -83,7 +85,7 @@ class ArrowView: NSView {
             arrowPath.line(to: leftPoint)
             arrowPath.move(to: lineEndPoint)
             arrowPath.line(to: rightPoint)
-            arrowPath.lineWidth = lineWidth
+            arrowPath.lineWidth = boardWidth * ratio
             arrowPath.stroke()
         }
         
@@ -101,6 +103,13 @@ class ArrowView: NSView {
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
         commonInit()
+    }
+    
+    func setComponentData(component:Component,ratio:Double){
+        startPoint = NSPoint(x: component.startPoint.x * ratio,
+                             y: component.startPoint.y * ratio)
+        color = component.color
+        boardWidth = component.boardWidth
     }
     
     private func commonInit() {

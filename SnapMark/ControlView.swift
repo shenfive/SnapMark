@@ -7,42 +7,6 @@
 //
 
 import Cocoa
-//
-//class Component:NSObject{
-//    var componentType = COMPONET_TYPE.ARROW //元件型別
-//    var layerSeq = 0                        //  元件的圖層順序編號
-//    var isLock = false                      //  是否需要鎖定，暫時不使用，請填入 N
-//    var positionX = 0                       //  元件相對於海報左上角的 X 座標
-//    var positionY = 0                       //  元件相對於海報左上角的 Y 座標
-//    var width = 0                           //  元件寬度
-//    var height = 0                          //  元件高度
-//    var backgroundColor = ""                //  背景顏色，如”#FFFF00”
-//    var transparent = 0                   //  背景透明度(0~255，0 表示不透明)
-//    var rotation:Double = 0                 //  旋轉角度(0~365)
-//
-//    func copyComponent() -> Component{
-//        let com = Component()
-//        com.componentType = self.componentType
-//        com.layerSeq = self.layerSeq
-//        com.isLock = self.isLock
-//        com.positionX = self.positionX
-//        com.positionY = self.positionY
-//        com.width = self.width
-//        com.height = self.height
-//        com.backgroundColor = self.backgroundColor
-//        com.transparent = self.transparent
-//        com.rotation = self.rotation
-//        return com
-//    }
-//
-//}
-
-
-enum COMPONET_TYPE{
-    case TEXT     //文字框
-    case ARROW    //箭頭
-    case BOX
-}
 
 
 class ControlView: NSView {
@@ -320,6 +284,8 @@ class ControlView: NSView {
         let offsetX = currentMousePoint.x - startMousePoint.x
         let offsetY = currentMousePoint.y - startMousePoint.y
         print("OF:\(offsetX):\(offsetY)")
+        
+        
         switch actionID{
         case "5": // 移動
             let rect = NSRect(x:startViewRect.minX + offsetX,
@@ -334,8 +300,11 @@ class ControlView: NSView {
                                 y:startViewRect.minY,
                                 width: startViewRect.width - offsetX,
                                 height: startViewRect.height + offsetY)
+            
+            
             self.frame = rect
             self.view.frame = self.bounds
+            print("rect:\(rect)")
             moveComponentOffset(offsetX:offsetX,offsetWidth: -offsetX,offsetHeight: offsetY)
         case "2":
             let rect = NSRect(x:startViewRect.minX,
@@ -344,7 +313,7 @@ class ControlView: NSView {
                                 height: startViewRect.height + offsetY)
             self.frame = rect
             self.view.frame = self.bounds
-            print("f:\(self.frame)")
+            print("rect:\(rect)")
             moveComponentOffset(offsetHeight: offsetY)
         case "3"://
             let rect = NSRect(x:startViewRect.minX,
@@ -411,18 +380,23 @@ class ControlView: NSView {
                              offsetY y:CGFloat = 0,
                              offsetWidth width:CGFloat = 0,
                              offsetHeight height:CGFloat = 0){
+
+//        let newRect = NSRect(x: startContentRect.minX + x ,
+//                             y: startContentRect.minY + y ,
+//                             width: startContentRect.width + width,
+//                             height: startContentRect.height + height)
+//        let newRect = NSRect(x:20,
+//                             y:20,
+//                             width: view.frame.width - 40,
+//                             height: view.frame.height - 40)
+        print("newRect:\(view.bounds)")
         switch componentType {
         case .TEXT:
             break
         case .ARROW:
-            let newRect = NSRect(x: startContentRect.minX + x ,
-                                 y: startContentRect.minY + y ,
-                                 width: startContentRect.width + width,
-                                 height: startContentRect.height + height)
-            
-            componentView.frame = newRect
+            componentView.frame = self.frame
         case .BOX:
-            break
+            componentView.frame = self.frame
         }
         
     }

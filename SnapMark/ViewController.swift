@@ -32,6 +32,16 @@ class ViewController: NSViewController {
     @IBOutlet weak var boxModeButton: NSButton!
     @IBOutlet weak var modeArrowPosition: NSLayoutConstraint!
     
+    @IBOutlet weak var selectConerRadius: NSPopUpButton!
+    
+    
+//    //控制顯示
+//    let cView = ControlView()
+    
+    //附加元件
+    var components:[Component] = []
+    
+    
     //拮取畫面控制器
     var controller:ScreenCaptureController? = ScreenCaptureController()
     
@@ -41,8 +51,13 @@ class ViewController: NSViewController {
     //頁面的 Window
     var window:NSWindow!
     
+    //line width
+    let boardWidthSelected = [2.0,5.0,10.0]
 
-
+    //cornerRadius
+    let conerRadiusSelected = [0.0,5.0,10.0,20.0,100000.1]
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +73,8 @@ class ViewController: NSViewController {
         //編輯區關連
         documentView.theImageView = self.theImageView
         documentView.color = colorWell.color
+        documentView.lineWidth = boardWidthSelected[selectLineButton.indexOfSelectedItem]
+        documentView.cornerRadius = conerRadiusSelected[selectConerRadius.indexOfSelectedItem]
         documentView.editMode = .ARROW
 
         //初始化編輯區
@@ -66,17 +83,54 @@ class ViewController: NSViewController {
             setImage()
         }
         
+        documentView.startAction = {
+            self.documentView.subviews.forEach { view in
+                if view.isKind(of: ControlView.self){
+                    view.removeFromSuperview()
+                }
+            }
+        }
+        
         documentView.endAction = {
-            let newRect = NSRect(x: self.documentView.newView.frame.minX - 20,
-                                 y: self.documentView.newView.frame.minY - 20,
-                                 width: self.documentView.newView.frame.width + 40,
-                                 height: self.documentView.newView.frame.height + 40)
-            let cView = ControlView(frame: newRect)
-            cView.componentView = $0
-            cView.componentType = .ARROW
-            self.documentView.addSubview(cView)
+//            let controlViewRect = NSRect(x: self.documentView.newView.frame.minX - 20,
+//                                 y: self.documentView.newView.frame.minY - 20,
+//                                 width: self.documentView.newView.frame.width + 40,
+//                                 height: self.documentView.newView.frame.height + 40)
+//
+//            cView.componentType = self.documentView.editMode
+//
+//            self.documentView.addSubview(cView)
+     
+            self.components.append(self.documentView.getComponet(scale: self.ratioSlider.doubleValue))
+            
+            self.reDrawComponts()
+            print($0)
+            
         }
      
+    }
+    
+    func reDrawComponts(){
+        self.documentView.subviews.forEach {
+            if $0.isKind(of: ArrowView.self) { $0.removeFromSuperview() }
+        }
+        components.forEach { component in
+            switch component.componentType{
+            case .ARROW:
+                let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
+                arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+                arrowView.ratio = ratioSlider.doubleValue
+                print(component)
+                print(arrowView.frame)
+
+                self.documentView.addSubview(arrowView)
+                break
+            case .BOX:
+                break
+            case .TEXT:
+                break
+            }
+        }
     }
 
     
@@ -123,6 +177,17 @@ class ViewController: NSViewController {
         documentView.color = colorWell.color
     }
     
+    @IBAction func changeLineWidth(_ sender: Any) {
+        documentView.lineWidth = boardWidthSelected[selectLineButton.indexOfSelectedItem]
+    }
+    
+    @IBAction func changeConerRadius(_ sender: Any) {
+        documentView.cornerRadius = conerRadiusSelected[selectConerRadius.indexOfSelectedItem]
+    }
+    
+    
+    
+    
     func setImage(){
         if let newImage = resizedImage(editingImage, scale: ratioSlider.doubleValue){
             self.contentWidth.constant = min(self.contentContainerView.frame.width - 16, newImage.size.width - 1) + 16
@@ -132,7 +197,7 @@ class ViewController: NSViewController {
                 self.documentView.frame.size = newImage.size
                 self.theImageView.image = newImage
                 self.theImageView.frame = self.documentView.bounds
-        
+                self.reDrawComponts()
             }
         }
     }
