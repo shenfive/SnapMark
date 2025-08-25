@@ -101,7 +101,7 @@ class ViewController: NSViewController {
 //
 //            self.documentView.addSubview(cView)
      
-            self.components.append(self.documentView.getComponet(scale: self.ratioSlider.doubleValue))
+            self.components.append(self.documentView.getComponet(ratio: self.ratioSlider.doubleValue))
             
             self.reDrawComponts()
             print($0)
@@ -113,6 +113,7 @@ class ViewController: NSViewController {
     func reDrawComponts(){
         self.documentView.subviews.forEach {
             if $0.isKind(of: ArrowView.self) { $0.removeFromSuperview() }
+            if $0.isKind(of: BoxView.self) { $0.removeFromSuperview() }
         }
         components.forEach { component in
             switch component.componentType{
@@ -120,12 +121,13 @@ class ViewController: NSViewController {
                 let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
                 arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
                 arrowView.ratio = ratioSlider.doubleValue
-                print(component)
-                print(arrowView.frame)
-
                 self.documentView.addSubview(arrowView)
                 break
             case .BOX:
+                let boxView = BoxView(frame: component.framRect(ratio: ratioSlider.doubleValue))
+                boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+                boxView.ratio = ratioSlider.doubleValue
+                self.documentView.addSubview(boxView)
                 break
             case .TEXT:
                 break
@@ -165,11 +167,13 @@ class ViewController: NSViewController {
     @objc func ratioSliderDidChange(_ sender:NSSlider){
         let value = sender.doubleValue * 100
         ratioLabel.stringValue = String(format: "%.1f%%", value).replacingOccurrences(of: ".0%", with: "%")
+        documentView.ratio = sender.doubleValue
         setImage()
     }
     
     @IBAction func resetRatio(_ sender: Any) {
         ratioSlider.doubleValue = 1.0
+        documentView.ratio = 1.0
         ratioSliderDidChange(ratioSlider)
     }
     
@@ -207,7 +211,9 @@ class ViewController: NSViewController {
         guard let mainWindow = self.view.window else { return }
         controller?.onCaptureComplete = { [weak self] image in
             self?.editingImage = image
+            self?.components.removeAll()
             self?.setImage()
+            
         }
         controller?.startCapture(from: mainWindow)
     }

@@ -10,9 +10,11 @@ import Cocoa
 class BoxView: NSView {
 
     var color:NSColor!
-    var lineWidth = 2.0
+    var         boardWidth = 2.0
     var cornerRadius = 8.0
     var ratio = 1.0
+    var startPoint = CGPoint(x: 0, y: 0)
+    var endPoint = CGPoint(x: 0, y: 0)
     
 
     @IBOutlet weak var theBoxView: NSView!
@@ -23,7 +25,7 @@ class BoxView: NSView {
 
         theBoxView.wantsLayer = true
         theBoxView.layer?.borderColor = color.cgColor
-        theBoxView.layer?.borderWidth = lineWidth * ratio
+        theBoxView.layer?.borderWidth =         boardWidth * ratio
         theBoxView.layer?.cornerRadius = cornerRadius
         if cornerRadius == 100000.1{
             theBoxView.layer?.cornerRadius = min(theBoxView.frame.height,theBoxView.frame.width) / 2
@@ -40,6 +42,15 @@ class BoxView: NSView {
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
         commonInit()
+    }
+    
+    func setComponentData(component:Component,ratio:Double){
+        startPoint = component.startPoint
+        endPoint = component.endPoint
+        self.ratio = ratio
+        cornerRadius = component.cornerRadius
+        color = component.color
+        boardWidth = component.boardWidth
     }
     
     private func commonInit() {

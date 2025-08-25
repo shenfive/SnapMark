@@ -25,23 +25,19 @@ class ArrowView: NSView {
         // 設定線條顏色
         color.set()
 
-        
         var lineStartPoint = CGPoint(x: 0, y:0)
         var lineEndPoint = CGPoint(x: 0, y: 0)
         
         let dx = endPoint.x - startPoint.x
         let dy = endPoint.y - startPoint.y
         
-        lineStartPoint = CGPoint(x:(dx >= 0 ? 0:bounds.width) * ratio, y:( dy >= 0 ? 0:bounds.height) * ratio)
-        lineEndPoint = CGPoint(x: (dx >= 0 ?bounds.width:0) * ratio, y: (dy >= 0 ? bounds.height:0) * ratio)
+        lineStartPoint = CGPoint(x:(dx >= 0 ? 0:bounds.width) , y:( dy >= 0 ? 0:bounds.height))
+        lineEndPoint = CGPoint(x: (dx >= 0 ?bounds.width:0), y: (dy >= 0 ? bounds.height:0) )
 
         
-        // 建立主線 path
-        let path = NSBezierPath()
-        path.move(to: lineStartPoint)
-        path.line(to: lineEndPoint)
-        path.lineWidth = boardWidth * ratio
-        path.stroke()
+
+        
+        
         
         
         // 箭頭方向向量
@@ -63,7 +59,7 @@ class ArrowView: NSView {
                 )
             }
             
-            let arrowLength: CGFloat = min(length, 25)
+            let arrowLength: CGFloat = min(length, 15 + boardWidth * ratio)
             let arrowAngle: CGFloat = 30.0 * (.pi / 180.0) // 60° in radians
             
             let leftVector = rotatedVector(angle: arrowAngle)
@@ -79,14 +75,41 @@ class ArrowView: NSView {
                 y: lineEndPoint.y - arrowLength * rightVector.y
             )
             
-            // 畫箭頭線
+//            // 畫箭頭線
+//            let arrowPath = NSBezierPath()
+//            arrowPath.move(to: lineEndPoint)
+//            arrowPath.line(to: leftPoint)
+//            arrowPath.move(to: lineEndPoint)
+//            arrowPath.line(to: rightPoint)
+//            arrowPath.lineWidth = boardWidth * ratio
+//            arrowPath.stroke()
+            
+            
+            // 箭頭（實心三角形）
             let arrowPath = NSBezierPath()
             arrowPath.move(to: lineEndPoint)
             arrowPath.line(to: leftPoint)
-            arrowPath.move(to: lineEndPoint)
             arrowPath.line(to: rightPoint)
-            arrowPath.lineWidth = boardWidth * ratio
-            arrowPath.stroke()
+            arrowPath.close()
+
+            color.setFill()
+            arrowPath.fill()
+            
+            
+            let inset: CGFloat = boardWidth * ratio
+            let adjustedEndPoint = CGPoint(
+                x: lineEndPoint.x - inset * ux,
+                y: lineEndPoint.y - inset * uy
+            )
+            
+            // 建立主線 path
+            let path = NSBezierPath()
+            path.move(to: lineStartPoint)
+            path.line(to: adjustedEndPoint)
+            path.lineWidth = boardWidth * ratio
+            path.stroke()
+            
+            
         }
         
         
@@ -106,8 +129,9 @@ class ArrowView: NSView {
     }
     
     func setComponentData(component:Component,ratio:Double){
-        startPoint = NSPoint(x: component.startPoint.x * ratio,
-                             y: component.startPoint.y * ratio)
+        startPoint = component.startPoint
+        endPoint = component.endPoint
+        self.ratio = ratio
         color = component.color
         boardWidth = component.boardWidth
     }

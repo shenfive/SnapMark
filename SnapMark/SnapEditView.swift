@@ -13,7 +13,7 @@ class SnapEditView: NSView {
     var startPoint: NSPoint = .zero
     var endPoint: NSPoint = .zero
     var onSelectionComplete: ((CGRect) -> Void)?
-    var newView:NSBox!
+    var newView:NSView!
     var arrowView:ArrowView = ArrowView()
     var boxView:BoxView = BoxView()
     var textView:NSView = NSView()
@@ -32,20 +32,21 @@ class SnapEditView: NSView {
         startAction?()
         startPoint = convert(event.locationInWindow, from: nil)
         print("startPoint:\(startPoint)")
-        newView = NSBox(frame: NSRect(origin: startPoint, size: NSSize(width: 10, height: 10)))
+        newView = NSView(frame: NSRect(origin: startPoint, size: NSSize(width: 0, height: 0)))
 
         switch editMode {
         case .TEXT:
             break
         case .ARROW:
-            arrowView.frame = newView.bounds
+            arrowView.ratio = ratio
+            arrowView.frame = newView.frame
             arrowView.color = color
             arrowView.boardWidth = lineWidth
             arrowView.ratio = ratio
             newView.addSubview(arrowView)
         case .BOX:
             boxView.color = color
-            boxView.lineWidth = lineWidth
+            boxView.boardWidth = lineWidth
             boxView.ratio = ratio
             boxView.frame = newView.bounds
             boxView.cornerRadius = cornerRadius
@@ -53,9 +54,13 @@ class SnapEditView: NSView {
         }
         
  
-        newView.boxType = .custom
-        newView.fillColor = NSColor.clear
-        newView.borderColor = NSColor.white
+        newView.wantsLayer = true
+        newView.layer?.borderColor = .white
+        newView.layer?.borderWidth =  1
+        
+//        newView.boxType = .custom
+//        newView.fillColor = NSColor.clear
+//        newView.borderColor = NSColor.white
         
         addSubview(newView, positioned: .above, relativeTo: nil)
         
@@ -65,8 +70,8 @@ class SnapEditView: NSView {
         endPoint = convert(event.locationInWindow, from: nil)
         print("endPoint:\(endPoint)")
         // 計算左下角座標與大小
-        let width = max(10,abs(startPoint.x - endPoint.x))
-        let height = max(10,abs(startPoint.y - endPoint.y))
+        let width = abs(startPoint.x - endPoint.x)//max(10,abs(startPoint.x - endPoint.x))
+        let height = abs(startPoint.y - endPoint.y)//max(10,abs(startPoint.y - endPoint.y))
         
         let originX = min(startPoint.x, endPoint.x)
         let originY = min(startPoint.y, endPoint.y)
@@ -80,14 +85,17 @@ class SnapEditView: NSView {
         case .ARROW:
             arrowView.startPoint = startPoint
             arrowView.endPoint = endPoint
-            arrowView.frame = newView.contentView!.bounds
+            arrowView.frame = NSRect(x: 0   , y: 0, width: width, height: height)
+            
+            
         case .BOX:
-            boxView.frame = newView.contentView!.bounds
+            boxView.frame = newView.bounds
         }
 
     }
 
     override func mouseUp(with event: NSEvent) {
+        newView.removeFromSuperview()
         endPoint = convert(event.locationInWindow, from: nil)
         switch editMode {
         case .TEXT:
@@ -99,7 +107,7 @@ class SnapEditView: NSView {
             endAction?(boxView)
             boxView.removeFromSuperview()
         }
-        newView.borderColor = NSColor.clear
+//        newView.borderColor = NSColor.clear
     }
 
 
@@ -107,11 +115,30 @@ class SnapEditView: NSView {
         print("Draw")
     }
     
-    func getComponet(scale:Double) -> Component{
-        return Component(startPoint: NSPoint(x: startPoint.x * scale, y: startPoint.y * scale) ,
-                         endPoint: NSPoint(x: endPoint.x * scale, y: endPoint.y * scale) ,
-                         color: color,
-                         boardWidth: lineWidth,
-                         cornerRadius: cornerRadius)
+    func getComponet(ratio:Double) -> Component{
+        switch editMode {
+        case .TEXT:
+            return Component(componentType: .TEXT,
+                             startPoint: NSPoint(x: startPoint.x / ratio, y: startPoint.y / ratio) ,
+                             endPoint: NSPoint(x: endPoint.x / ratio, y: endPoint.y / ratio) ,
+                             color: color,
+                             boardWidth: lineWidth,
+                             cornerRadius: cornerRadius)
+        case .ARROW:
+            return Component(componentType: .ARROW,
+                             startPoint: NSPoint(x: startPoint.x / ratio, y: startPoint.y / ratio) ,
+                             endPoint: NSPoint(x: endPoint.x / ratio, y: endPoint.y / ratio) ,
+                             color: color,
+                             boardWidth: lineWidth,
+                             cornerRadius: cornerRadius)
+        case .BOX:
+            return Component(componentType: .BOX,
+                             startPoint: NSPoint(x: startPoint.x / ratio, y: startPoint.y / ratio) ,
+                             endPoint: NSPoint(x: endPoint.x / ratio, y: endPoint.y / ratio) ,
+                             color: color,
+                             boardWidth: lineWidth,
+                             cornerRadius: cornerRadius)
+        }
+
     }
 }
