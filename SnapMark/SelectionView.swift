@@ -10,6 +10,7 @@ class SelectionView: NSView {
     var startPoint: NSPoint = .zero
     var endPoint: NSPoint = .zero
     var onSelectionComplete: ((CGRect) -> Void)?
+    var lineWidth:CGFloat = 1
 
     override func mouseDown(with event: NSEvent) {
         startPoint = event.locationInWindow
@@ -58,7 +59,7 @@ class SelectionView: NSView {
 
         let path = NSBezierPath(rect: rect)
         path.fill()
-        path.lineWidth = 1
+        path.lineWidth = lineWidth
         path.stroke()
     }
 }

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TextView" customModule="SnapMark" customModuleProvider="target">
+            <connections>
+                <outlet property="textField" destination="Vd8-pS-TGq" id="t4H-tc-lh2"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="332" height="196"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="JSj-gu-mo4">
+                    <rect key="frame" x="0.0" y="0.0" width="5" height="196"/>
+                    <view key="contentView" id="iqh-jU-pz6">
+                        <rect key="frame" x="1" y="1" width="3" height="194"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="5" id="RUC-zX-fW6"/>
+                    </constraints>
+                    <color key="fillColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                </box>
+                <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="uB0-h4-0B5">
+                    <rect key="frame" x="327" y="0.0" width="5" height="196"/>
+                    <view key="contentView" id="hCj-Km-aeH">
+                        <rect key="frame" x="1" y="1" width="3" height="194"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="5" id="a0B-Kd-3yh"/>
+                    </constraints>
+                    <color key="fillColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                </box>
+                <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vd8-pS-TGq">
+                    <rect key="frame" x="8" y="90" width="316" height="16"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Test" placeholderString="PlaceHorder" id="Oem-gx-5Pv">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="updateText:" target="-2" id="R7p-uT-awq"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="uB0-h4-0B5" secondAttribute="trailing" id="Bqr-N1-rzK"/>
+                <constraint firstItem="uB0-h4-0B5" firstAttribute="leading" secondItem="Vd8-pS-TGq" secondAttribute="trailing" constant="5" id="CRt-nv-pbR"/>
+                <constraint firstItem="JSj-gu-mo4" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="D1T-by-tPO"/>
+                <constraint firstAttribute="bottom" secondItem="uB0-h4-0B5" secondAttribute="bottom" id="DW8-q6-jwc"/>
+                <constraint firstItem="JSj-gu-mo4" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="KQ8-xN-kMn"/>
+                <constraint firstItem="Vd8-pS-TGq" firstAttribute="leading" secondItem="JSj-gu-mo4" secondAttribute="trailing" constant="5" id="RCj-v6-og8"/>
+                <constraint firstAttribute="bottom" secondItem="JSj-gu-mo4" secondAttribute="bottom" id="RVZ-bZ-JNm"/>
+                <constraint firstItem="Vd8-pS-TGq" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="a0c-wE-JB3"/>
+                <constraint firstItem="Vd8-pS-TGq" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="e8N-2Q-eMF"/>
+                <constraint firstItem="uB0-h4-0B5" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="kmf-Rw-boX"/>
+            </constraints>
+            <point key="canvasLocation" x="120" y="166"/>
+        </customView>
+    </objects>
+</document>

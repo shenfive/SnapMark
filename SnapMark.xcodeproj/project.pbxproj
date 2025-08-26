@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		F818521A2E3771D100183060 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = F81852192E3771D100183060 /* SwiftyJSON */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		F81852022E376B6A00183060 /* SnapMark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapMark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -27,7 +23,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F818521A2E3771D100183060 /* SwiftyJSON in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +65,6 @@
 			);
 			name = SnapMark;
 			packageProductDependencies = (
-				F81852192E3771D100183060 /* SwiftyJSON */,
 			);
 			productName = SnapMark;
 			productReference = F81852022E376B6A00183060 /* SnapMark.app */;
@@ -102,7 +96,6 @@
 			mainGroup = F81851F92E376B6A00183060;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				F81852182E3771D100183060 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F81852032E376B6A00183060 /* Products */;
@@ -337,25 +330,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		F81852182E3771D100183060 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		F81852192E3771D100183060 /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F81852182E3771D100183060 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F81851FA2E376B6A00183060 /* Project object */;
 }

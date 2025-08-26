@@ -62,7 +62,9 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //選擇線粗細
+ 
+        // 設定 FontManager 的 target
+        NSFontManager.shared.target = self
         
         
         //顯示比例按制
@@ -82,6 +84,7 @@ class ViewController: NSViewController {
             editingImage = image
             setImage()
         }
+
         
         documentView.startAction = {
             self.documentView.subviews.forEach { view in
@@ -104,6 +107,7 @@ class ViewController: NSViewController {
             self.components.append(self.documentView.getComponet(ratio: self.ratioSlider.doubleValue))
             
             self.reDrawComponts()
+            //回傳物件View
             print($0)
             
         }
@@ -154,16 +158,52 @@ class ViewController: NSViewController {
             name: NSWindow.didResizeNotification,
             object: self.window
         )
+      
         
     }
     
 
 
-    
+    @IBAction func callFontSetting(_ sender: Any) {
+        NSFontManager.shared.orderFrontFontPanel(self)
+    }
+
+    @objc func changeFont(_ sender: Any?) {
+        documentView.font = NSFontManager.shared.selectedFont ?? NSFont.systemFont(ofSize: 14)
+    }
     
 
     
-
+    //設定顏色
+    @IBAction func changeColor(_ sender: Any) {
+        documentView.color = colorWell.color
+    }
+    
+    
+    //設定顯示比例
+    
+    //符合目前視窗
+    @IBAction func setFitWindowRatio(_ sender: Any) {
+        let original = NSSize(width: self.theImageView.image!.size.width / self.ratioSlider.doubleValue  + 14,
+                              height: self.theImageView.image!.size.height / self.ratioSlider.doubleValue + 14)
+        let target = NSSize(width: self.contentContainerView.frame.size.width ,
+                            height: self.contentContainerView.frame.size.height )
+        let widthScale = target.width / original.width
+        let heightScale = target.height / original.height
+        
+        let scale = min(widthScale, heightScale)
+        
+        self.ratioSlider.doubleValue = scale
+        self.documentView.ratio = scale
+        self.ratioSliderDidChange(self.ratioSlider)
+    }
+    //原始解析度
+    @IBAction func resetRatio(_ sender: Any) {
+        ratioSlider.doubleValue = 1.0
+        documentView.ratio = 1.0
+        ratioSliderDidChange(ratioSlider)
+    }
+    //依 Slider 設定
     @objc func ratioSliderDidChange(_ sender:NSSlider){
         let value = sender.doubleValue * 100
         ratioLabel.stringValue = String(format: "%.1f%%", value).replacingOccurrences(of: ".0%", with: "%")
@@ -171,15 +211,6 @@ class ViewController: NSViewController {
         setImage()
     }
     
-    @IBAction func resetRatio(_ sender: Any) {
-        ratioSlider.doubleValue = 1.0
-        documentView.ratio = 1.0
-        ratioSliderDidChange(ratioSlider)
-    }
-    
-    @IBAction func changeColor(_ sender: Any) {
-        documentView.color = colorWell.color
-    }
     
     @IBAction func changeLineWidth(_ sender: Any) {
         documentView.lineWidth = boardWidthSelected[selectLineButton.indexOfSelectedItem]

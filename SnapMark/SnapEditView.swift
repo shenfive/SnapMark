@@ -16,16 +16,18 @@ class SnapEditView: NSView {
     var newView:NSView!
     var arrowView:ArrowView = ArrowView()
     var boxView:BoxView = BoxView()
-    var textView:NSView = NSView()
+    var textView:TextView = TextView()
     var color:NSColor!
     var lineWidth = 2.0
     var cornerRadius = 8.0
     var ratio = 1.0
-
+    var font = NSFont.systemFont(ofSize: 14)
+    
     var endAction:((NSView)->())? = nil
     var startAction:(()->())? = nil
     
     var editMode:COMPONET_TYPE = .ARROW
+
     
     override func mouseDown(with event: NSEvent) {
         NSColorPanel.shared.close()
@@ -36,10 +38,14 @@ class SnapEditView: NSView {
 
         switch editMode {
         case .TEXT:
-            break
+            textView.frame.origin = newView.frame.origin
+            textView.setFont(font: NSFont.systemFont(ofSize: 40))
+            textView.textField.textColor = color
+            textView.fitSize()
+            addSubview(textView, positioned: .above, relativeTo: nil)
         case .ARROW:
             arrowView.ratio = ratio
-            arrowView.frame = newView.frame
+            arrowView.frame = newView.bounds
             arrowView.color = color
             arrowView.boardWidth = lineWidth
             arrowView.ratio = ratio
@@ -54,9 +60,18 @@ class SnapEditView: NSView {
         }
         
  
+        //新增元件的外框
         newView.wantsLayer = true
         newView.layer?.borderColor = .white
-        newView.layer?.borderWidth =  1
+        switch editMode {
+        case .TEXT:
+            newView.layer?.borderWidth = 1
+        case .ARROW:
+            newView.layer?.borderWidth = 1
+        case .BOX:
+            newView.layer?.borderWidth = 0
+        }
+
         
 //        newView.boxType = .custom
 //        newView.fillColor = NSColor.clear

@@ -117,6 +117,15 @@ class ArrowView: NSView {
     }
     
     
+    func setComponentData(component:Component,ratio:Double){
+        startPoint = component.startPoint
+        endPoint = component.endPoint
+        self.ratio = ratio
+        color = component.color
+        boardWidth = component.boardWidth
+    }
+    
+    
     // MARK: - Initializers
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -127,15 +136,7 @@ class ArrowView: NSView {
         super.init(coder: decoder)
         commonInit()
     }
-    
-    func setComponentData(component:Component,ratio:Double){
-        startPoint = component.startPoint
-        endPoint = component.endPoint
-        self.ratio = ratio
-        color = component.color
-        boardWidth = component.boardWidth
-    }
-    
+
     private func commonInit() {
         var topLevelObjects: NSArray?
         Bundle.main.loadNibNamed("ArrowView", owner: self, topLevelObjects: &topLevelObjects)
