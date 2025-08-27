@@ -39,7 +39,7 @@ class SnapEditView: NSView {
         switch editMode {
         case .TEXT:
             textView.frame.origin = newView.frame.origin
-            textView.setFont(font: NSFont.systemFont(ofSize: 40))
+            textView.setFont(font: font)
             textView.textField.textColor = color
             textView.fitSize()
             addSubview(textView, positioned: .above, relativeTo: nil)

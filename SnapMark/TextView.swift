@@ -108,7 +108,7 @@ extension TextView: NSTextFieldDelegate, NSTextViewDelegate {
             let attributed = NSAttributedString(string: currentText, attributes: attributes)
             
             // 計算文字尺寸
-            let maxWidth: CGFloat = 1000 // 可自訂最大寬度
+            let maxWidth: CGFloat = 1920 // 可自訂最大寬度
             let boundingRect = attributed.boundingRect(
                 with: NSSize(width: maxWidth, height: .greatestFiniteMagnitude),
                 options: [.usesLineFragmentOrigin, .usesFontLeading]

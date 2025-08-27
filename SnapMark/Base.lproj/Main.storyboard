@@ -882,17 +882,40 @@
                                             <action selector="changeConerRadius:" target="XfG-lQ-9wD" id="MsW-Fc-SLl"/>
                                         </connections>
                                     </popUpButton>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bBM-Mh-kxE">
-                                        <rect key="frame" x="285" y="10" width="40" height="36"/>
+                                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zpP-gZ-l3q">
+                                        <rect key="frame" x="293" y="24" width="181" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSFontPanel" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="sOy-pv-rJe">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
+                                        <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="nan-r5-jGe" id="rKK-Jd-dWL">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="tRg-Yb-lww">
+                                                <items>
+                                                    <menuItem title="Item 1" state="on" id="nan-r5-jGe"/>
+                                                    <menuItem title="Item 2" id="eWn-eG-Zsl"/>
+                                                    <menuItem title="Item 3" id="Qgk-id-Yth"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                    </popUpButton>
+                                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7MF-he-Kq0">
+                                        <rect key="frame" x="294" y="-6" width="123" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <sliderCell key="cell" state="on" alignment="left" minValue="7" maxValue="72" doubleValue="14" tickMarkPosition="above" sliderType="linear" id="EMb-Cx-2M3">
+                                            <font key="font" metaFont="system" size="12"/>
+                                        </sliderCell>
                                         <connections>
-                                            <action selector="callFontSetting:" target="XfG-lQ-9wD" id="Fnc-3m-XeQ"/>
+                                            <action selector="fontSizeAction:" target="XfG-lQ-9wD" id="eYu-EE-Obd"/>
                                         </connections>
-                                    </button>
+                                    </slider>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-G7-1ke">
+                                        <rect key="frame" x="433" y="4" width="19" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="14" id="Gpj-oJ-Ecs">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="xNt-gU-wpP"/>
@@ -1067,6 +1090,9 @@
                         <outlet property="contentScrollView" destination="32J-s3-3Zy" id="aXg-BR-hHh"/>
                         <outlet property="contentWidth" destination="NF5-wm-esc" id="Qit-iM-m86"/>
                         <outlet property="documentView" destination="Gnf-mE-Mhf" id="hw0-wg-PCj"/>
+                        <outlet property="fontButton" destination="zpP-gZ-l3q" id="Wy3-b7-8jq"/>
+                        <outlet property="fontSizeLabel" destination="XN4-G7-1ke" id="xRd-l3-tC6"/>
+                        <outlet property="fontSizeSlider" destination="7MF-he-Kq0" id="QQ6-TH-R5D"/>
                         <outlet property="modeArrowPosition" destination="7L3-xe-xxM" id="bCi-As-kga"/>
                         <outlet property="modeImage" destination="VhU-UG-sr4" id="VFN-oj-NMk"/>
                         <outlet property="ratioLabel" destination="Tsc-aF-psN" id="dW8-Js-Q6q"/>
@@ -1084,7 +1110,6 @@
     </scenes>
     <resources>
         <image name="Icon_Add_Frame_1_1_Normal" width="40" height="40"/>
-        <image name="NSFontPanel" width="32" height="32"/>
         <image name="arrow.up.forward" catalog="system" width="14" height="12"/>
         <image name="character.textbox" catalog="system" width="20" height="14"/>
         <image name="chevron.compact.forward" catalog="system" width="8" height="17"/>

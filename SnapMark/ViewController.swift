@@ -33,6 +33,9 @@ class ViewController: NSViewController {
     @IBOutlet weak var modeArrowPosition: NSLayoutConstraint!
     
     @IBOutlet weak var selectConerRadius: NSPopUpButton!
+    @IBOutlet weak var fontButton: NSPopUpButton!
+    @IBOutlet weak var fontSizeSlider: NSSlider!
+    @IBOutlet weak var fontSizeLabel: NSTextField!
     
     
 //    //控制顯示
@@ -62,10 +65,17 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
  
-        // 設定 FontManager 的 target
-        NSFontManager.shared.target = self
+
+        setFontButton()
         
+
+        
+        //設定字型大小
+        fontSizeSlider.target = self
+        fontSizeSlider.isContinuous = true
+        fontSizeSlider.action = #selector(fontSizeChanged(_:))
         
         //顯示比例按制
         ratioSlider.target = self
@@ -95,23 +105,44 @@ class ViewController: NSViewController {
         }
         
         documentView.endAction = {
-//            let controlViewRect = NSRect(x: self.documentView.newView.frame.minX - 20,
-//                                 y: self.documentView.newView.frame.minY - 20,
-//                                 width: self.documentView.newView.frame.width + 40,
-//                                 height: self.documentView.newView.frame.height + 40)
-//
-//            cView.componentType = self.documentView.editMode
-//
-//            self.documentView.addSubview(cView)
-     
             self.components.append(self.documentView.getComponet(ratio: self.ratioSlider.doubleValue))
-            
             self.reDrawComponts()
             //回傳物件View
             print($0)
             
         }
      
+    }
+    
+    func setFontButton(){
+        //設定選字型
+        let fontMenu = NSMenu()
+        // 加入 System Font 項目
+        let systemFont = NSFont.systemFont(ofSize: 14)
+        let systemAttrTitle = NSAttributedString(string: "System Font", attributes: [.font: systemFont])
+
+        let systemItem = NSMenuItem()
+        systemItem.attributedTitle = systemAttrTitle
+        systemItem.representedObject = systemFont
+        systemItem.action = #selector(fontSelected(_:))
+        systemItem.target = self
+
+        fontMenu.addItem(systemItem)
+
+        // 加入其他字型家族
+        for family in NSFontManager.shared.availableFontFamilies {
+            guard let font = NSFont(name: family, size: 14) else { continue }
+            let attrTitle = NSAttributedString(string: family, attributes: [.font: font])
+
+            let item = NSMenuItem()
+            item.attributedTitle = attrTitle
+            item.representedObject = font
+            item.action = #selector(fontSelected(_:))
+            item.target = self
+
+            fontMenu.addItem(item)
+        }
+        fontButton.menu = fontMenu
     }
     
     func reDrawComponts(){
@@ -158,18 +189,16 @@ class ViewController: NSViewController {
             name: NSWindow.didResizeNotification,
             object: self.window
         )
-      
-        
     }
     
 
-
-    @IBAction func callFontSetting(_ sender: Any) {
-        NSFontManager.shared.orderFrontFontPanel(self)
+    @IBAction func fontSizeAction(_ sender: Any) {
+        fontSizeChanged(sender)
     }
-
-    @objc func changeFont(_ sender: Any?) {
-        documentView.font = NSFontManager.shared.selectedFont ?? NSFont.systemFont(ofSize: 14)
+    @objc func fontSizeChanged(_ sender: Any){
+        fontSizeLabel.stringValue = "\(fontSizeSlider.intValue)"
+        documentView.font = NSFont(name:documentView.font.fontName, size: CGFloat(fontSizeSlider.intValue))
+        ?? NSFont.systemFont(ofSize: CGFloat(fontSizeSlider.intValue))
     }
     
 
@@ -220,6 +249,12 @@ class ViewController: NSViewController {
         documentView.cornerRadius = conerRadiusSelected[selectConerRadius.indexOfSelectedItem]
     }
     
+    
+    @objc func fontSelected(_ sender: NSMenuItem) {
+        guard let font = sender.representedObject as? NSFont else { return }
+        documentView.font = NSFont(name: font.fontName, size: CGFloat(fontSizeSlider.intValue)) ?? documentView.font
+        print("選擇字型：\(font.fontName), 大小：\(documentView.font.pointSize)")
+    }
     
     
     
@@ -280,10 +315,10 @@ class ViewController: NSViewController {
     }
     
     
+    //修改圖片大小
     func resizedImage(_ image: NSImage, scale: Double) -> NSImage? {
         let newSize = NSSize(width: image.size.width * scale,
                              height: image.size.height * scale)
-
         let newImage = NSImage(size: newSize)
         newImage.lockFocus()
         image.draw(in: NSRect(origin: .zero, size: newSize),
