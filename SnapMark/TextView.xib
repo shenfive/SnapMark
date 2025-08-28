@@ -8,6 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TextView" customModule="SnapMark" customModuleProvider="target">
             <connections>
+                <outlet property="endBox" destination="uB0-h4-0B5" id="VYf-ff-EwW"/>
+                <outlet property="frontBox" destination="JSj-gu-mo4" id="mmv-do-V2S"/>
                 <outlet property="textField" destination="Vd8-pS-TGq" id="t4H-tc-lh2"/>
             </connections>
         </customObject>

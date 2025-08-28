@@ -837,7 +837,7 @@
                                             <constraint firstAttribute="width" constant="40" id="cju-Pd-V4r"/>
                                             <constraint firstAttribute="height" constant="40" id="dEc-1S-eHV"/>
                                         </constraints>
-                                        <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="color" red="1" green="0.1857388616" blue="0.57339501380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="changeColor:" target="XfG-lQ-9wD" id="9pw-OV-uuo"/>
                                         </connections>
@@ -887,7 +887,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="nan-r5-jGe" id="rKK-Jd-dWL">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="menu"/>
+                                            <font key="font" metaFont="message"/>
                                             <menu key="menu" id="tRg-Yb-lww">
                                                 <items>
                                                     <menuItem title="Item 1" state="on" id="nan-r5-jGe"/>
@@ -900,17 +900,17 @@
                                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7MF-he-Kq0">
                                         <rect key="frame" x="294" y="-6" width="123" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <sliderCell key="cell" state="on" alignment="left" minValue="7" maxValue="72" doubleValue="14" tickMarkPosition="above" sliderType="linear" id="EMb-Cx-2M3">
-                                            <font key="font" metaFont="system" size="12"/>
+                                        <sliderCell key="cell" state="on" alignment="left" minValue="7" maxValue="72" doubleValue="20" tickMarkPosition="above" sliderType="linear" id="EMb-Cx-2M3">
+                                            <font key="font" metaFont="cellTitle"/>
                                         </sliderCell>
                                         <connections>
                                             <action selector="fontSizeAction:" target="XfG-lQ-9wD" id="eYu-EE-Obd"/>
                                         </connections>
                                     </slider>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-G7-1ke">
-                                        <rect key="frame" x="433" y="4" width="19" height="16"/>
+                                        <rect key="frame" x="433" y="4" width="20" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="14" id="Gpj-oJ-Ecs">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="20" id="Gpj-oJ-Ecs">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1008,7 +1008,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="130" id="pnt-6V-L3B"/>
                                         </constraints>
-                                        <sliderCell key="cell" state="on" alignment="left" minValue="0.10000000000000001" maxValue="3" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="59h-MC-Xkp">
+                                        <sliderCell key="cell" state="on" alignment="left" minValue="0.25" maxValue="4" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="59h-MC-Xkp">
                                             <font key="font" metaFont="cellTitle"/>
                                         </sliderCell>
                                     </slider>
@@ -1044,6 +1044,9 @@
                                             <constraint firstAttribute="height" constant="40" id="6Dw-9T-U85"/>
                                             <constraint firstAttribute="width" constant="40" id="Oz4-Nb-jmk"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="setFitWindowRatio:" target="XfG-lQ-9wD" id="avw-UO-lPk"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>

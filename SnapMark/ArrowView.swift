@@ -59,7 +59,7 @@ class ArrowView: NSView {
                 )
             }
             
-            let arrowLength: CGFloat = min(length, 15 + boardWidth * ratio)
+            let arrowLength: CGFloat = min(length, (15 + boardWidth) * ratio)
             let arrowAngle: CGFloat = 30.0 * (.pi / 180.0) // 60° in radians
             
             let leftVector = rotatedVector(angle: arrowAngle)
@@ -74,16 +74,7 @@ class ArrowView: NSView {
                 x: lineEndPoint.x - arrowLength * rightVector.x,
                 y: lineEndPoint.y - arrowLength * rightVector.y
             )
-            
-//            // 畫箭頭線
-//            let arrowPath = NSBezierPath()
-//            arrowPath.move(to: lineEndPoint)
-//            arrowPath.line(to: leftPoint)
-//            arrowPath.move(to: lineEndPoint)
-//            arrowPath.line(to: rightPoint)
-//            arrowPath.lineWidth = boardWidth * ratio
-//            arrowPath.stroke()
-            
+                        
             
             // 箭頭（實心三角形）
             let arrowPath = NSBezierPath()
@@ -94,7 +85,6 @@ class ArrowView: NSView {
 
             color.setFill()
             arrowPath.fill()
-            
             
             let inset: CGFloat = boardWidth * ratio
             let adjustedEndPoint = CGPoint(

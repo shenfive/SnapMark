@@ -22,6 +22,8 @@ struct Component{
     var boardWidth:Double
     var cornerRadius:Double
     var text:String = ""
+    var fontName:String = ""
+    var fontSize:CGFloat = 14.0
     var isSelected = false
     func framRect(ratio:Double) -> NSRect{
         let x = min(startPoint.x,endPoint.x) * ratio

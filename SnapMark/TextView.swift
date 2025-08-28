@@ -10,10 +10,26 @@ import Cocoa
 class TextView: NSView {
 
     @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var frontBox: NSBox!
+    @IBOutlet weak var endBox: NSBox!
     
     
     var startPoint:NSPoint = .zero
+    var color:NSColor = NSColor.black
+    var ratio:CGFloat = 1
     
+    var enableEdit:Bool  {
+        get{
+            return frontBox.isHidden
+        }
+        set{
+            frontBox.isHidden = !newValue
+            endBox.isHidden = !newValue
+            textField.isEditable = newValue
+            textField.isSelectable = true 
+        }
+
+    }
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -25,13 +41,24 @@ class TextView: NSView {
     func fitSize(){
         print("string\(textField.stringValue)")
         textField.sizeToFit()
+        textField.textColor = color
         let newSize = textField.frame.size
         self.frame.size = NSSize(width: newSize.width + 20,
                                  height: newSize.height + 20)
     }
     
+    func setEditMode(on:Bool){
+        
+    }
+    
     func setFont(font:NSFont){
-        textField.font = font
+        textField.textColor = color
+        if let theFont = NSFont(name: font.fontName, size: font.pointSize * ratio){
+            textField.font = theFont
+        }else{
+            textField.font = NSFont.systemFont(ofSize: font.pointSize * ratio)
+        }
+        fitSize()
     }
     
     func setTextDelegate(){

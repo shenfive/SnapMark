@@ -58,7 +58,7 @@ class ViewController: NSViewController {
     let boardWidthSelected = [2.0,5.0,10.0]
 
     //cornerRadius
-    let conerRadiusSelected = [0.0,5.0,10.0,20.0,100000.1]
+    let conerRadiusSelected = [0.0,5.0,10.0,20.0,100000.1] //最後一項是取半徑，即藥丸形
     
     
     
@@ -67,7 +67,7 @@ class ViewController: NSViewController {
         
 
  
-
+        //設定字型選擇器
         setFontButton()
         
 
@@ -85,7 +85,7 @@ class ViewController: NSViewController {
         //編輯區關連
         documentView.theImageView = self.theImageView
         documentView.color = colorWell.color
-        documentView.lineWidth = boardWidthSelected[selectLineButton.indexOfSelectedItem]
+        documentView.boardWidth = boardWidthSelected[selectLineButton.indexOfSelectedItem]
         documentView.cornerRadius = conerRadiusSelected[selectConerRadius.indexOfSelectedItem]
         documentView.editMode = .ARROW
 
@@ -95,7 +95,7 @@ class ViewController: NSViewController {
             setImage()
         }
 
-        
+        //新增物件時的動作
         documentView.startAction = {
             self.documentView.subviews.forEach { view in
                 if view.isKind(of: ControlView.self){
@@ -104,16 +104,96 @@ class ViewController: NSViewController {
             }
         }
         
+        //完成新增物件時的動作
         documentView.endAction = {
             self.components.append(self.documentView.getComponet(ratio: self.ratioSlider.doubleValue))
             self.reDrawComponts()
             //回傳物件View
             print($0)
-            
         }
      
     }
     
+    
+    
+    func reDrawComponts(){
+        self.documentView.subviews.forEach {
+            if $0.isKind(of: ArrowView.self) { $0.removeFromSuperview() }
+            if $0.isKind(of: BoxView.self) { $0.removeFromSuperview() }
+            if $0.isKind(of: TextView.self) { $0.removeFromSuperview() }
+        }
+        components.forEach { component in
+            switch component.componentType{
+            case .ARROW:
+                let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
+                arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+                arrowView.ratio = ratioSlider.doubleValue
+                arrowView.color = component.color
+                self.documentView.addSubview(arrowView)
+                break
+            case .BOX:
+                let boxView = BoxView(frame: component.framRect(ratio: ratioSlider.doubleValue))
+                boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+                boxView.ratio = ratioSlider.doubleValue
+                boxView.color = component.color
+                self.documentView.addSubview(boxView)
+                break
+            case .TEXT:
+                let textView = TextView(frame: component.framRect(ratio: ratioSlider.doubleValue))
+                textView.ratio = ratioSlider.doubleValue
+                textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
+                textView.color = component.color
+                textView.enableEdit = false
+                textView.fitSize()
+                self.documentView.addSubview(textView)
+            }
+        }
+    }
+
+    
+
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        guard let window = view.window else {return}
+        self.window = window
+        view.window?.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
+        //抓取外部視窗動作
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(windowDidResize(_:)),
+            name: NSWindow.didResizeNotification,
+            object: self.window
+        )
+    }
+    
+
+
+    //MARK: 字形相關
+    
+    //設定字型大小動作
+    @objc func fontSizeChanged(_ sender: Any){
+        fontSizeLabel.stringValue = "\(fontSizeSlider.intValue)"
+        setFont()
+    }
+    
+    //選擇字形選單動作
+    @objc func fontSelected(_ sender: NSMenuItem) {
+        guard let font = sender.representedObject as? NSFont else { return }
+        print("選擇字型：\(font.fontName), 大小：\(fontSizeSlider.intValue)")
+        setFont()
+    }
+    
+    //實作設定字形
+    func setFont(){
+        if let font = NSFont(name: fontButton.selectedItem?.title ?? "",
+                             size: CGFloat(fontSizeSlider.doubleValue)){
+            documentView.font = font
+            documentView.redraw()
+        }
+    }
+    
+    //設定字形選單
     func setFontButton(){
         //設定選字型
         let fontMenu = NSMenu()
@@ -144,72 +224,19 @@ class ViewController: NSViewController {
         }
         fontButton.menu = fontMenu
     }
-    
-    func reDrawComponts(){
-        self.documentView.subviews.forEach {
-            if $0.isKind(of: ArrowView.self) { $0.removeFromSuperview() }
-            if $0.isKind(of: BoxView.self) { $0.removeFromSuperview() }
-        }
-        components.forEach { component in
-            switch component.componentType{
-            case .ARROW:
-                let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
-                arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-                arrowView.ratio = ratioSlider.doubleValue
-                self.documentView.addSubview(arrowView)
-                break
-            case .BOX:
-                let boxView = BoxView(frame: component.framRect(ratio: ratioSlider.doubleValue))
-                boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-                boxView.ratio = ratioSlider.doubleValue
-                self.documentView.addSubview(boxView)
-                break
-            case .TEXT:
-                break
-            }
-        }
-    }
 
     
-    //外部視窗大小改變
-    @objc func windowDidResize(_ notification: Notification) {
-        setImage()
-      
-    }
-
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        guard let window = view.window else {return}
-        self.window = window
-        view.window?.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
-        //抓取外部視窗動作
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(windowDidResize(_:)),
-            name: NSWindow.didResizeNotification,
-            object: self.window
-        )
-    }
-    
-
-    @IBAction func fontSizeAction(_ sender: Any) {
-        fontSizeChanged(sender)
-    }
-    @objc func fontSizeChanged(_ sender: Any){
-        fontSizeLabel.stringValue = "\(fontSizeSlider.intValue)"
-        documentView.font = NSFont(name:documentView.font.fontName, size: CGFloat(fontSizeSlider.intValue))
-        ?? NSFont.systemFont(ofSize: CGFloat(fontSizeSlider.intValue))
-    }
     
 
     
     //設定顏色
     @IBAction func changeColor(_ sender: Any) {
         documentView.color = colorWell.color
+        documentView.redraw()
     }
     
     
-    //設定顯示比例
+    //MARK:設定顯示比例
     
     //符合目前視窗
     @IBAction func setFitWindowRatio(_ sender: Any) {
@@ -232,38 +259,39 @@ class ViewController: NSViewController {
         documentView.ratio = 1.0
         ratioSliderDidChange(ratioSlider)
     }
-    //依 Slider 設定
+    //依 Slider 設定編輯區大小
     @objc func ratioSliderDidChange(_ sender:NSSlider){
         let value = sender.doubleValue * 100
         ratioLabel.stringValue = String(format: "%.1f%%", value).replacingOccurrences(of: ".0%", with: "%")
         documentView.ratio = sender.doubleValue
         setImage()
+        documentView.redraw()
     }
     
     
     @IBAction func changeLineWidth(_ sender: Any) {
-        documentView.lineWidth = boardWidthSelected[selectLineButton.indexOfSelectedItem]
+        documentView.boardWidth = boardWidthSelected[selectLineButton.indexOfSelectedItem]
+        documentView.redraw()
     }
     
+    //選擇圓角
     @IBAction func changeConerRadius(_ sender: Any) {
         documentView.cornerRadius = conerRadiusSelected[selectConerRadius.indexOfSelectedItem]
+        documentView.redraw()
     }
     
-    
-    @objc func fontSelected(_ sender: NSMenuItem) {
-        guard let font = sender.representedObject as? NSFont else { return }
-        documentView.font = NSFont(name: font.fontName, size: CGFloat(fontSizeSlider.intValue)) ?? documentView.font
-        print("選擇字型：\(font.fontName), 大小：\(documentView.font.pointSize)")
-    }
+
     
     
     
+
+    //重繪底圖
     func setImage(){
         if let newImage = resizedImage(editingImage, scale: ratioSlider.doubleValue){
             self.contentWidth.constant = min(self.contentContainerView.frame.width - 16, newImage.size.width - 1) + 16
             self.contentHeight.constant = min(self.contentContainerView.frame.height - 16, newImage.size.height - 1) + 16
             self.setModeDisplayUI()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.001){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01){
                 self.documentView.frame.size = newImage.size
                 self.theImageView.image = newImage
                 self.theImageView.frame = self.documentView.bounds
@@ -279,7 +307,7 @@ class ViewController: NSViewController {
             self?.editingImage = image
             self?.components.removeAll()
             self?.setImage()
-            
+            self?.setFitWindowRatio(image)
         }
         controller?.startCapture(from: mainWindow)
     }
@@ -289,7 +317,6 @@ class ViewController: NSViewController {
         documentView.editMode = .ARROW
         setModeDisplayUI()
     }
-    
     @IBAction func setTextMode(_ sender: Any) {
 
         documentView.editMode = .TEXT
@@ -300,6 +327,7 @@ class ViewController: NSViewController {
         setModeDisplayUI()
     }
     
+    //設定編輯模式
     func setModeDisplayUI(){
         var sender = NSButton()
         switch documentView.editMode {
@@ -310,8 +338,12 @@ class ViewController: NSViewController {
         case .BOX:
             sender = boxModeButton
         }
-        
-        modeArrowPosition.constant = sender.frame.minY + 20
+        //箭頭移動的動畫
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.25
+            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            modeArrowPosition.animator().constant = sender.frame.minY + 20
+        }
     }
     
     
@@ -329,5 +361,8 @@ class ViewController: NSViewController {
         return newImage
     }
 
-    
+    //外部視窗大小改變
+    @objc func windowDidResize(_ notification: Notification) {
+        setImage()
+    }
 }

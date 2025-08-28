@@ -18,10 +18,10 @@ class SnapEditView: NSView {
     var boxView:BoxView = BoxView()
     var textView:TextView = TextView()
     var color:NSColor!
-    var lineWidth = 2.0
+    var boardWidth = 2.0
     var cornerRadius = 8.0
     var ratio = 1.0
-    var font = NSFont.systemFont(ofSize: 14)
+    var font = NSFont.systemFont(ofSize: 14) 
     
     var endAction:((NSView)->())? = nil
     var startAction:(()->())? = nil
@@ -39,20 +39,20 @@ class SnapEditView: NSView {
         switch editMode {
         case .TEXT:
             textView.frame.origin = newView.frame.origin
+            textView.color = color
+            textView.ratio = ratio
             textView.setFont(font: font)
-            textView.textField.textColor = color
-            textView.fitSize()
             addSubview(textView, positioned: .above, relativeTo: nil)
         case .ARROW:
             arrowView.ratio = ratio
             arrowView.frame = newView.bounds
             arrowView.color = color
-            arrowView.boardWidth = lineWidth
+            arrowView.boardWidth = boardWidth
             arrowView.ratio = ratio
             newView.addSubview(arrowView)
         case .BOX:
             boxView.color = color
-            boxView.boardWidth = lineWidth
+            boxView.boardWidth = boardWidth
             boxView.ratio = ratio
             boxView.frame = newView.bounds
             boxView.cornerRadius = cornerRadius
@@ -65,7 +65,7 @@ class SnapEditView: NSView {
         newView.layer?.borderColor = .white
         switch editMode {
         case .TEXT:
-            newView.layer?.borderWidth = 1
+            newView.layer?.borderWidth = 0
         case .ARROW:
             newView.layer?.borderWidth = 1
         case .BOX:
@@ -79,6 +79,22 @@ class SnapEditView: NSView {
         
         addSubview(newView, positioned: .above, relativeTo: nil)
         
+    }
+    
+    func redraw(){
+        switch editMode {
+        case .TEXT:
+            textView.ratio = ratio
+            textView.color = color
+            textView.setFont(font: font)
+        case .ARROW:
+            arrowView.color = color
+            arrowView.boardWidth = boardWidth
+        case .BOX:
+            boxView.color = color
+            boxView.cornerRadius = cornerRadius
+            boxView.boardWidth = boardWidth
+        }  
     }
 
     override func mouseDragged(with event: NSEvent) {
@@ -96,7 +112,7 @@ class SnapEditView: NSView {
         newView.frame = NSRect(x: originX, y: originY, width: width, height: height)
         switch editMode {
         case .TEXT:
-            break
+            textView.frame.origin = endPoint
         case .ARROW:
             arrowView.startPoint = startPoint
             arrowView.endPoint = endPoint
@@ -114,7 +130,8 @@ class SnapEditView: NSView {
         endPoint = convert(event.locationInWindow, from: nil)
         switch editMode {
         case .TEXT:
-            break
+            endAction?(textView)
+            arrowView.removeFromSuperview()
         case .ARROW:
             endAction?(arrowView)
             arrowView.removeFromSuperview()
@@ -134,24 +151,27 @@ class SnapEditView: NSView {
         switch editMode {
         case .TEXT:
             return Component(componentType: .TEXT,
-                             startPoint: NSPoint(x: startPoint.x / ratio, y: startPoint.y / ratio) ,
+                             startPoint: NSPoint(x: endPoint.x / ratio, y: endPoint.y / ratio) ,
                              endPoint: NSPoint(x: endPoint.x / ratio, y: endPoint.y / ratio) ,
                              color: color,
-                             boardWidth: lineWidth,
-                             cornerRadius: cornerRadius)
+                             boardWidth: boardWidth,
+                             cornerRadius: cornerRadius,
+                             text: textView.textField.stringValue,
+                             fontName: font.fontName,
+                             fontSize: font.pointSize)
         case .ARROW:
             return Component(componentType: .ARROW,
                              startPoint: NSPoint(x: startPoint.x / ratio, y: startPoint.y / ratio) ,
                              endPoint: NSPoint(x: endPoint.x / ratio, y: endPoint.y / ratio) ,
                              color: color,
-                             boardWidth: lineWidth,
+                             boardWidth: boardWidth,
                              cornerRadius: cornerRadius)
         case .BOX:
             return Component(componentType: .BOX,
                              startPoint: NSPoint(x: startPoint.x / ratio, y: startPoint.y / ratio) ,
                              endPoint: NSPoint(x: endPoint.x / ratio, y: endPoint.y / ratio) ,
                              color: color,
-                             boardWidth: lineWidth,
+                             boardWidth: boardWidth,
                              cornerRadius: cornerRadius)
         }
 
