@@ -36,6 +36,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var fontButton: NSPopUpButton!
     @IBOutlet weak var fontSizeSlider: NSSlider!
     @IBOutlet weak var fontSizeLabel: NSTextField!
+    @IBOutlet weak var fontSampleLabel: NSTextField!
     
     
 //    //控制顯示
@@ -189,6 +190,8 @@ class ViewController: NSViewController {
         if let font = NSFont(name: fontButton.selectedItem?.title ?? "",
                              size: CGFloat(fontSizeSlider.doubleValue)){
             documentView.font = font
+            fontSampleLabel.font = font
+            fontSampleLabel.textColor = colorWell.color
             documentView.redraw()
         }
     }
@@ -307,7 +310,9 @@ class ViewController: NSViewController {
             self?.editingImage = image
             self?.components.removeAll()
             self?.setImage()
-            self?.setFitWindowRatio(image)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                self?.setFitWindowRatio(image)
+            }
         }
         controller?.startCapture(from: mainWindow)
     }
