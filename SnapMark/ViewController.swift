@@ -38,6 +38,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var fontSizeLabel: NSTextField!
     @IBOutlet weak var fontSampleLabel: NSTextField!
     
+    @IBOutlet weak var itemCollectionView: NSCollectionView!
     
 //    //控制顯示
 //    let cView = ControlView()
@@ -61,12 +62,31 @@ class ViewController: NSViewController {
     //cornerRadius
     let conerRadiusSelected = [0.0,5.0,10.0,20.0,100000.1] //最後一項是取半徑，即藥丸形
     
+    //Cell Size
+    let cellSize = NSSize(width: 76.0 / 3.0 * 4.0, height: 76.0)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
 
+        //
+        itemCollectionView.delegate = self
+        itemCollectionView.dataSource = self
+        let flowLayout = NSCollectionViewFlowLayout()
+        flowLayout.itemSize = cellSize
+        flowLayout.minimumInteritemSpacing = 10
+        flowLayout.minimumLineSpacing = 10
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.sectionInset = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+
+        itemCollectionView.collectionViewLayout = flowLayout
+        itemCollectionView.isSelectable = true
+        itemCollectionView.enclosingScrollView?.hasHorizontalScroller = true
+        itemCollectionView.enclosingScrollView?.hasVerticalScroller = false
+
+        
+        
  
         //設定字型選擇器
         setFontButton()
@@ -109,6 +129,7 @@ class ViewController: NSViewController {
         documentView.endAction = {
             self.components.append(self.documentView.getComponet(ratio: self.ratioSlider.doubleValue))
             self.reDrawComponts()
+            self.itemCollectionView.reloadData()
             //回傳物件View
             print($0)
         }
@@ -370,4 +391,121 @@ class ViewController: NSViewController {
     @objc func windowDidResize(_ notification: Notification) {
         setImage()
     }
+    
+    
+    
+//    //計算 aspectFit
+//    func aspectFitRect(contentRect: NSRect, containerRect: NSRect) -> NSRect {
+//        let contentSize = contentRect.size
+//        let containerSize = containerRect.size
+//
+//        let contentAspect = contentSize.width / contentSize.height
+//        let containerAspect = containerSize.width / containerSize.height
+//
+//        var fitSize: NSSize
+//
+//        if contentAspect > containerAspect {
+//            // 限制寬度
+//            fitSize = NSSize(width: containerSize.width,
+//                             height: containerSize.width / contentAspect)
+//        } else {
+//            // 限制高度
+//            fitSize = NSSize(width: containerSize.height * contentAspect,
+//                             height: containerSize.height)
+//        }
+//
+//        // 計算置中位置
+//        let originX = containerRect.origin.x + (containerSize.width - fitSize.width) / 2
+//        let originY = containerRect.origin.y + (containerSize.height - fitSize.height) / 2
+//        
+//        let newRect =  NSRect(origin: NSPoint(x: originX, y: originY), size: fitSize)
+//
+//        return newRect
+//    }
+    /// 計算 aspectFit 並回傳 rect 與縮放比例
+    func aspectFitRectAndScale(contentRect: NSRect, containerRect: NSRect) -> (rect: NSRect, scale: CGFloat) {
+        let contentSize = contentRect.size
+        let containerSize = containerRect.size
+
+        let contentAspect = contentSize.width / contentSize.height
+        let containerAspect = containerSize.width / containerSize.height
+
+        var fitSize: NSSize
+        var scale: CGFloat
+
+        if contentAspect > containerAspect {
+            // 限制寬度
+            scale = containerSize.width / contentSize.width
+            fitSize = NSSize(width: containerSize.width,
+                             height: contentSize.height * scale)
+        } else {
+            // 限制高度
+            scale = containerSize.height / contentSize.height
+            fitSize = NSSize(width: contentSize.width * scale,
+                             height: containerSize.height)
+        }
+
+        // 計算置中位置
+        let originX = containerRect.origin.x + (containerSize.width - fitSize.width) / 2
+        let originY = containerRect.origin.y + (containerSize.height - fitSize.height) / 2
+
+        let newRect = NSRect(origin: NSPoint(x: originX, y: originY), size: fitSize)
+        
+        return (rect: newRect, scale: scale)
+    }
+
+}
+
+extension ViewController:NSCollectionViewDelegate,NSCollectionViewDataSource{
+    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+        components.count
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+        let component = components[indexPath.item]
+        let item = ComponentViewItem(nibName: "ComponentViewItem", bundle: nil)
+        item.view.bounds.size = cellSize
+        item.itemBox.bounds.size = cellSize
+
+        switch component.componentType{
+        case .ARROW:
+            let arrowView = ArrowView(frame: component.framRect(ratio: 1))
+            arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+            arrowView.color = component.color
+//            arrowView.frame = aspectFitRect(contentRect: arrowView.frame, containerRect: item.view.bounds)
+            let newVeiwSeting = aspectFitRectAndScale(contentRect: arrowView.frame, containerRect: item.preView.bounds)
+            arrowView.ratio = newVeiwSeting.scale
+            arrowView.frame = newVeiwSeting.rect
+            print("arr:\(arrowView.frame)")
+            item.preView.addSubview(arrowView)
+        case .BOX:
+            let boxView = BoxView(frame: component.framRect(ratio: 1))
+            boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+            boxView.color = component.color
+            let newVeiwSeting = aspectFitRectAndScale(contentRect: boxView.frame, containerRect: item.preView.bounds)
+            boxView.ratio = newVeiwSeting.scale
+            boxView.frame = newVeiwSeting.rect
+         
+            item.preView.addSubview(boxView)
+            break
+        case .TEXT:
+            let textView = TextView(frame: component.framRect(ratio: 1))
+            textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
+            textView.color = component.color
+            textView.enableEdit = false
+            textView.fitSize()
+//            textView.frame = aspectFitRect(contentRect:textView.frame, containerRect:item.view.bounds)
+            let newVeiwSeting = aspectFitRectAndScale(contentRect: textView.frame, containerRect: item.preView.bounds)
+            textView.ratio = newVeiwSeting.scale
+            textView.frame = newVeiwSeting.rect
+            
+            
+            item.preView.addSubview(textView)
+        }
+        return item
+    }
+    
+    
+
+    
 }

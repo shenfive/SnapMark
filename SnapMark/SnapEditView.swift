@@ -133,10 +133,14 @@ class SnapEditView: NSView {
             endAction?(textView)
             arrowView.removeFromSuperview()
         case .ARROW:
-            endAction?(arrowView)
+            if arrowView.frame.width > 5 && arrowView.frame.height > 5{
+                endAction?(arrowView)
+            }
             arrowView.removeFromSuperview()
         case .BOX:
-            endAction?(boxView)
+            if boxView.frame.width > 4 && boxView.frame.height > 4{
+                endAction?(boxView)
+            }
             boxView.removeFromSuperview()
         }
 //        newView.borderColor = NSColor.clear
