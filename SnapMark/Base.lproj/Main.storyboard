@@ -689,27 +689,62 @@
                     <window key="window" title="SnapMark" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="700" height="270"/>
+                        <rect key="contentRect" x="196" y="240" width="600" height="400"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <value key="minSize" type="size" width="700" height="400"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
+                        <segue destination="R18-HF-aZU" kind="relationship" relationship="window.shadowedContentViewController" id="Ilb-ZF-zZ2"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="247"/>
         </scene>
-        <!--View Controller-->
+        <!--Launcher View Controller-->
+        <scene sceneID="9pW-iY-L9B">
+            <objects>
+                <viewController id="R18-HF-aZU" customClass="LauncherViewController" customModule="SnapMark" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="w95-pC-OM1">
+                        <rect key="frame" x="0.0" y="0.0" width="700" height="385"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="KAw-Zi-1cY">
+                                <rect key="frame" x="160" y="140" width="100" height="107"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="character.book.closed.fill.zh" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yPa-NO-iYR">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="IXp-eh-hEk"/>
+                                    <constraint firstAttribute="height" constant="100" id="p8y-KZ-sZE"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="action:" target="R18-HF-aZU" id="7fq-1W-Qf5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="KAw-Zi-1cY" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="Mx3-9u-2qm"/>
+                            <constraint firstItem="KAw-Zi-1cY" firstAttribute="centerX" secondItem="w95-pC-OM1" secondAttribute="centerX" multiplier="0.6" id="faX-As-nWU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="XfG-lQ-9wD" kind="show" identifier="goMain" id="KTk-Lg-QAg"/>
+                    </connections>
+                </viewController>
+                <customObject id="QOc-qu-mXt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="932" y="239.5"/>
+        </scene>
+        <!--Main View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="SnapMark" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="MainViewController" customModule="SnapMark" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="801" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="900" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView appearanceType="aqua" translatesAutoresizingMaskIntoConstraints="NO" id="cjk-N8-lLZ">
@@ -828,12 +863,12 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="u2x-4v-ZxW">
-                                <rect key="frame" x="80" y="500" width="721" height="100"/>
+                                <rect key="frame" x="80" y="500" width="820" height="100"/>
                                 <subviews>
                                     <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="sXZ-cJ-0Cz">
-                                        <rect key="frame" x="0.0" y="0.0" width="721" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="820" height="100"/>
                                         <view key="contentView" id="KdK-sj-758">
-                                            <rect key="frame" x="1" y="1" width="719" height="98"/>
+                                            <rect key="frame" x="1" y="1" width="818" height="98"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <box title="Ratio" translatesAutoresizingMaskIntoConstraints="NO" id="pBl-pJ-8IF">
@@ -1026,9 +1061,6 @@
                                                                 <sliderCell key="cell" state="on" alignment="left" minValue="10" maxValue="72" doubleValue="20" tickMarkPosition="above" sliderType="linear" id="EMb-Cx-2M3">
                                                                     <font key="font" metaFont="cellTitle"/>
                                                                 </sliderCell>
-                                                                <connections>
-                                                                    <action selector="fontSizeAction:" target="XfG-lQ-9wD" id="eYu-EE-Obd"/>
-                                                                </connections>
                                                             </slider>
                                                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-G7-1ke">
                                                                 <rect key="frame" x="102" y="21" width="20" height="16"/>
@@ -1102,18 +1134,18 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="fS6-gH-cjm">
-                                <rect key="frame" x="80" y="120" width="721" height="380"/>
+                                <rect key="frame" x="80" y="120" width="820" height="380"/>
                                 <subviews>
                                     <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="DwW-UX-xqM">
-                                        <rect key="frame" x="0.0" y="0.0" width="721" height="380"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="820" height="380"/>
                                         <view key="contentView" id="3a6-kO-THO">
-                                            <rect key="frame" x="1" y="1" width="719" height="378"/>
+                                            <rect key="frame" x="1" y="1" width="818" height="378"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <color key="fillColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </box>
                                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32J-s3-3Zy">
-                                        <rect key="frame" x="233" y="62" width="256" height="256"/>
+                                        <rect key="frame" x="282" y="62" width="256" height="256"/>
                                         <clipView key="contentView" id="ddn-6g-BX3">
                                             <rect key="frame" x="0.0" y="0.0" width="241" height="241"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1155,12 +1187,12 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="m9Q-4i-xPk">
-                                <rect key="frame" x="0.0" y="0.0" width="801" height="120"/>
+                                <rect key="frame" x="0.0" y="0.0" width="900" height="120"/>
                                 <subviews>
                                     <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="cAS-Ca-q2s">
-                                        <rect key="frame" x="0.0" y="0.0" width="801" height="120"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="900" height="120"/>
                                         <view key="contentView" id="XeK-R5-w38">
-                                            <rect key="frame" x="1" y="1" width="799" height="118"/>
+                                            <rect key="frame" x="1" y="1" width="898" height="118"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="39Q-yB-qvx">
@@ -1175,19 +1207,19 @@
                                                     <color key="fillColor" name="systemCyanColor" catalog="System" colorSpace="catalog"/>
                                                 </box>
                                                 <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="CN9-Mq-KUA">
-                                                    <rect key="frame" x="100" y="0.0" width="699" height="118"/>
+                                                    <rect key="frame" x="100" y="0.0" width="798" height="118"/>
                                                     <view key="contentView" id="Hpc-Gk-gkH">
-                                                        <rect key="frame" x="1" y="1" width="697" height="116"/>
+                                                        <rect key="frame" x="1" y="1" width="796" height="116"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAx-vg-vUR">
-                                                                <rect key="frame" x="20" y="11" width="657" height="95"/>
+                                                            <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAx-vg-vUR">
+                                                                <rect key="frame" x="20" y="11" width="756" height="95"/>
                                                                 <clipView key="contentView" id="2vO-3K-l5F">
-                                                                    <rect key="frame" x="1" y="1" width="655" height="93"/>
+                                                                    <rect key="frame" x="1" y="1" width="754" height="93"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <collectionView id="Lmk-dl-dQK">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="655" height="158"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="754" height="93"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="yJc-Bg-j71">
                                                                                 <size key="itemSize" width="50" height="50"/>
@@ -1281,12 +1313,13 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75.5" y="927"/>
+            <point key="canvasLocation" x="680" y="817"/>
         </scene>
     </scenes>
     <resources>
         <image name="Icon_Add_Frame_1_1_Normal" width="40" height="40"/>
         <image name="arrow.up.forward" catalog="system" width="14" height="12"/>
+        <image name="character.book.closed.fill.zh" catalog="system" width="15" height="16"/>
         <image name="character.textbox" catalog="system" width="20" height="14"/>
         <image name="chevron.compact.forward" catalog="system" width="8" height="17"/>
         <image name="dot.scope.display" catalog="system" width="24" height="19"/>

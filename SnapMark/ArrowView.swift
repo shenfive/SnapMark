@@ -16,9 +16,6 @@ class ArrowView: NSView {
     var color:NSColor = NSColor.systemRed
     var ratio:Double = 1
 
-    
-    
-    
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         
@@ -33,12 +30,6 @@ class ArrowView: NSView {
         
         lineStartPoint = CGPoint(x:(dx >= 0 ? 0:bounds.width) , y:( dy >= 0 ? 0:bounds.height))
         lineEndPoint = CGPoint(x: (dx >= 0 ?bounds.width:0), y: (dy >= 0 ? bounds.height:0) )
-
-        
-
-        
-        
-        
         
         // 箭頭方向向量
         let adx = lineEndPoint.x - lineStartPoint.x
@@ -98,12 +89,7 @@ class ArrowView: NSView {
             path.line(to: adjustedEndPoint)
             path.lineWidth = boardWidth * ratio
             path.stroke()
-            
-            
         }
-        
-        
-        
     }
     
     
