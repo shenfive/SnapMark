@@ -9,17 +9,19 @@ import Cocoa
 
 class ComponentViewItem: NSCollectionViewItem {
     
-    private var trackingArea: NSTrackingArea?
+
 
     @IBOutlet weak var itemBox: NSBox!
     @IBOutlet weak var preView: PreviewView!
     
     var componentId:Int = 999
     var selectAction:((Int)->())? = nil
+    var mouseOverEnterAction:((Int)->())? = nil
+    var mouseOverExitAction:((Int)->())? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        itemBox.titlePosition = .atTop
+
 
         // Do view setup here.
     }
@@ -27,6 +29,8 @@ class ComponentViewItem: NSCollectionViewItem {
     override func viewDidAppear() {
         super.viewDidAppear()
         preView.componentId = componentId
+        preView.mouseOverEnterAction = mouseOverEnterAction
+        preView.mouseOverExitAction = mouseOverExitAction
     }
 
     override func mouseDown(with event: NSEvent) {

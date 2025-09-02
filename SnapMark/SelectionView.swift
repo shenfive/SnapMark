@@ -11,7 +11,8 @@ class SelectionView: NSView {
     var endPoint: NSPoint = .zero
     var onSelectionComplete: ((CGRect) -> Void)?
     var lineWidth:CGFloat = 1
-
+    
+    
     override func mouseDown(with event: NSEvent) {
         startPoint = event.locationInWindow
         print("startPoint:\(startPoint)")
@@ -49,7 +50,7 @@ class SelectionView: NSView {
     override func draw(_ dirtyRect: NSRect) {
         NSColor.red.setStroke()
         NSColor(calibratedWhite: 0, alpha: 0).setFill()
-
+        
         let rect = CGRect(
             x: min(startPoint.x, endPoint.x),
             y: min(startPoint.y, endPoint.y),

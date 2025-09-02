@@ -25,11 +25,23 @@ class BoxView: NSView {
 
         theBoxView.wantsLayer = true
         theBoxView.layer?.borderColor = color.cgColor
-        theBoxView.layer?.borderWidth = min(boardWidth * ratio,bounds.height/2,bounds.width/2)
-        theBoxView.layer?.cornerRadius = cornerRadius
+        
+        theBoxView.layer?.borderWidth = boardWidth
+        
+        theBoxView.layer?.shadowColor = NSColor.white.cgColor
+        theBoxView.layer?.shadowOpacity = 1
+        theBoxView.layer?.shadowOffset = .zero
+        theBoxView.layer?.shadowRadius = 1 * ratio
+        
+        let c = min(cornerRadius * ratio,theBoxView.frame.size.height / 2.0,theBoxView.frame.size.width / 2.0)
+        theBoxView.layer?.cornerRadius = c
+        
         if cornerRadius == 100000.1{
             theBoxView.layer?.cornerRadius = min(theBoxView.frame.height,theBoxView.frame.width) / 2
         }
+
+
+
     }
     
     

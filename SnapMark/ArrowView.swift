@@ -15,7 +15,8 @@ class ArrowView: NSView {
     var endPoint = CGPoint(x: 0, y: 0)
     var color:NSColor = NSColor.systemRed
     var ratio:Double = 1
-    
+    var outLine = true
+    var outLineColor = NSColor.white
     
     
     override func draw(_ dirtyRect: NSRect) {
@@ -74,13 +75,16 @@ class ArrowView: NSView {
             y: lineEndPoint.y - inset * uy
         )
 
-        // 主線外框（白色）
-        let outerPath = NSBezierPath()
-        outerPath.move(to: lineStartPoint)
-        outerPath.line(to: adjustedEndPoint)
-        outerPath.lineWidth = (boardWidth * ratio) + 2.0
-        NSColor.white.setStroke()
-        outerPath.stroke()
+//        if outLine{
+//            // 主線外框
+//            let outerPath = NSBezierPath()
+//            outerPath.move(to: lineStartPoint)
+//            outerPath.line(to: adjustedEndPoint)
+//            outerPath.lineWidth = (boardWidth * ratio) + 2.0
+//            outLineColor.setStroke()
+//            outerPath.stroke()
+//        }
+
 
         // 主線本體（主色）
         let innerPath = NSBezierPath()
@@ -90,14 +94,17 @@ class ArrowView: NSView {
         color.setStroke()
         innerPath.stroke()
 
-        // 箭頭左右邊緣描邊（避免底部白線）
-        let edgePath = NSBezierPath()
-        edgePath.move(to: leftPoint)
-        edgePath.line(to: lineEndPoint)
-        edgePath.line(to: rightPoint)
-        NSColor.white.setStroke()
-        edgePath.lineWidth = 1.0
-        edgePath.stroke()
+        
+//        if outLine{
+//            // 箭頭左右邊緣描邊
+//            let edgePath = NSBezierPath()
+//            edgePath.move(to: leftPoint)
+//            edgePath.line(to: lineEndPoint)
+//            edgePath.line(to: rightPoint)
+//            outLineColor.setStroke()
+//            edgePath.lineWidth = 1.0
+//            edgePath.stroke()
+//        }
 
         // 箭頭主體（實心三角形）
         let arrowPath = NSBezierPath()
@@ -107,6 +114,11 @@ class ArrowView: NSView {
         arrowPath.close()
         color.setFill()
         arrowPath.fill()
+        
+        layer?.shadowColor = NSColor.white.cgColor
+        layer?.shadowOpacity = 1
+        layer?.shadowOffset = .zero
+        layer?.shadowRadius = 1 * ratio
     }
 
     func setComponentData(component:Component,ratio:Double){

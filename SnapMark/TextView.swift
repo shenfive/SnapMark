@@ -9,14 +9,17 @@ import Cocoa
 
 class TextView: NSView {
 
-    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var textField: TransparentTextField!
     @IBOutlet weak var frontBox: NSBox!
     @IBOutlet weak var endBox: NSBox!
     
     
     var startPoint:NSPoint = .zero
-    var color:NSColor = NSColor.black
-    var ratio:CGFloat = 1
+    var color:NSColor = NSColor.blue
+    var ratio:CGFloat = 1.0
+    
+    var strokeColor:NSColor = .white
+    var strokeWidth:CGFloat = 2.0
     
     var enableEdit:Bool  {
         get{
@@ -27,6 +30,16 @@ class TextView: NSView {
             endBox.isHidden = !newValue
             textField.isEditable = newValue
             textField.isSelectable = true 
+        }
+    }
+    
+    /// 控制是否讓事件穿透
+    var isMouseTransparent: Bool  {
+        get{
+            return textField.isMouseTransparent
+        }
+        set{
+            textField.isMouseTransparent = newValue
         }
 
     }
@@ -59,6 +72,7 @@ class TextView: NSView {
             textField.font = NSFont.systemFont(ofSize: font.pointSize * ratio)
         }
         fitSize()
+        applyStroke()
     }
     
     func setTextDelegate(){
@@ -87,22 +101,53 @@ class TextView: NSView {
         commonInit()
     }
 
+    
     private func commonInit() {
         var topLevelObjects: NSArray?
         Bundle.main.loadNibNamed("TextView", owner: self, topLevelObjects: &topLevelObjects)
-        
+
         guard let views = topLevelObjects as? [Any],
               let contentView = views.first(where: { $0 is NSView }) as? NSView else {
             return
         }
+
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(contentView)
         
         textField.delegate = self
-        
-        
-        contentView.frame = self.bounds
-        contentView.autoresizingMask = [.width, .height]
-        self.addSubview(contentView)
+        textField.isEditable = false
+        textField.isSelectable = false
+
+
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: self.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
     }
+    
+    func applyStroke() {
+        let text = textField.stringValue
+        let font = textField.font ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        
+        let shadow = NSShadow()
+        shadow.shadowBlurRadius = strokeWidth * ratio
+        shadow.shadowOffset = .zero
+        shadow.shadowColor = strokeColor
+
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: color,
+            .shadow: shadow
+        ]
+        
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        textField.attributedStringValue = attributedString
+    }
+    
+   
+
     
     
 }

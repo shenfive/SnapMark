@@ -70,7 +70,7 @@ class MainViewController: NSViewController {
         super.viewDidLoad()
         
 
-        //
+        //Collection View 設定
         itemCollectionView.delegate = self
         itemCollectionView.dataSource = self
         let flowLayout = NSCollectionViewFlowLayout()
@@ -85,13 +85,9 @@ class MainViewController: NSViewController {
         itemCollectionView.enclosingScrollView?.hasHorizontalScroller = true
         itemCollectionView.enclosingScrollView?.hasVerticalScroller = false
 
-        
-        
- 
         //設定字型選擇器
         setFontButton()
         
-
         
         //設定字型大小
         fontSizeSlider.target = self
@@ -140,10 +136,11 @@ class MainViewController: NSViewController {
         super.viewWillAppear()
         
         
+        //初始化晝面大小
         if let window = self.view.window ,
            let screenFrame = NSScreen.main?.frame {
             
-            let windowSize = NSSize(width: 900, height: 600)
+            let windowSize = NSSize(width: 800, height: 600)
             let originX = (screenFrame.width - windowSize.width) / 2
             let originY = (screenFrame.height - windowSize.height) / 2
             let centeredRect = NSRect(origin: CGPoint(x: originX, y: originY), size: windowSize)
@@ -151,50 +148,9 @@ class MainViewController: NSViewController {
             window.setFrame(centeredRect, display: true)
             setModeDisplayUI()
         }
-    }
-    
-    
-    func reDrawComponts(){
-        self.documentView.subviews.forEach {
-            if $0.isKind(of: ArrowView.self) { $0.removeFromSuperview() }
-            if $0.isKind(of: BoxView.self) { $0.removeFromSuperview() }
-            if $0.isKind(of: TextView.self) { $0.removeFromSuperview() }
-        }
-        components.forEach { component in
-            switch component.componentType{
-            case .ARROW:
-                let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
-                arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-                arrowView.ratio = ratioSlider.doubleValue
-                arrowView.color = component.color
-                self.documentView.addSubview(arrowView)
-                break
-            case .BOX:
-                let boxView = BoxView(frame: component.framRect(ratio: ratioSlider.doubleValue))
-                boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-                boxView.ratio = ratioSlider.doubleValue
-                boxView.color = component.color
-                self.documentView.addSubview(boxView)
-                break
-            case .TEXT:
-                let textView = TextView(frame: component.framRect(ratio: ratioSlider.doubleValue))
-                textView.ratio = ratioSlider.doubleValue
-                textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
-                textView.color = component.color
-                textView.enableEdit = false
-                textView.fitSize()
-                self.documentView.addSubview(textView)
-            }
-        }
-    }
-
-    
-
-
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        guard let window = view.window else {return}
-        self.window = window
+        
+//        guard let window = view.window else {return}
+//        self.window = window
         view.window?.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
         //抓取外部視窗動作
         NotificationCenter.default.addObserver(
@@ -205,6 +161,82 @@ class MainViewController: NSViewController {
         )
     }
     
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+//        guard let window = view.window else {return}
+//        self.window = window
+//        view.window?.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
+//        //抓取外部視窗動作
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(windowDidResize(_:)),
+//            name: NSWindow.didResizeNotification,
+//            object: self.window
+//        )
+    }
+    
+    
+    //MARK: 重畫所有元件
+    func reDrawComponts(){
+        
+        //移除標註文件
+        self.documentView.subviews.forEach {
+            if $0.isKind(of: ArrowView.self) { $0.removeFromSuperview() }
+            if $0.isKind(of: BoxView.self) { $0.removeFromSuperview() }
+            if $0.isKind(of: TextView.self) { $0.removeFromSuperview() }
+            if $0.isKind(of: SelectView.self) {$0.removeFromSuperview()}
+        }
+        
+        //重繪標註文件
+        components.forEach { component in
+            switch component.componentType{
+            case .ARROW:
+                let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
+                arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+                arrowView.ratio = ratioSlider.doubleValue
+                arrowView.color = component.color
+                self.documentView.addSubview(arrowView)
+                if component.isMouseOverMode{
+                    let editView = SelectView(frame: arrowView.frame)
+                    self.documentView.addSubview(editView)
+                }
+            
+            case .BOX:
+                let boxView = BoxView(frame: component.framRect(ratio: ratioSlider.doubleValue))
+                boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+                boxView.ratio = ratioSlider.doubleValue
+                boxView.color = component.color
+                self.documentView.addSubview(boxView)
+                print("b:\(boxView.frame)")
+                if component.isMouseOverMode{
+                    let editView = SelectView(frame: boxView.frame)
+                    print("e:\(editView.frame)")
+                    self.documentView.addSubview(editView)
+                }
+       
+            case .TEXT:
+                let textView = TextView(frame: component.framRect(ratio: ratioSlider.doubleValue))
+                textView.ratio = ratioSlider.doubleValue
+                textView.color = component.color
+                textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
+                textView.enableEdit = false
+                textView.fitSize()
+                self.documentView.addSubview(textView)
+                if component.isSelected{
+                    textView.enableEdit = true
+                }
+                if component.isMouseOverMode{
+                    let editView = SelectView(frame: textView.frame)
+                    self.documentView.addSubview(editView)
+                }
+            }
+        }
+    }
+
+    
+
+
 
 
     //MARK: 字形相關
@@ -341,6 +373,7 @@ class MainViewController: NSViewController {
     }
     
     
+    //MARK: 新增拮圖
     @IBAction func newSnap(_ sender: NSButton) {
         guard let mainWindow = self.view.window else { return }
         controller?.onCaptureComplete = { [weak self] image in
@@ -354,7 +387,7 @@ class MainViewController: NSViewController {
         controller?.startCapture(from: mainWindow)
     }
     
-    
+    //MARK:設定編輯模式
     @IBAction func setArrowMode(_ sender: Any) {
         documentView.editMode = .ARROW
         setModeDisplayUI()
@@ -449,59 +482,67 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let component = components[indexPath.item]
-        let item = ComponentViewItem(nibName: "ComponentViewItem", bundle: nil)
-        item.view.bounds.size = cellSize
-        item.itemBox.bounds.size = cellSize
-        item.componentId = indexPath.item
-        item.selectAction = {
+        let componentViewItem = ComponentViewItem(nibName: "ComponentViewItem", bundle: nil)
+        componentViewItem.view.bounds.size = cellSize
+        componentViewItem.itemBox.bounds.size = cellSize
+        componentViewItem.componentId = indexPath.item
+        componentViewItem.selectAction = {
             for index in 0..<self.components.count{
                 self.components[index].isSelected = false
             }
             self.components[$0].isSelected = true
             self.itemCollectionView.reloadData()
+            self.reDrawComponts()
         }
+        
         if component.isSelected {
-            item.itemBox.borderColor = .red
-            item.itemBox.borderWidth = 3
+            componentViewItem.itemBox.borderColor = .red
+            componentViewItem.itemBox.borderWidth = 3
+        }
+        componentViewItem.mouseOverEnterAction = {
+            print("on Main Enter:\($0)")
+            self.components[$0].isMouseOverMode = true
+            self.reDrawComponts()
+        }
+        componentViewItem.mouseOverExitAction = {
+            print("on Main Exit:\($0)")
+            self.components[$0].isMouseOverMode = false
+            self.reDrawComponts()
         }
 
         switch component.componentType{
         case .ARROW:
-            item.itemBox.title = "Arrow"
+            componentViewItem.itemBox.title = "Arrow"
             let arrowView = ArrowView(frame: component.framRect(ratio: 1))
             arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
             arrowView.color = component.color
-            let newVeiwSeting = aspectFitRectAndScale(contentRect: arrowView.frame, containerRect: item.preView.bounds)
+            let newVeiwSeting = aspectFitRectAndScale(contentRect: arrowView.frame, containerRect: componentViewItem.preView.bounds)
             arrowView.ratio = newVeiwSeting.scale
             arrowView.frame = newVeiwSeting.rect
             print("arr:\(arrowView.frame)")
-            item.preView.addSubview(arrowView)
+            componentViewItem.preView.addSubview(arrowView)
         case .BOX:
-            item.itemBox.title = "Box"
+            componentViewItem.itemBox.title = "Box"
             let boxView = BoxView(frame: component.framRect(ratio: 1))
             boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
             boxView.color = component.color
-            let newVeiwSeting = aspectFitRectAndScale(contentRect: boxView.frame, containerRect: item.preView.bounds)
+            let newVeiwSeting = aspectFitRectAndScale(contentRect: boxView.frame, containerRect: componentViewItem.preView.bounds)
             boxView.ratio = newVeiwSeting.scale
             boxView.frame = newVeiwSeting.rect
          
-            item.preView.addSubview(boxView)
+            componentViewItem.preView.addSubview(boxView)
             break
         case .TEXT:
-            item.itemBox.title = "Text.\(component.text)"
+            componentViewItem.itemBox.title = "Text.\(component.text)"
             let textView = TextView(frame: component.framRect(ratio: 1))
             textView.color = component.color
             textView.enableEdit = false
             textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
-            print(textView.frame.size)
-//            textView.frame = aspectFitRect(contentRect:textView.frame, containerRect:item.view.bounds)
-            let newVeiwSeting = aspectFitRectAndScale(contentRect: textView.frame, containerRect: item.preView.bounds)
-            textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
-            textView.frame = item.preView.bounds
-            
-            item.preView.addSubview(textView)
+            textView.frame = componentViewItem.preView.bounds
+            textView.isMouseTransparent = true
+            componentViewItem.preView.addSubview(textView)
         }
-        return item
+        return componentViewItem
     }
     
     

@@ -43,6 +43,7 @@ class ScreenCaptureController: NSObject {
         overlayWindow = overlay
         selectionView = selection
     }
+    
 
     /// 擷取指定區域並回到主視窗
     private func capture(rect: CGRect) {
