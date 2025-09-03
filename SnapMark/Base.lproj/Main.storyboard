@@ -1058,13 +1058,13 @@
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="80" id="EbR-Q4-ffl"/>
                                                                 </constraints>
-                                                                <sliderCell key="cell" state="on" alignment="left" minValue="10" maxValue="72" doubleValue="20" tickMarkPosition="above" sliderType="linear" id="EMb-Cx-2M3">
+                                                                <sliderCell key="cell" alignment="left" minValue="10" maxValue="90" doubleValue="40" tickMarkPosition="above" sliderType="linear" id="EMb-Cx-2M3">
                                                                     <font key="font" metaFont="cellTitle"/>
                                                                 </sliderCell>
                                                             </slider>
                                                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-G7-1ke">
-                                                                <rect key="frame" x="102" y="21" width="20" height="16"/>
-                                                                <textFieldCell key="cell" lineBreakMode="clipping" title="20" id="Gpj-oJ-Ecs">
+                                                                <rect key="frame" x="101" y="21" width="21" height="16"/>
+                                                                <textFieldCell key="cell" lineBreakMode="clipping" title="40" id="Gpj-oJ-Ecs">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1074,9 +1074,9 @@
                                                                 <rect key="frame" x="124" y="5" width="64" height="64"/>
                                                                 <subviews>
                                                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lOS-hq-eI6">
-                                                                        <rect key="frame" x="18" y="21" width="28" height="23"/>
+                                                                        <rect key="frame" x="7" y="9" width="51" height="47"/>
                                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Aa" id="yVZ-6n-jlE">
-                                                                            <font key="font" size="20" name="HelveticaNeue"/>
+                                                                            <font key="font" metaFont="system" size="40"/>
                                                                             <color key="textColor" name="systemPinkColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>

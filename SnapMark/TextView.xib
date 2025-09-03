@@ -42,9 +42,9 @@
                     <color key="fillColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                 </box>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vd8-pS-TGq" customClass="TransparentTextField" customModule="SnapMark" customModuleProvider="target">
-                    <rect key="frame" x="8" y="90" width="316" height="16"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Test" placeholderString="PlaceHorder" usesSingleLineMode="YES" id="Oem-gx-5Pv">
-                        <font key="font" usesAppearanceFont="YES"/>
+                    <rect key="frame" x="8" y="75" width="316" height="47"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="A" usesSingleLineMode="YES" id="Oem-gx-5Pv">
+                        <font key="font" metaFont="system" size="40"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>

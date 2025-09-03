@@ -21,7 +21,7 @@ class SnapEditView: NSView {
     var boardWidth = 2.0
     var cornerRadius = 8.0
     var ratio = 1.0
-    var font = NSFont.systemFont(ofSize: 14) 
+    var font = NSFont.systemFont(ofSize: 40) 
     
     var endAction:((NSView)->())? = nil
     var startAction:(()->())? = nil

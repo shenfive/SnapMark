@@ -88,7 +88,6 @@ class MainViewController: NSViewController {
         //設定字型選擇器
         setFontButton()
         
-        
         //設定字型大小
         fontSizeSlider.target = self
         fontSizeSlider.isContinuous = true
@@ -124,6 +123,12 @@ class MainViewController: NSViewController {
         //完成新增物件時的動作
         documentView.endAction = {
             self.components.append(self.documentView.getComponet(ratio: self.ratioSlider.doubleValue))
+            switch self.components.last?.componentType{
+            case .TEXT:
+                self.components[self.components.count-1].isSelected = true
+            default:
+                break
+            }
             self.reDrawComponts()
             self.itemCollectionView.reloadData()
             //回傳物件View
@@ -136,7 +141,7 @@ class MainViewController: NSViewController {
         super.viewWillAppear()
         
         
-        //初始化晝面大小
+        //初始化晝面大小 與標題
         if let window = self.view.window ,
            let screenFrame = NSScreen.main?.frame {
             
@@ -146,12 +151,11 @@ class MainViewController: NSViewController {
             let centeredRect = NSRect(origin: CGPoint(x: originX, y: originY), size: windowSize)
             
             window.setFrame(centeredRect, display: true)
+            window.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
             setModeDisplayUI()
         }
         
-//        guard let window = view.window else {return}
-//        self.window = window
-        view.window?.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
+
         //抓取外部視窗動作
         NotificationCenter.default.addObserver(
             self,
@@ -159,21 +163,6 @@ class MainViewController: NSViewController {
             name: NSWindow.didResizeNotification,
             object: self.window
         )
-    }
-    
-    
-    override func viewDidAppear() {
-        super.viewDidAppear()
-//        guard let window = view.window else {return}
-//        self.window = window
-//        view.window?.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
-//        //抓取外部視窗動作
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(windowDidResize(_:)),
-//            name: NSWindow.didResizeNotification,
-//            object: self.window
-//        )
     }
     
     
@@ -187,9 +176,10 @@ class MainViewController: NSViewController {
             if $0.isKind(of: TextView.self) { $0.removeFromSuperview() }
             if $0.isKind(of: SelectView.self) {$0.removeFromSuperview()}
         }
-        
+
         //重繪標註文件
-        components.forEach { component in
+        for index in 0..<components.count{
+            var component = components[index]
             switch component.componentType{
             case .ARROW:
                 let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
@@ -216,12 +206,26 @@ class MainViewController: NSViewController {
                 }
        
             case .TEXT:
+                print("show:\(index) string:\(component.text)")
                 let textView = TextView(frame: component.framRect(ratio: ratioSlider.doubleValue))
                 textView.ratio = ratioSlider.doubleValue
                 textView.color = component.color
                 textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
                 textView.enableEdit = false
+                textView.textField.stringValue = component.text
                 textView.fitSize()
+                
+                textView.dataIndex = index
+                textView.changeTextCallBack = { newString, dataIndex in
+                    self.components[dataIndex].text = newString
+                    self.itemCollectionView.reloadItems(at: [IndexPath(item: dataIndex, section: 0)])
+                }
+                textView.endEdingCallBack = { newString, dataIndex in
+                    self.components[dataIndex].text = newString
+                    self.components[dataIndex].isSelected = false
+                    self.itemCollectionView.reloadItems(at: [IndexPath(item: dataIndex, section: 0)])
+                    self.reDrawComponts()
+                }
                 self.documentView.addSubview(textView)
                 if component.isSelected{
                     textView.enableEdit = true
@@ -535,6 +539,7 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
         case .TEXT:
             componentViewItem.itemBox.title = "Text.\(component.text)"
             let textView = TextView(frame: component.framRect(ratio: 1))
+            textView.textField.stringValue = component.text
             textView.color = component.color
             textView.enableEdit = false
             textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
