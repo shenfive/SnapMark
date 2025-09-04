@@ -33,7 +33,7 @@ class SnapEditView: NSView {
         NSColorPanel.shared.close()
         startAction?()
         startPoint = convert(event.locationInWindow, from: nil)
-        print("startPoint:\(startPoint)")
+//        print("startPoint:\(startPoint)")
         newView = NSView(frame: NSRect(origin: startPoint, size: NSSize(width: 0, height: 0)))
 
         switch editMode {
@@ -99,7 +99,7 @@ class SnapEditView: NSView {
 
     override func mouseDragged(with event: NSEvent) {
         endPoint = convert(event.locationInWindow, from: nil)
-        print("endPoint:\(endPoint)")
+//        print("endPoint:\(endPoint)")
         // 計算左下角座標與大小
         let width = abs(startPoint.x - endPoint.x)//max(10,abs(startPoint.x - endPoint.x))
         let height = abs(startPoint.y - endPoint.y)//max(10,abs(startPoint.y - endPoint.y))

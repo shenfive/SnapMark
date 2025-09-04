@@ -57,8 +57,25 @@ class TextView: NSView {
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        
-        // Drawing code here.
+
+        let text = textField.stringValue
+        let font = textField.font ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
+
+        if strokeWidth > 0 {
+            let shadow = NSShadow()
+            shadow.shadowBlurRadius = strokeWidth * ratio
+            shadow.shadowOffset = .zero
+            shadow.shadowColor = strokeColor
+            
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: font,
+                .foregroundColor: color,
+                .shadow: shadow
+            ]
+            
+            let attributedString = NSAttributedString(string: text, attributes: attributes)
+            attributedString.draw(in: self.bounds.insetBy(dx: 10, dy: 10))
+        }
     }
     
     
@@ -83,7 +100,7 @@ class TextView: NSView {
             textField.font = NSFont.systemFont(ofSize: font.pointSize * ratio)
         }
         fitSize()
-        applyStroke()
+//        applyStroke()
     }
     
     func setTextDelegate(){
@@ -128,6 +145,7 @@ class TextView: NSView {
         textField.delegate = self
         textField.isEditable = false
         textField.isSelectable = false
+//        applyStroke()
         
         
         NSLayoutConstraint.activate([
@@ -137,26 +155,26 @@ class TextView: NSView {
             contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
-    
-    func applyStroke() {
-        let text = textField.stringValue
-        let font = textField.font ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
-        
-        let shadow = NSShadow()
-        shadow.shadowBlurRadius = strokeWidth * ratio
-        shadow.shadowOffset = .zero
-        shadow.shadowColor = strokeColor
-        
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            .foregroundColor: color,
-            .shadow: shadow
-        ]
-        
-        let attributedString = NSAttributedString(string: text, attributes: attributes)
-        textField.attributedStringValue = attributedString
-    }
-    
+//    
+//    func applyStroke() {
+//        let text = textField.stringValue
+//        let font = textField.font ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
+//        
+//        let shadow = NSShadow()
+//        shadow.shadowBlurRadius = strokeWidth * ratio
+//        shadow.shadowOffset = .zero
+//        shadow.shadowColor = strokeColor
+//        
+//        let attributes: [NSAttributedString.Key: Any] = [
+//            .font: font,
+//            .foregroundColor: color,
+//            .shadow: shadow
+//        ]
+//        
+//        let attributedString = NSAttributedString(string: text, attributes: attributes)
+//        textField.attributedStringValue = attributedString
+//    }
+//    
     
     
     
@@ -179,6 +197,9 @@ extension TextView: NSTextFieldDelegate, NSTextViewDelegate {
         print("文字已變更完成")
     }
     
+    func textDidEndEditing(_ notification: Notification){
+        endEdingCallBack?(textField.stringValue,dataIndex)
+    }
     func textView(_ textView: NSTextView, shouldChangeTextIn affectedCharRange: NSRange, replacementString: String?) -> Bool {
         print("即將插入：\(replacementString ?? "")")
         

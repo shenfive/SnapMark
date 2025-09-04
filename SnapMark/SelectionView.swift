@@ -15,13 +15,13 @@ class SelectionView: NSView {
     
     override func mouseDown(with event: NSEvent) {
         startPoint = event.locationInWindow
-        print("startPoint:\(startPoint)")
+//        print("startPoint:\(startPoint)")
     }
 
     override func mouseDragged(with event: NSEvent) {
         endPoint = event.locationInWindow
         needsDisplay = true
-        print("endPoint:\(endPoint)")
+//        print("endPoint:\(endPoint)")
     }
 
     override func mouseUp(with event: NSEvent) {

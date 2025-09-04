@@ -113,15 +113,26 @@ class MainViewController: NSViewController {
 
         //新增物件時的動作
         documentView.startAction = {
-            self.documentView.subviews.forEach { view in
-                if view.isKind(of: ControlView.self){
-                    view.removeFromSuperview()
-                }
+            //移除空白字串的 TextView
+            self.components.removeAll {
+                $0.componentType == .TEXT && $0.text.isEmpty
             }
+            
+            //先設定取消選取
+            for i in self.components.indices {
+                self.components[i].isSelected = false
+            }
+            //結束所有編輯
+            for view in self.documentView.subviews{
+                view.window?.makeFirstResponder(nil)
+            }
+            self.itemCollectionView.reloadData()
         }
         
         //完成新增物件時的動作
         documentView.endAction = {
+
+                        
             self.components.append(self.documentView.getComponet(ratio: self.ratioSlider.doubleValue))
             switch self.components.last?.componentType{
             case .TEXT:
@@ -129,8 +140,11 @@ class MainViewController: NSViewController {
             default:
                 break
             }
-            self.reDrawComponts()
-            self.itemCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.reDrawComponts()
+                self.itemCollectionView.reloadData()
+            }
+
             //回傳物件View
             print($0)
         }
@@ -168,7 +182,7 @@ class MainViewController: NSViewController {
     
     //MARK: 重畫所有元件
     func reDrawComponts(){
-        
+    
         //移除標註文件
         self.documentView.subviews.forEach {
             if $0.isKind(of: ArrowView.self) { $0.removeFromSuperview() }
@@ -176,6 +190,7 @@ class MainViewController: NSViewController {
             if $0.isKind(of: TextView.self) { $0.removeFromSuperview() }
             if $0.isKind(of: SelectView.self) {$0.removeFromSuperview()}
         }
+     
 
         //重繪標註文件
         for index in 0..<components.count{
@@ -505,8 +520,10 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
         }
         componentViewItem.mouseOverEnterAction = {
             print("on Main Enter:\($0)")
-            self.components[$0].isMouseOverMode = true
-            self.reDrawComponts()
+            if self.components[$0].isSelected != true{
+                self.components[$0].isMouseOverMode = true
+                self.reDrawComponts()
+            }
         }
         componentViewItem.mouseOverExitAction = {
             print("on Main Exit:\($0)")
@@ -523,7 +540,6 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             let newVeiwSeting = aspectFitRectAndScale(contentRect: arrowView.frame, containerRect: componentViewItem.preView.bounds)
             arrowView.ratio = newVeiwSeting.scale
             arrowView.frame = newVeiwSeting.rect
-            print("arr:\(arrowView.frame)")
             componentViewItem.preView.addSubview(arrowView)
         case .BOX:
             componentViewItem.itemBox.title = "Box"
@@ -542,6 +558,7 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             textView.textField.stringValue = component.text
             textView.color = component.color
             textView.enableEdit = false
+            textView.strokeWidth = 0
             textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
             textView.frame = componentViewItem.preView.bounds
             textView.isMouseTransparent = true

@@ -43,7 +43,7 @@
                 </box>
                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vd8-pS-TGq" customClass="TransparentTextField" customModule="SnapMark" customModuleProvider="target">
                     <rect key="frame" x="8" y="75" width="316" height="47"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="A" usesSingleLineMode="YES" id="Oem-gx-5Pv">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" usesSingleLineMode="YES" id="Oem-gx-5Pv">
                         <font key="font" metaFont="system" size="40"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
