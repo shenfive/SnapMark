@@ -206,6 +206,10 @@ class MainViewController: NSViewController {
                     let editView = SelectView(frame: arrowView.frame)
                     self.documentView.addSubview(editView)
                 }
+                
+                //TODO: 測試編輯箭頭
+                arrowView.enableEdit =  component.isSelected
+                
             
             case .BOX:
                 let boxView = BoxView(frame: component.framRect(ratio: ratioSlider.doubleValue))

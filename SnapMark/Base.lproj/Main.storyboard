@@ -879,7 +879,7 @@
                                                         <subviews>
                                                             <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ywf-PC-uBO">
                                                                 <rect key="frame" x="6" y="32" width="35" height="35"/>
-                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Icon_Add_Frame_1_1_Normal" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="bfl-pL-eaJ">
+                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Icon_Add_Frame_1_1_Normal" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="bfl-pL-eaJ">
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
@@ -892,8 +892,8 @@
                                                                 </connections>
                                                             </button>
                                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="MtX-3G-XAG">
-                                                                <rect key="frame" x="44" y="32" width="35" height="35"/>
-                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icn_bgsetting_fit" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GTr-qx-wPy">
+                                                                <rect key="frame" x="44" y="30" width="35" height="41"/>
+                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSEnterFullScreenTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GTr-qx-wPy">
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
@@ -1318,12 +1318,12 @@
     </scenes>
     <resources>
         <image name="Icon_Add_Frame_1_1_Normal" width="40" height="40"/>
+        <image name="NSEnterFullScreenTemplate" width="20" height="18"/>
         <image name="arrow.up.forward" catalog="system" width="14" height="12"/>
         <image name="character.book.closed.fill.zh" catalog="system" width="15" height="16"/>
         <image name="character.textbox" catalog="system" width="20" height="14"/>
         <image name="chevron.compact.forward" catalog="system" width="8" height="17"/>
         <image name="dot.scope.display" catalog="system" width="24" height="19"/>
-        <image name="icn_bgsetting_fit" width="32" height="32"/>
         <image name="square" catalog="system" width="16" height="14"/>
         <image name="start2" width="256" height="256"/>
     </resources>
