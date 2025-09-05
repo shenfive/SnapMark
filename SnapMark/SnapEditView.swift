@@ -27,13 +27,30 @@ class SnapEditView: NSView {
     var startAction:(()->())? = nil
     
     var editMode:COMPONET_TYPE = .ARROW
+    var selectedSubView:NSView? = nil
 
+    
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        
+        if let subView = selectedSubView{
+            // 將點轉換到 subView 的座標系
+            let pointInSubView = convert(point, to: subView)
+            
+            // 檢查是否點在 subView 上
+            if subView.hitTest(pointInSubView) != nil {
+                return subView
+            }
+        }
+        
+        // 否則由自己處理
+        return self
+    }
     
     override func mouseDown(with event: NSEvent) {
         NSColorPanel.shared.close()
         startAction?()
         startPoint = convert(event.locationInWindow, from: nil)
-//        print("startPoint:\(startPoint)")
+        print("Snap startPoint:\(startPoint)")
         newView = NSView(frame: NSRect(origin: startPoint, size: NSSize(width: 0, height: 0)))
 
         switch editMode {
@@ -46,8 +63,8 @@ class SnapEditView: NSView {
         case .ARROW:
             arrowView.ratio = ratio
             arrowView.frame = newView.bounds
-            arrowView.color = color
-            arrowView.boardWidth = boardWidth
+            arrowView.arrowComponent.color = color
+            arrowView.arrowComponent.boardWidth = boardWidth
             arrowView.ratio = ratio
             newView.addSubview(arrowView)
         case .BOX:
@@ -71,11 +88,6 @@ class SnapEditView: NSView {
         case .BOX:
             newView.layer?.borderWidth = 0
         }
-
-        
-//        newView.boxType = .custom
-//        newView.fillColor = NSColor.clear
-//        newView.borderColor = NSColor.white
         
         addSubview(newView, positioned: .above, relativeTo: nil)
         
@@ -88,8 +100,8 @@ class SnapEditView: NSView {
             textView.color = color
             textView.setFont(font: font)
         case .ARROW:
-            arrowView.color = color
-            arrowView.boardWidth = boardWidth
+            arrowView.arrowComponent.color = color
+            arrowView.arrowComponent.boardWidth = boardWidth
         case .BOX:
             boxView.color = color
             boxView.cornerRadius = cornerRadius
@@ -114,8 +126,8 @@ class SnapEditView: NSView {
         case .TEXT:
             textView.frame.origin = endPoint
         case .ARROW:
-            arrowView.startPoint = startPoint
-            arrowView.endPoint = endPoint
+            arrowView.arrowComponent.startPoint = startPoint
+            arrowView.arrowComponent.endPoint = endPoint
             arrowView.frame = NSRect(x: 0   , y: 0, width: width, height: height)
             
             

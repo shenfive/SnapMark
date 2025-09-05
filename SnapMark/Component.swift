@@ -16,11 +16,11 @@ enum COMPONET_TYPE{
 
 struct Component{
     var componentType = COMPONET_TYPE.ARROW //元件型別
-    var startPoint:NSPoint
-    var endPoint:NSPoint
-    var color:NSColor
-    var boardWidth:Double
-    var cornerRadius:Double
+    var startPoint:NSPoint = .zero
+    var endPoint:NSPoint = .zero
+    var color:NSColor = NSColor.systemRed
+    var boardWidth:Double = 2
+    var cornerRadius:Double = 5
     var text:String = ""
     var fontName:String = ""
     var fontSize:CGFloat = 14.0

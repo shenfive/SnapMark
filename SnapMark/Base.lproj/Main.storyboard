@@ -1144,14 +1144,14 @@
                                         </view>
                                         <color key="fillColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </box>
-                                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32J-s3-3Zy">
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32J-s3-3Zy">
                                         <rect key="frame" x="282" y="62" width="256" height="256"/>
                                         <clipView key="contentView" id="ddn-6g-BX3">
-                                            <rect key="frame" x="0.0" y="0.0" width="241" height="241"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <view autoresizesSubviews="NO" appearanceType="aqua" id="Gnf-mE-Mhf" customClass="SnapEditView" customModule="SnapMark" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="271" height="271"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="azm-qx-4uP">
@@ -1167,12 +1167,12 @@
                                             <constraint firstAttribute="width" constant="256" id="NF5-wm-esc"/>
                                             <constraint firstAttribute="height" constant="256" id="Zlk-qs-ie7"/>
                                         </constraints>
-                                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="7W4-fe-Ios">
-                                            <rect key="frame" x="0.0" y="241" width="241" height="15"/>
+                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="7W4-fe-Ios">
+                                            <rect key="frame" x="-100" y="-100" width="241" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="W7F-pA-Pfw">
-                                            <rect key="frame" x="241" y="0.0" width="15" height="241"/>
+                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="W7F-pA-Pfw">
+                                            <rect key="frame" x="241" y="0.0" width="15" height="256"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>

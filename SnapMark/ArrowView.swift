@@ -10,16 +10,26 @@ import Cocoa
 
 class ArrowView: NSView {
     
-    var boardWidth = 4.0
-    var startPoint = CGPoint(x: 0, y: 0)
-    var endPoint = CGPoint(x: 0, y: 0)
-    var color:NSColor = NSColor.systemRed
+//    var boardWidth = 4.0
+    var arrowComponent:Component = Component()
+//    var startPoint = CGPoint(x: 0, y: 0)
+//    var endPoint = CGPoint(x: 0, y: 0)
+//    var color:NSColor = NSColor.systemRed
     var ratio:Double = 1
     var outLine = true
     var outLineColor = NSColor.white
     var _enableEdit = false
+    
+    
+    var startMouseDownLocation:CGPoint = .zero
+    
+    var endEditAction:((Component)->())? = nil
+    
+    
     @IBOutlet weak var startPointerView:NSImageView!
     @IBOutlet weak var endPointerView:NSImageView!
+    
+    
     
     var enableEdit:Bool {
         get{
@@ -32,13 +42,21 @@ class ArrowView: NSView {
         }
     }
     
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        return enableEdit &&  bounds.contains(point) ? self : nil
+//        return nil
+    }
+    
+    
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
+        
+//        print("draw:\(arrowComponent.startPoint)")
 
         // 計算方向向量
-        let dx = endPoint.x - startPoint.x
-        let dy = endPoint.y - startPoint.y
+        let dx = arrowComponent.endPoint.x - arrowComponent.startPoint.x
+        let dy = arrowComponent.endPoint.y - arrowComponent.startPoint.y
 
         let lineStartPoint = CGPoint(
             x: dx >= 0 ? 0 : bounds.width,
@@ -67,7 +85,7 @@ class ArrowView: NSView {
             )
         }
 
-        let arrowLength: CGFloat = min(length, (15 + boardWidth) * ratio)
+        let arrowLength: CGFloat = min(length, (15 + arrowComponent.boardWidth) * ratio)
         let arrowAngle: CGFloat = 30.0 * (.pi / 180.0)
 
         let leftVector = rotatedVector(angle: arrowAngle)
@@ -83,7 +101,7 @@ class ArrowView: NSView {
         )
 
         // 主線端點微調（避免箭頭重疊）
-        let inset: CGFloat = boardWidth * ratio
+        let inset: CGFloat = arrowComponent.boardWidth * ratio
         let adjustedEndPoint = CGPoint(
             x: lineEndPoint.x - inset * ux,
             y: lineEndPoint.y - inset * uy
@@ -104,8 +122,8 @@ class ArrowView: NSView {
         let innerPath = NSBezierPath()
         innerPath.move(to: lineStartPoint)
         innerPath.line(to: adjustedEndPoint)
-        innerPath.lineWidth = boardWidth * ratio
-        color.setStroke()
+        innerPath.lineWidth = arrowComponent.boardWidth * ratio
+        arrowComponent.color.setStroke()
         innerPath.stroke()
 
         
@@ -126,7 +144,7 @@ class ArrowView: NSView {
         arrowPath.line(to: leftPoint)
         arrowPath.line(to: rightPoint)
         arrowPath.close()
-        color.setFill()
+        arrowComponent.color.setFill()
         arrowPath.fill()
         
         layer?.shadowColor = NSColor.white.cgColor
@@ -138,24 +156,59 @@ class ArrowView: NSView {
         }
     }
     
+//    func updatePointerViews() {
+//        // 計算方向向量
+//        let dx = arrowComponent.endPoint.x - arrowComponent.startPoint.x
+//        let dy = arrowComponent.endPoint.y - arrowComponent.startPoint.y
+//
+//        let lineStartPoint = CGPoint(
+//            x: dx >= 0 ? 0 : bounds.width,
+//            y: dy >= 0 ? 0 : bounds.height
+//        )
+//        let lineEndPoint = CGPoint(
+//            x: dx >= 0 ? bounds.width : 0,
+//            y: dy >= 0 ? bounds.height : 0
+//        )
+//
+//        // 設定 ImageView 的大小（可依照圖片大小或固定尺寸）
+//        let pointerSize = NSSize(width: 25, height: 25)
+//
+//        // 更新 startPointerView 的位置
+//        startPointerView.frame = NSRect(
+//            origin: CGPoint(
+//                x: lineStartPoint.x - pointerSize.width / 2,
+//                y: lineStartPoint.y - pointerSize.height / 2
+//            ),
+//            size: pointerSize
+//        )
+//
+//        // 更新 endPointerView 的位置
+//        endPointerView.frame = NSRect(
+//            origin: CGPoint(
+//                x: lineEndPoint.x - pointerSize.width / 2,
+//                y: lineEndPoint.y - pointerSize.height / 2
+//            ),
+//            size: pointerSize
+//        )
+//    }
+    
     func updatePointerViews() {
-        // 計算方向向量
-        let dx = endPoint.x - startPoint.x
-        let dy = endPoint.y - startPoint.y
+        let dx = arrowComponent.endPoint.x - arrowComponent.startPoint.x
+        let dy = arrowComponent.endPoint.y - arrowComponent.startPoint.y
+
+        let inset: CGFloat = 10.0  // 內縮量
 
         let lineStartPoint = CGPoint(
-            x: dx >= 0 ? 0 : bounds.width,
-            y: dy >= 0 ? 0 : bounds.height
+            x: dx >= 0 ? inset : bounds.width - inset,
+            y: dy >= 0 ? inset : bounds.height - inset
         )
         let lineEndPoint = CGPoint(
-            x: dx >= 0 ? bounds.width : 0,
-            y: dy >= 0 ? bounds.height : 0
+            x: dx >= 0 ? bounds.width - inset : inset,
+            y: dy >= 0 ? bounds.height - inset : inset
         )
 
-        // 設定 ImageView 的大小（可依照圖片大小或固定尺寸）
-        let pointerSize = NSSize(width: 20, height: 20)
+        let pointerSize = NSSize(width: 25, height: 25)
 
-        // 更新 startPointerView 的位置
         startPointerView.frame = NSRect(
             origin: CGPoint(
                 x: lineStartPoint.x - pointerSize.width / 2,
@@ -164,7 +217,6 @@ class ArrowView: NSView {
             size: pointerSize
         )
 
-        // 更新 endPointerView 的位置
         endPointerView.frame = NSRect(
             origin: CGPoint(
                 x: lineEndPoint.x - pointerSize.width / 2,
@@ -175,46 +227,90 @@ class ArrowView: NSView {
     }
 
 
+
     func setComponentData(component:Component,ratio:Double){
-        startPoint = component.startPoint
-        endPoint = component.endPoint
+        arrowComponent = component
+        
         self.ratio = ratio
-        color = component.color
-        boardWidth = component.boardWidth
+//        color = component.color
+//        boardWidth = component.boardWidth
     }
     
     
     var draggingStart = false
     var draggingEnd = false
+    var startMouseDownStartPoint:CGPoint = .zero
+    var startMouseDownEndPoint:CGPoint = .zero
 
     override func mouseDown(with event: NSEvent) {
         print("arrow mouse down")
-        let location = convert(event.locationInWindow, from: nil)
-        print("location:\(location)\nstart:\(startPointerView.frame)\nend\(endPointerView.frame)")
+//        let location = convert(event.locationInWindow, from: nil)
+        let location = superview!.convert(event.locationInWindow, from: nil)
+        print("location:\(location)\nstart:\(arrowComponent.startPoint)\nend\(arrowComponent.endPoint)")
         
-        if startPointerView.frame.contains(location) {
+        startMouseDownLocation = location
+        startMouseDownEndPoint = arrowComponent.endPoint
+        startMouseDownStartPoint = arrowComponent.startPoint
+        
+        
+        draggingStart = false
+        draggingEnd = false
+        let locationInView = convert(event.locationInWindow, from: nil)
+        if startPointerView.frame.contains(locationInView) {
+            print("STARTPoint")
             draggingStart = true
-        } else if endPointerView.frame.contains(location) {
+        } else if endPointerView.frame.contains(locationInView) {
+            print("EndPoint")
+            draggingEnd = true
+        }else{
+            print("BothPoing")
+            draggingStart = true
             draggingEnd = true
         }
     }
 
     override func mouseDragged(with event: NSEvent) {
-        print("arrow mouse Dragged")
-        let location = convert(event.locationInWindow, from: nil)
+//        print("arrow mouse Dragged")
+//        let location = convert(event.locationInWindow, from: nil)
+        let location = superview!.convert(event.locationInWindow, from: nil)
+        
+        let offsetX = (location.x - startMouseDownLocation.x) / ratio
+        let offsetY = (location.y - startMouseDownLocation.y) / ratio
+        
+        print("offX:\(offsetX)    offY:\(offsetY)   ratio:\(ratio)")
         
         if draggingStart {
-            print("s:\(startPoint):L:\(location)")
-            startPoint = location
-            needsDisplay = true
-        } else if draggingEnd {
-            endPoint = location
-            needsDisplay = true
+            arrowComponent.startPoint = CGPoint(x: startMouseDownStartPoint.x + offsetX,
+                                                y: startMouseDownStartPoint.y + offsetY)
         }
+        if draggingEnd{
+            arrowComponent.endPoint = CGPoint(x: startMouseDownEndPoint.x + offsetX,
+                                              y: startMouseDownEndPoint.y + offsetY)
+        }
+        self.frame = arrowComponent.framRect(ratio: ratio)
+
+    
+//        needsDisplay = true
+        
+        
+//        if draggingStart {
+//            arrowComponent.startPoint = CGPoint(x: startMouseDownPoint.x + offsetX, y: startMouseDownPoint.y + offsetY)
+//            
+////            print("s:\(arrowComponent.startPoint):L:\(location)")
+//            self.frame = arrowComponent.framRect(ratio: ratio)
+//
+//            needsDisplay = true
+//        } else if draggingEnd {
+//            arrowComponent.endPoint = CGPoint(x: startMouseDownPoint.x + offsetX, y: startMouseDownPoint.y + offsetY)
+//            self.frame = arrowComponent.framRect(ratio: ratio)
+//
+//            needsDisplay = true
+//        }
     }
 
     override func mouseUp(with event: NSEvent) {
         print("arrow mouse UP")
+        endEditAction?(arrowComponent)
         draggingStart = false
         draggingEnd = false
     }

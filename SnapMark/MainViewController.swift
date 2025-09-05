@@ -105,11 +105,6 @@ class MainViewController: NSViewController {
         documentView.cornerRadius = conerRadiusSelected[selectConerRadius.indexOfSelectedItem]
         documentView.editMode = .ARROW
 
-        //初始化編輯區
-        if let image = theImageView.image{
-            editingImage = image
-            setImage()
-        }
 
         //新增物件時的動作
         documentView.startAction = {
@@ -167,6 +162,14 @@ class MainViewController: NSViewController {
             window.setFrame(centeredRect, display: true)
             window.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
             setModeDisplayUI()
+            //初始化編輯區
+            if let image = theImageView.image{
+                editingImage = image
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                    self.setImage()
+                }
+            }
+
         }
         
 
@@ -192,6 +195,8 @@ class MainViewController: NSViewController {
         }
      
 
+        documentView.selectedSubView = nil
+        
         //重繪標註文件
         for index in 0..<components.count{
             var component = components[index]
@@ -200,15 +205,20 @@ class MainViewController: NSViewController {
                 let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
                 arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
                 arrowView.ratio = ratioSlider.doubleValue
-                arrowView.color = component.color
                 self.documentView.addSubview(arrowView)
                 if component.isMouseOverMode{
                     let editView = SelectView(frame: arrowView.frame)
                     self.documentView.addSubview(editView)
                 }
-                
-                //TODO: 測試編輯箭頭
                 arrowView.enableEdit =  component.isSelected
+                if component.isSelected {
+                    documentView.selectedSubView = arrowView
+                }
+                arrowView.endEditAction = {
+                    self.components[index] = $0
+                    self.reDrawComponts()
+                    self.itemCollectionView.reloadData()
+                }
                 
             
             case .BOX:
@@ -383,12 +393,19 @@ class MainViewController: NSViewController {
     //重繪底圖
     func setImage(){
         if let newImage = resizedImage(editingImage, scale: ratioSlider.doubleValue){
-            self.contentWidth.constant = min(self.contentContainerView.frame.width - 16, newImage.size.width - 1) + 16
-            self.contentHeight.constant = min(self.contentContainerView.frame.height - 16, newImage.size.height - 1) + 16
-            self.setModeDisplayUI()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01){
+            //因為與 UI 相關，放在主執行緒才會出現預期的畫面，並利用時間差來正確製造正確的順序與大小
+            self.theImageView.image = newImage
+            DispatchQueue.main.async{
+//                self.contentWidth.constant = min(self.contentContainerView.frame.width - 16, newImage.size.width - 1) + 16
+//                self.contentHeight.constant = min(self.contentContainerView.frame.height - 16, newImage.size.height - 1) + 16
+                self.contentWidth.constant = min(self.contentContainerView.frame.width, newImage.size.width ) 
+                self.contentHeight.constant = min(self.contentContainerView.frame.height, newImage.size.height)
+                
+                self.setModeDisplayUI()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.02){
                 self.documentView.frame.size = newImage.size
-                self.theImageView.image = newImage
+
                 self.theImageView.frame = self.documentView.bounds
                 self.reDrawComponts()
             }
@@ -403,7 +420,8 @@ class MainViewController: NSViewController {
             self?.editingImage = image
             self?.components.removeAll()
             self?.setImage()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+            self?.itemCollectionView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
                 self?.setFitWindowRatio(image)
             }
         }
@@ -540,7 +558,7 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             componentViewItem.itemBox.title = "Arrow"
             let arrowView = ArrowView(frame: component.framRect(ratio: 1))
             arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-            arrowView.color = component.color
+            arrowView.arrowComponent.color = component.color
             let newVeiwSeting = aspectFitRectAndScale(contentRect: arrowView.frame, containerRect: componentViewItem.preView.bounds)
             arrowView.ratio = newVeiwSeting.scale
             arrowView.frame = newVeiwSeting.rect
