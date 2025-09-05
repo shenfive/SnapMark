@@ -43,6 +43,8 @@ class MainViewController: NSViewController {
 //    //控制顯示
 //    let cView = ControlView()
     
+    
+    
     //附加元件
     var components:[Component] = []
     
@@ -51,7 +53,7 @@ class MainViewController: NSViewController {
     var controller:ScreenCaptureController? = ScreenCaptureController()
     
     //編輯中的影像
-    var editingImage:NSImage = NSImage()
+    var editingImage:NSImage = NSImage(named: "start2") ?? NSImage()
     
     //頁面的 Window
     var window:NSWindow!
@@ -69,7 +71,9 @@ class MainViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        setImage()
+        
+        
         //Collection View 設定
         itemCollectionView.delegate = self
         itemCollectionView.dataSource = self
@@ -181,6 +185,7 @@ class MainViewController: NSViewController {
             object: self.window
         )
     }
+    
     
     
     //MARK: 重畫所有元件
@@ -414,7 +419,7 @@ class MainViewController: NSViewController {
     
     
     //MARK: 新增拮圖
-    @IBAction func newSnap(_ sender: NSButton) {
+    @IBAction func newSnap(_ sender: Any) {
         guard let mainWindow = self.view.window else { return }
         controller?.onCaptureComplete = { [weak self] image in
             self?.editingImage = image
