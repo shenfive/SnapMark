@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24127" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24127"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="BoxView" customModule="SnapMark" customModuleProvider="target">
             <connections>
+                <outlet property="endPointerView" destination="wVD-gm-4Rw" id="ESW-hl-Y2r"/>
+                <outlet property="selectView" destination="xde-FT-ppM" id="rSI-Mx-q7P"/>
+                <outlet property="startPointerView" destination="8fh-o6-YrW" id="C2D-f8-5MK"/>
                 <outlet property="theBoxView" destination="FWX-5b-tpH" id="fqr-Ev-HrW"/>
             </connections>
         </customObject>
@@ -19,15 +22,46 @@
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="FWX-5b-tpH">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="GjC-s1-4CE">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="GjC-s1-4CE" secondAttribute="bottom" id="9GY-co-ptu"/>
+                        <constraint firstItem="GjC-s1-4CE" firstAttribute="top" secondItem="FWX-5b-tpH" secondAttribute="top" id="9Ul-dk-YSu"/>
+                        <constraint firstItem="GjC-s1-4CE" firstAttribute="leading" secondItem="FWX-5b-tpH" secondAttribute="leading" id="af7-IG-0ay"/>
+                        <constraint firstAttribute="trailing" secondItem="GjC-s1-4CE" secondAttribute="trailing" id="oJC-vs-X7G"/>
+                    </constraints>
                 </customView>
+                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xde-FT-ppM" customClass="SelectView" customModule="SnapMark" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                </customView>
+                <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8fh-o6-YrW">
+                    <rect key="frame" x="10" y="167" width="38" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="aLv-wd-ouY"/>
+                </imageView>
+                <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wVD-gm-4Rw">
+                    <rect key="frame" x="10" y="245" width="17" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="tsN-xA-kf4"/>
+                </imageView>
             </subviews>
             <constraints>
+                <constraint firstItem="xde-FT-ppM" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="5fg-P4-BZb"/>
+                <constraint firstAttribute="trailing" secondItem="xde-FT-ppM" secondAttribute="trailing" id="7O8-wZ-eeh"/>
                 <constraint firstAttribute="trailing" secondItem="FWX-5b-tpH" secondAttribute="trailing" id="BSF-xR-QJt"/>
+                <constraint firstAttribute="bottom" secondItem="xde-FT-ppM" secondAttribute="bottom" id="Ibm-1K-qm1"/>
                 <constraint firstItem="FWX-5b-tpH" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="Yvf-eN-nua"/>
                 <constraint firstAttribute="bottom" secondItem="FWX-5b-tpH" secondAttribute="bottom" id="bS2-mJ-cDB"/>
+                <constraint firstItem="xde-FT-ppM" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="tWT-jt-Bvg"/>
                 <constraint firstItem="FWX-5b-tpH" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="yBX-zo-G53"/>
             </constraints>
             <point key="canvasLocation" x="132" y="-72"/>
         </customView>
     </objects>
+    <resources>
+        <image name="icon_controlpoint_8point" width="17" height="17"/>
+    </resources>
 </document>

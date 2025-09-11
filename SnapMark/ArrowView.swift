@@ -10,11 +10,7 @@ import Cocoa
 
 class ArrowView: NSView {
     
-//    var boardWidth = 4.0
     var arrowComponent:Component = Component()
-//    var startPoint = CGPoint(x: 0, y: 0)
-//    var endPoint = CGPoint(x: 0, y: 0)
-//    var color:NSColor = NSColor.systemRed
     var ratio:Double = 1
     var outLine = true
     var outLineColor = NSColor.white
@@ -29,6 +25,7 @@ class ArrowView: NSView {
     @IBOutlet weak var startPointerView:NSImageView!
     @IBOutlet weak var endPointerView:NSImageView!
     
+    @IBOutlet weak var selectView: SelectView!
     
     
     var enableEdit:Bool {
@@ -39,12 +36,13 @@ class ArrowView: NSView {
             _enableEdit = newValue
             startPointerView.isHidden = !newValue
             endPointerView.isHidden = !newValue
+            selectView.isHidden = !newValue
+            
         }
     }
     
     override func hitTest(_ point: NSPoint) -> NSView? {
         return enableEdit &&  bounds.contains(point) ? self : nil
-//        return nil
     }
     
     
@@ -52,7 +50,6 @@ class ArrowView: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         
-//        print("draw:\(arrowComponent.startPoint)")
 
         // 計算方向向量
         let dx = arrowComponent.endPoint.x - arrowComponent.startPoint.x
@@ -155,48 +152,13 @@ class ArrowView: NSView {
             updatePointerViews()
         }
     }
-    
-//    func updatePointerViews() {
-//        // 計算方向向量
-//        let dx = arrowComponent.endPoint.x - arrowComponent.startPoint.x
-//        let dy = arrowComponent.endPoint.y - arrowComponent.startPoint.y
-//
-//        let lineStartPoint = CGPoint(
-//            x: dx >= 0 ? 0 : bounds.width,
-//            y: dy >= 0 ? 0 : bounds.height
-//        )
-//        let lineEndPoint = CGPoint(
-//            x: dx >= 0 ? bounds.width : 0,
-//            y: dy >= 0 ? bounds.height : 0
-//        )
-//
-//        // 設定 ImageView 的大小（可依照圖片大小或固定尺寸）
-//        let pointerSize = NSSize(width: 25, height: 25)
-//
-//        // 更新 startPointerView 的位置
-//        startPointerView.frame = NSRect(
-//            origin: CGPoint(
-//                x: lineStartPoint.x - pointerSize.width / 2,
-//                y: lineStartPoint.y - pointerSize.height / 2
-//            ),
-//            size: pointerSize
-//        )
-//
-//        // 更新 endPointerView 的位置
-//        endPointerView.frame = NSRect(
-//            origin: CGPoint(
-//                x: lineEndPoint.x - pointerSize.width / 2,
-//                y: lineEndPoint.y - pointerSize.height / 2
-//            ),
-//            size: pointerSize
-//        )
-//    }
-    
+
+    //繪製編輯控制項
     func updatePointerViews() {
         let dx = arrowComponent.endPoint.x - arrowComponent.startPoint.x
         let dy = arrowComponent.endPoint.y - arrowComponent.startPoint.y
 
-        let inset: CGFloat = 10.0  // 內縮量
+        let inset: CGFloat = 5  // 內縮量
 
         let lineStartPoint = CGPoint(
             x: dx >= 0 ? inset : bounds.width - inset,
@@ -207,7 +169,7 @@ class ArrowView: NSView {
             y: dy >= 0 ? bounds.height - inset : inset
         )
 
-        let pointerSize = NSSize(width: 25, height: 25)
+        let pointerSize = NSSize(width: 20, height: 20)
 
         startPointerView.frame = NSRect(
             origin: CGPoint(
@@ -230,10 +192,7 @@ class ArrowView: NSView {
 
     func setComponentData(component:Component,ratio:Double){
         arrowComponent = component
-        
         self.ratio = ratio
-//        color = component.color
-//        boardWidth = component.boardWidth
     }
     
     
@@ -243,10 +202,7 @@ class ArrowView: NSView {
     var startMouseDownEndPoint:CGPoint = .zero
 
     override func mouseDown(with event: NSEvent) {
-        print("arrow mouse down")
-//        let location = convert(event.locationInWindow, from: nil)
         let location = superview!.convert(event.locationInWindow, from: nil)
-        print("location:\(location)\nstart:\(arrowComponent.startPoint)\nend\(arrowComponent.endPoint)")
         
         startMouseDownLocation = location
         startMouseDownEndPoint = arrowComponent.endPoint
@@ -270,14 +226,11 @@ class ArrowView: NSView {
     }
 
     override func mouseDragged(with event: NSEvent) {
-//        print("arrow mouse Dragged")
-//        let location = convert(event.locationInWindow, from: nil)
         let location = superview!.convert(event.locationInWindow, from: nil)
         
         let offsetX = (location.x - startMouseDownLocation.x) / ratio
         let offsetY = (location.y - startMouseDownLocation.y) / ratio
         
-        print("offX:\(offsetX)    offY:\(offsetY)   ratio:\(ratio)")
         
         if draggingStart {
             arrowComponent.startPoint = CGPoint(x: startMouseDownStartPoint.x + offsetX,
@@ -289,23 +242,6 @@ class ArrowView: NSView {
         }
         self.frame = arrowComponent.framRect(ratio: ratio)
 
-    
-//        needsDisplay = true
-        
-        
-//        if draggingStart {
-//            arrowComponent.startPoint = CGPoint(x: startMouseDownPoint.x + offsetX, y: startMouseDownPoint.y + offsetY)
-//            
-////            print("s:\(arrowComponent.startPoint):L:\(location)")
-//            self.frame = arrowComponent.framRect(ratio: ratio)
-//
-//            needsDisplay = true
-//        } else if draggingEnd {
-//            arrowComponent.endPoint = CGPoint(x: startMouseDownPoint.x + offsetX, y: startMouseDownPoint.y + offsetY)
-//            self.frame = arrowComponent.framRect(ratio: ratio)
-//
-//            needsDisplay = true
-//        }
     }
 
     override func mouseUp(with event: NSEvent) {
@@ -350,8 +286,6 @@ class ArrowView: NSView {
         startPointerView.wantsLayer = true
         startPointerView.canDrawSubviewsIntoLayer = true
         startPointerView.postsFrameChangedNotifications = true
-//        startPointerView.addTrackingArea(...) // 可選
-
         endPointerView.wantsLayer = true
         endPointerView.canDrawSubviewsIntoLayer = true
 

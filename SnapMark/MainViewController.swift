@@ -162,7 +162,7 @@ class MainViewController: NSViewController {
             let originX = (screenFrame.width - windowSize.width) / 2
             let originY = (screenFrame.height - windowSize.height) / 2
             let centeredRect = NSRect(origin: CGPoint(x: originX, y: originY), size: windowSize)
-            
+            window.minSize = NSSize(width: 700, height: 500)
             window.setFrame(centeredRect, display: true)
             window.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
             setModeDisplayUI()
@@ -209,7 +209,6 @@ class MainViewController: NSViewController {
             case .ARROW:
                 let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
                 arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-                arrowView.ratio = ratioSlider.doubleValue
                 self.documentView.addSubview(arrowView)
                 if component.isMouseOverMode{
                     let editView = SelectView(frame: arrowView.frame)
@@ -229,15 +228,23 @@ class MainViewController: NSViewController {
             case .BOX:
                 let boxView = BoxView(frame: component.framRect(ratio: ratioSlider.doubleValue))
                 boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-                boxView.ratio = ratioSlider.doubleValue
-                boxView.color = component.color
+       
                 self.documentView.addSubview(boxView)
-                print("b:\(boxView.frame)")
                 if component.isMouseOverMode{
                     let editView = SelectView(frame: boxView.frame)
                     print("e:\(editView.frame)")
                     self.documentView.addSubview(editView)
                 }
+                boxView.enableEdit = component.isSelected
+                if component.isSelected {
+                    documentView.selectedSubView = boxView
+                }
+                boxView.endEditAction = {
+                    self.components[index] = $0
+                    self.reDrawComponts()
+                    self.itemCollectionView.reloadData()
+                }
+                
        
             case .TEXT:
                 print("show:\(index) string:\(component.text)")
@@ -532,11 +539,17 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
         componentViewItem.view.bounds.size = cellSize
         componentViewItem.itemBox.bounds.size = cellSize
         componentViewItem.componentId = indexPath.item
+        
+        //按下去時的動作
         componentViewItem.selectAction = {
-            for index in 0..<self.components.count{
-                self.components[index].isSelected = false
+            if self.components[$0].isSelected == true {
+                self.components[$0].isSelected = false
+            }else{
+                for index in 0..<self.components.count{
+                    self.components[index].isSelected = false
+                }
+                self.components[$0].isSelected = true
             }
-            self.components[$0].isSelected = true
             self.itemCollectionView.reloadData()
             self.reDrawComponts()
         }
@@ -551,11 +564,35 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
                 self.components[$0].isMouseOverMode = true
                 self.reDrawComponts()
             }
+            componentViewItem.deleteButton.isHidden = false
         }
         componentViewItem.mouseOverExitAction = {
             print("on Main Exit:\($0)")
             self.components[$0].isMouseOverMode = false
+            componentViewItem.deleteButton.isHidden = true
             self.reDrawComponts()
+        }
+        componentViewItem.deleteAction = {
+            let alert = NSAlert()
+            alert.messageText = "提示"
+            alert.informativeText = "刪除這個元件？"
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "確定")
+            alert.addButton(withTitle: "取消")
+
+            // 指定圖示
+            if let image = snapshot(of: componentViewItem.preView) {
+                alert.icon = image
+            }
+            
+            
+            let response = alert.runModal()
+            if response == .alertFirstButtonReturn {
+                // 使用者按下「確定」
+                self.components.remove(at: indexPath.item)
+                self.reDrawComponts()
+                self.itemCollectionView.reloadData()
+            }
         }
 
         switch component.componentType{
@@ -563,7 +600,6 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             componentViewItem.itemBox.title = "Arrow"
             let arrowView = ArrowView(frame: component.framRect(ratio: 1))
             arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-            arrowView.arrowComponent.color = component.color
             let newVeiwSeting = aspectFitRectAndScale(contentRect: arrowView.frame, containerRect: componentViewItem.preView.bounds)
             arrowView.ratio = newVeiwSeting.scale
             arrowView.frame = newVeiwSeting.rect
@@ -572,13 +608,12 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             componentViewItem.itemBox.title = "Box"
             let boxView = BoxView(frame: component.framRect(ratio: 1))
             boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-            boxView.color = component.color
+    
             let newVeiwSeting = aspectFitRectAndScale(contentRect: boxView.frame, containerRect: componentViewItem.preView.bounds)
             boxView.ratio = newVeiwSeting.scale
             boxView.frame = newVeiwSeting.rect
-         
             componentViewItem.preView.addSubview(boxView)
-            break
+       
         case .TEXT:
             componentViewItem.itemBox.title = "Text.\(component.text)"
             let textView = TextView(frame: component.framRect(ratio: 1))

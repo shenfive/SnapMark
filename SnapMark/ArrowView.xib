@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24127" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24127"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ArrowView" customModule="SnapMark" customModuleProvider="target">
             <connections>
                 <outlet property="endPointerView" destination="2nf-8d-WsN" id="0Lr-ur-Wra"/>
+                <outlet property="selectView" destination="qU7-Kc-Wdk" id="z0P-3e-W0Y"/>
                 <outlet property="startPointerView" destination="5DU-1k-DhY" id="fCJ-ck-9rg"/>
             </connections>
         </customObject>
@@ -18,6 +19,9 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
+                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qU7-Kc-Wdk" customClass="SelectView" customModule="SnapMark" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+                </customView>
                 <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5DU-1k-DhY">
                     <rect key="frame" x="72" y="204" width="38" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -29,6 +33,12 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_controlpoint_8point" id="krr-Bk-9Kb"/>
                 </imageView>
             </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="qU7-Kc-Wdk" secondAttribute="bottom" id="N4F-eu-GmR"/>
+                <constraint firstItem="qU7-Kc-Wdk" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="QwU-gG-VOZ"/>
+                <constraint firstAttribute="trailing" secondItem="qU7-Kc-Wdk" secondAttribute="trailing" id="fNT-Cx-o4F"/>
+                <constraint firstItem="qU7-Kc-Wdk" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="uFG-F9-waZ"/>
+            </constraints>
             <point key="canvasLocation" x="140" y="154"/>
         </customView>
     </objects>

@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import UniformTypeIdentifiers
 
 class LauncherViewController: NSViewController {
     
@@ -76,4 +77,28 @@ class LauncherViewController: NSViewController {
         }
         controller?.startCapture(from: mainWindow)
     }
+    
+    @IBAction func actionWithReadFile(_ sender: Any) {
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = [
+            UTType.png,
+            UTType.jpeg,
+            UTType.gif,
+            UTType.tiff,
+            UTType.bmp,
+            UTType.heic
+        ]
+        panel.canChooseFiles = true
+        panel.canChooseDirectories = false
+        panel.allowsMultipleSelection = false
+        panel.title = "選擇一張圖片"
+
+        if panel.runModal() == .OK, let url = panel.url {
+            if let image  = NSImage(contentsOf: url){
+                self.newImage = image
+                self.performSegue(withIdentifier: "goMain", sender: nil)
+            }
+        }
+    }
+    
 }

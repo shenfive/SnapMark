@@ -13,11 +13,13 @@ class ComponentViewItem: NSCollectionViewItem {
 
     @IBOutlet weak var itemBox: NSBox!
     @IBOutlet weak var preView: PreviewView!
+    @IBOutlet weak var deleteButton: NSButton!
     
     var componentId:Int = 999
     var selectAction:((Int)->())? = nil
     var mouseOverEnterAction:((Int)->())? = nil
     var mouseOverExitAction:((Int)->())? = nil
+    var deleteAction:(()->())? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,7 @@ class ComponentViewItem: NSCollectionViewItem {
         preView.componentId = componentId
         preView.mouseOverEnterAction = mouseOverEnterAction
         preView.mouseOverExitAction = mouseOverExitAction
+        deleteButton.isHidden = true
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -38,5 +41,8 @@ class ComponentViewItem: NSCollectionViewItem {
         selectAction?(componentId)
     }
     
-
+    @IBAction func deleteAction(_ sender: Any) {
+        deleteAction?()
+    }
+    
 }

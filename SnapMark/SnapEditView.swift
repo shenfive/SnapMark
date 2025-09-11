@@ -68,11 +68,11 @@ class SnapEditView: NSView {
             arrowView.ratio = ratio
             newView.addSubview(arrowView)
         case .BOX:
-            boxView.color = color
-            boxView.boardWidth = boardWidth
+            boxView.boxComponent.color = color
+            boxView.boxComponent.boardWidth = boardWidth
             boxView.ratio = ratio
             boxView.frame = newView.bounds
-            boxView.cornerRadius = cornerRadius
+            boxView.boxComponent.cornerRadius = cornerRadius
             newView.addSubview(boxView)
         }
         
@@ -103,9 +103,9 @@ class SnapEditView: NSView {
             arrowView.arrowComponent.color = color
             arrowView.arrowComponent.boardWidth = boardWidth
         case .BOX:
-            boxView.color = color
-            boxView.cornerRadius = cornerRadius
-            boxView.boardWidth = boardWidth
+            boxView.boxComponent.color = color
+            boxView.boxComponent.cornerRadius = cornerRadius
+            boxView.boxComponent.boardWidth = boardWidth
         }  
     }
 
@@ -175,6 +175,7 @@ class SnapEditView: NSView {
                              fontName: font.fontName,
                              fontSize: font.pointSize)
         case .ARROW:
+            
             return Component(componentType: .ARROW,
                              startPoint: NSPoint(x: startPoint.x / ratio, y: startPoint.y / ratio) ,
                              endPoint: NSPoint(x: endPoint.x / ratio, y: endPoint.y / ratio) ,
@@ -182,9 +183,13 @@ class SnapEditView: NSView {
                              boardWidth: boardWidth,
                              cornerRadius: cornerRadius)
         case .BOX:
+            let minX = min(startPoint.x, endPoint.x)
+            let maxX = max(startPoint.x, endPoint.x)
+            let minY = min(startPoint.y, endPoint.y)
+            let maxY = max(startPoint.y, endPoint.y)
             return Component(componentType: .BOX,
-                             startPoint: NSPoint(x: startPoint.x / ratio, y: startPoint.y / ratio) ,
-                             endPoint: NSPoint(x: endPoint.x / ratio, y: endPoint.y / ratio) ,
+                             startPoint: NSPoint(x:minX / ratio, y: minY / ratio) ,
+                             endPoint: NSPoint(x: maxX / ratio, y: maxY / ratio) ,
                              color: color,
                              boardWidth: boardWidth,
                              cornerRadius: cornerRadius)

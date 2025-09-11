@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24127" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24127"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ComponentViewItem" customModule="SnapMark" customModuleProvider="target">
             <connections>
+                <outlet property="deleteButton" destination="CdT-6u-CmH" id="EcE-0v-YKM"/>
                 <outlet property="itemBox" destination="iT3-pj-Xr9" id="ACE-4E-wD7"/>
                 <outlet property="preView" destination="BrF-Jc-A3j" id="l5j-ff-CG6"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -28,11 +29,23 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="BrF-Jc-A3j" customClass="PreviewView" customModule="SnapMark" customModuleProvider="target">
                                 <rect key="frame" x="5" y="5" width="89" height="62"/>
                             </customView>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="CdT-6u-CmH">
+                                <rect key="frame" x="24" y="-2" width="52" height="25"/>
+                                <buttonCell key="cell" type="squareTextured" title="Delete" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zzu-Gm-LyA">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="deleteAction:" target="-2" id="RNb-ae-gva"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="BrF-Jc-A3j" firstAttribute="top" secondItem="C9H-Vb-MIf" secondAttribute="top" constant="5" id="1Nx-JS-9jT"/>
                             <constraint firstAttribute="trailing" secondItem="BrF-Jc-A3j" secondAttribute="trailing" constant="5" id="E3l-mX-Ar3"/>
                             <constraint firstAttribute="bottom" secondItem="BrF-Jc-A3j" secondAttribute="bottom" constant="5" id="Lir-wW-ww6"/>
+                            <constraint firstAttribute="bottom" secondItem="CdT-6u-CmH" secondAttribute="bottom" id="P3m-AW-RBs"/>
+                            <constraint firstItem="CdT-6u-CmH" firstAttribute="centerX" secondItem="C9H-Vb-MIf" secondAttribute="centerX" id="cnk-jq-E6Q"/>
                             <constraint firstItem="BrF-Jc-A3j" firstAttribute="leading" secondItem="C9H-Vb-MIf" secondAttribute="leading" constant="5" id="fL5-at-htE"/>
                         </constraints>
                     </view>
@@ -46,7 +59,7 @@
                 <constraint firstItem="iT3-pj-Xr9" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="2" id="eJi-tY-cAn"/>
                 <constraint firstAttribute="bottom" secondItem="iT3-pj-Xr9" secondAttribute="bottom" id="gU6-a3-Rok"/>
             </constraints>
-            <point key="canvasLocation" x="-83.5" y="65"/>
+            <point key="canvasLocation" x="-296" y="24"/>
         </customView>
     </objects>
 </document>

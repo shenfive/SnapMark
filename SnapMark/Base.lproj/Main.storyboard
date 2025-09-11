@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24127"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -680,7 +680,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="24" y="-217"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -691,6 +691,7 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="600" height="400"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <value key="minSize" type="size" width="600" height="400"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
@@ -701,7 +702,7 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="247"/>
+            <point key="canvasLocation" x="56" y="145"/>
         </scene>
         <!--Launcher View Controller-->
         <scene sceneID="9pW-iY-L9B">
@@ -712,31 +713,45 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="KAw-Zi-1cY">
-                                <rect key="frame" x="160" y="140" width="100" height="107"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="character.book.closed.fill.zh" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yPa-NO-iYR">
+                                <rect key="frame" x="160" y="123" width="100" height="144"/>
+                                <buttonCell key="cell" type="square" title="直接進入" bezelStyle="shadowlessSquare" image="character.book.closed.fill.zh" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yPa-NO-iYR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="IXp-eh-hEk"/>
-                                    <constraint firstAttribute="height" constant="100" id="p8y-KZ-sZE"/>
+                                    <constraint firstAttribute="height" constant="140" id="p8y-KZ-sZE"/>
                                 </constraints>
                                 <connections>
                                     <action selector="action:" target="R18-HF-aZU" id="7fq-1W-Qf5"/>
                                 </connections>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="hay-e7-BCX">
-                                <rect key="frame" x="300" y="140" width="100" height="106"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TME-Ba-1D6">
+                                <rect key="frame" x="300" y="123" width="100" height="143"/>
+                                <buttonCell key="cell" type="square" title="拮圖" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TME-Ba-1D6">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="RZq-Hp-5Qr"/>
-                                    <constraint firstAttribute="height" constant="100" id="yBm-D5-35p"/>
+                                    <constraint firstAttribute="height" constant="140" id="yBm-D5-35p"/>
                                 </constraints>
                                 <connections>
                                     <action selector="actionWithNewSnap:" target="R18-HF-aZU" id="B3o-Vj-5bJ"/>
+                                </connections>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="KIO-cf-c01">
+                                <rect key="frame" x="440" y="123" width="100" height="143"/>
+                                <buttonCell key="cell" type="square" title="讀取圖檔" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="7nl-Jv-Qx6">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="140" id="7NC-Jv-nmG"/>
+                                    <constraint firstAttribute="width" constant="100" id="QfN-aI-DCu"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="actionWithReadFile:" target="R18-HF-aZU" id="hhF-1B-GbS"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -744,6 +759,8 @@
                             <constraint firstItem="KAw-Zi-1cY" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="Mx3-9u-2qm"/>
                             <constraint firstItem="hay-e7-BCX" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="Nsj-Ox-qUk"/>
                             <constraint firstItem="hay-e7-BCX" firstAttribute="centerX" secondItem="w95-pC-OM1" secondAttribute="centerX" id="PII-cp-VrV"/>
+                            <constraint firstItem="KIO-cf-c01" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="X1c-4o-Age"/>
+                            <constraint firstItem="KIO-cf-c01" firstAttribute="centerX" secondItem="w95-pC-OM1" secondAttribute="centerX" multiplier="1.4" id="dE8-9P-xFz"/>
                             <constraint firstItem="KAw-Zi-1cY" firstAttribute="centerX" secondItem="w95-pC-OM1" secondAttribute="centerX" multiplier="0.6" id="faX-As-nWU"/>
                         </constraints>
                     </view>
@@ -753,7 +770,7 @@
                 </viewController>
                 <customObject id="QOc-qu-mXt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="932" y="239.5"/>
+            <point key="canvasLocation" x="931" y="138"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -879,7 +896,7 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="u2x-4v-ZxW">
-                                <rect key="frame" x="80" y="500" width="820" height="100"/>
+                                <rect key="frame" x="80" y="620" width="820" height="100"/>
                                 <subviews>
                                     <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="sXZ-cJ-0Cz">
                                         <rect key="frame" x="0.0" y="0.0" width="820" height="100"/>
