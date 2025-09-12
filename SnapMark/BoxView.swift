@@ -128,6 +128,14 @@ class BoxView: NSView {
     
     override func mouseUp(with event: NSEvent) {
         print("arrow mouse UP")
+        let minX = min(boxComponent.startPoint.x, boxComponent.endPoint.x)
+        let maxX = max(boxComponent.startPoint.x, boxComponent.endPoint.x)
+        let minY = min(boxComponent.startPoint.y, boxComponent.endPoint.y)
+        let maxY = max(boxComponent.startPoint.y, boxComponent.endPoint.y)
+        
+        boxComponent.startPoint = NSPoint(x: minX / ratio, y: minY / ratio)
+        boxComponent.endPoint = NSPoint(x: maxX / ratio, y: maxY / ratio)
+        
         endEditAction?(boxComponent)
         draggingStart = false
         draggingEnd = false

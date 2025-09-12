@@ -248,15 +248,17 @@ class MainViewController: NSViewController {
        
             case .TEXT:
                 print("show:\(index) string:\(component.text)")
-                let textView = TextView(frame: component.framRect(ratio: ratioSlider.doubleValue))
-                textView.ratio = ratioSlider.doubleValue
-                textView.color = component.color
-                textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
-                textView.enableEdit = false
-                textView.textField.stringValue = component.text
-                textView.fitSize()
-                
+                let textView = TextView()
                 textView.dataIndex = index
+                textView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+//                textView.ratio = ratioSlider.doubleValue
+//                textView.color = component.color
+//                textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
+//                textView.enableEdit = false
+//                textView.textField.stringValue = component.text
+//                textView.fitSize()
+//                
+//                textView.dataIndex = index
                 textView.changeTextCallBack = { newString, dataIndex in
                     self.components[dataIndex].text = newString
                     self.itemCollectionView.reloadItems(at: [IndexPath(item: dataIndex, section: 0)])
@@ -268,8 +270,9 @@ class MainViewController: NSViewController {
                     self.reDrawComponts()
                 }
                 self.documentView.addSubview(textView)
+                textView.enableEdit = component.isSelected
                 if component.isSelected{
-                    textView.enableEdit = true
+                    documentView.selectedSubView = textView
                 }
                 if component.isMouseOverMode{
                     let editView = SelectView(frame: textView.frame)
@@ -615,13 +618,13 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             componentViewItem.preView.addSubview(boxView)
        
         case .TEXT:
-            componentViewItem.itemBox.title = "Text.\(component.text)"
-            let textView = TextView(frame: component.framRect(ratio: 1))
-            textView.textField.stringValue = component.text
-            textView.color = component.color
-            textView.enableEdit = false
-            textView.strokeWidth = 0
-            textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
+            let textView = TextView()
+            textView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+//            textView.textField.stringValue = component.text
+//            textView.color = component.color
+//            textView.enableEdit = false
+//            textView.strokeWidth = 0
+//            textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
             textView.frame = componentViewItem.preView.bounds
             textView.isMouseTransparent = true
             componentViewItem.preView.addSubview(textView)

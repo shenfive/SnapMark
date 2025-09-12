@@ -12,19 +12,12 @@ class ArrowView: NSView {
     
     var arrowComponent:Component = Component()
     var ratio:Double = 1
-    var outLine = true
-    var outLineColor = NSColor.white
     var _enableEdit = false
-    
-    
-    var startMouseDownLocation:CGPoint = .zero
-    
     var endEditAction:((Component)->())? = nil
-    
+    var startMouseDownLocation:CGPoint = .zero
     
     @IBOutlet weak var startPointerView:NSImageView!
     @IBOutlet weak var endPointerView:NSImageView!
-    
     @IBOutlet weak var selectView: SelectView!
     
     
@@ -104,15 +97,6 @@ class ArrowView: NSView {
             y: lineEndPoint.y - inset * uy
         )
 
-//        if outLine{
-//            // 主線外框
-//            let outerPath = NSBezierPath()
-//            outerPath.move(to: lineStartPoint)
-//            outerPath.line(to: adjustedEndPoint)
-//            outerPath.lineWidth = (boardWidth * ratio) + 2.0
-//            outLineColor.setStroke()
-//            outerPath.stroke()
-//        }
 
 
         // 主線本體（主色）
@@ -123,17 +107,6 @@ class ArrowView: NSView {
         arrowComponent.color.setStroke()
         innerPath.stroke()
 
-        
-//        if outLine{
-//            // 箭頭左右邊緣描邊
-//            let edgePath = NSBezierPath()
-//            edgePath.move(to: leftPoint)
-//            edgePath.line(to: lineEndPoint)
-//            edgePath.line(to: rightPoint)
-//            outLineColor.setStroke()
-//            edgePath.lineWidth = 1.0
-//            edgePath.stroke()
-//        }
 
         // 箭頭主體（實心三角形）
         let arrowPath = NSBezierPath()
@@ -144,6 +117,8 @@ class ArrowView: NSView {
         arrowComponent.color.setFill()
         arrowPath.fill()
         
+        
+        //陰影外框
         layer?.shadowColor = NSColor.white.cgColor
         layer?.shadowOpacity = 1
         layer?.shadowOffset = .zero

@@ -56,7 +56,7 @@ class SnapEditView: NSView {
         switch editMode {
         case .TEXT:
             textView.frame.origin = newView.frame.origin
-            textView.color = color
+            textView.textComponent.color = color
             textView.ratio = ratio
             textView.setFont(font: font)
             addSubview(textView, positioned: .above, relativeTo: nil)
@@ -97,7 +97,7 @@ class SnapEditView: NSView {
         switch editMode {
         case .TEXT:
             textView.ratio = ratio
-            textView.color = color
+            textView.textComponent.color = color
             textView.setFont(font: font)
         case .ARROW:
             arrowView.arrowComponent.color = color

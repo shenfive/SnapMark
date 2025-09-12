@@ -9,17 +9,23 @@ import Cocoa
 
 class TextView: NSView {
     
+    var textComponent:Component = Component()
+    var ratio:Double = 1
+    var _enableEdit = false
+    var endEditAction:((Component)->())? = nil
+    var startMouseDownLocation:CGPoint = .zero
+    
+    
     @IBOutlet weak var textField: TransparentTextField!
     @IBOutlet weak var frontBox: NSBox!
     @IBOutlet weak var endBox: NSBox!
     
     
-    var startPoint:NSPoint = .zero
-    var color:NSColor = NSColor.blue
-    var ratio:CGFloat = 1.0
+//    var startPoint:NSPoint = .zero
+//    var color:NSColor = NSColor.blue
     
-    var strokeColor:NSColor = .white
-    var strokeWidth:CGFloat = 2.0
+//    var strokeColor:NSColor = .white
+//    var strokeWidth:CGFloat = 2.0
     
     var dataIndex:Int = 99999
     var changeTextCallBack:((String,Int)->())? = nil
@@ -27,14 +33,14 @@ class TextView: NSView {
     
     var enableEdit:Bool  {
         get{
-            return frontBox.isHidden
+            return _enableEdit
         }
         set{
             frontBox.isHidden = !newValue
             endBox.isHidden = !newValue
             textField.isEditable = newValue
             textField.isSelectable = true
-            
+            _enableEdit = newValue
             //自動開始編輯
             if newValue == true {
                 if let window = textField.window {
@@ -42,6 +48,21 @@ class TextView: NSView {
                 }
             }
         }
+    }
+    
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        print("cc:\(enableEdit &&  bounds.contains(point))")
+        print(enableEdit)
+        print(bounds.contains(point))
+        return enableEdit &&  bounds.contains(point) ? self : nil
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        print("text mouseDown")
+    }
+    
+    override func mouseDragged(with event: NSEvent) {
+        print("text mouseDragged")
     }
     
     /// 控制是否讓事件穿透
@@ -60,47 +81,50 @@ class TextView: NSView {
 
         let text = textField.stringValue
         let font = textField.font ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        let shadow = NSShadow()
+        shadow.shadowColor = NSColor.white
+        shadow.shadowOffset = .zero
+        shadow.shadowBlurRadius = 5
+    
 
-        if strokeWidth > 0 {
-            let shadow = NSShadow()
-            shadow.shadowBlurRadius = strokeWidth * ratio
-            shadow.shadowOffset = .zero
-            shadow.shadowColor = strokeColor
-            
-            let attributes: [NSAttributedString.Key: Any] = [
-                .font: font,
-                .foregroundColor: color,
-                .shadow: shadow
-            ]
-            
-            let attributedString = NSAttributedString(string: text, attributes: attributes)
-            attributedString.draw(in: self.bounds.insetBy(dx: 10, dy: 10))
-        }
+        let attributes: [NSAttributedString.Key: Any] = [
+            .shadow: shadow,
+            .font: font,
+            .foregroundColor: textComponent.color
+        ]
+        textField.attributedStringValue = NSAttributedString(string: text, attributes: attributes)
+
     }
     
     
     func fitSize(){
         print("string\(textField.stringValue)")
         textField.sizeToFit()
-        textField.textColor = color
+        textField.textColor = textComponent.color
         let newSize = textField.frame.size
         self.frame.size = NSSize(width: newSize.width + 20,
                                  height: newSize.height + 20)
     }
     
-    func setEditMode(on:Bool){
-        
+    func setComponentData(component:Component,ratio:Double){
+        textComponent = component
+        self.ratio = ratio
+        self.frame = component.framRect(ratio: ratio)
+        setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
+        enableEdit = false
+        textField.stringValue = component.text
+        fitSize()
     }
     
+    
     func setFont(font:NSFont){
-        textField.textColor = color
+        textField.textColor = textComponent.color
         if let theFont = NSFont(name: font.fontName, size: font.pointSize * ratio){
             textField.font = theFont
         }else{
             textField.font = NSFont.systemFont(ofSize: font.pointSize * ratio)
         }
         fitSize()
-//        applyStroke()
     }
     
     func setTextDelegate(){
