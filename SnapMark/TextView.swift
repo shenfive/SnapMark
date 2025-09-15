@@ -57,12 +57,53 @@ class TextView: NSView {
         return enableEdit &&  bounds.contains(point) ? self : nil
     }
     
+    var startMouseDownStartPoint:CGPoint = .zero
+    var startMouseDownEndPoint:CGPoint = .zero
+    
     override func mouseDown(with event: NSEvent) {
         print("text mouseDown")
+        let location = superview!.convert(event.locationInWindow, from: nil)
+        startMouseDownLocation = location
+        startMouseDownStartPoint = textComponent.startPoint
+        startMouseDownEndPoint = textComponent.endPoint
+        textField.window?.makeFirstResponder(self.textField)
+        
     }
     
     override func mouseDragged(with event: NSEvent) {
+        let location = superview!.convert(event.locationInWindow, from: nil)
+        
+        let offsetX = (location.x - startMouseDownLocation.x) / ratio
+        let offsetY = (location.y - startMouseDownLocation.y) / ratio
+        
+        if sqrt(offsetX * offsetX + offsetY * offsetY) > 3 {
+            textField.window?.makeFirstResponder(nil)
+            
+            textComponent.startPoint = CGPoint(x: startMouseDownStartPoint.x + offsetX,
+                                               y: startMouseDownStartPoint.y + offsetY)
+            textComponent.endPoint = CGPoint(x: startMouseDownEndPoint.x + offsetX,
+                                             y: startMouseDownEndPoint.y + offsetY)
+            
+            self.frame = textComponent.framRect(ratio: ratio)
+            
+            fitSize()
+        }
+        
+
+        
         print("text mouseDragged")
+    }
+    
+    override func mouseUp(with event: NSEvent) {
+//        let location = superview!.convert(event.locationInWindow, from: nil)
+//        let offsetX = (location.x - startMouseDownLocation.x) / ratio
+//        let offsetY = (location.y - startMouseDownLocation.y) / ratio
+//        if sqrt(offsetX * offsetX + offsetY * offsetY) > 3 {
+//            
+//            endEditAction?(textComponent)
+//        }
+        endEditAction?(textComponent)
+        print("text mouse UP")
     }
     
     /// 控制是否讓事件穿透

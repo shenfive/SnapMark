@@ -43,10 +43,12 @@ class MainViewController: NSViewController {
 //    //控制顯示
 //    let cView = ControlView()
     
-    
+    //
     
     //附加元件
     var components:[Component] = []
+    
+    var currentFileUrl:URL? = nil
     
     
     //拮取畫面控制器
@@ -186,10 +188,35 @@ class MainViewController: NSViewController {
         )
     }
     
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        SMFireManager.shared.showSavePanel { url in
+   
+            
+            self.currentFileUrl = url
+            self.openFile()
+            
+        }
+    }
+    
+    func openFile(){
+        if let url = self.currentFileUrl {
+            self.currentFileUrl = url
+            do {
+                try SMFireManager.shared.savePackage(to: url, image1: self.editingImage,
+                                                     image2: self.editingImage,
+                                                     json: "")
+            }catch{
+                print(error.localizedDescription)
+            }
+        }
+    }
     
     
     //MARK: 重畫所有元件
     func reDrawComponts(){
+
+//        let _ = getComponentsJSON()
     
         //移除標註文件
         self.documentView.subviews.forEach {
@@ -204,7 +231,7 @@ class MainViewController: NSViewController {
         
         //重繪標註文件
         for index in 0..<components.count{
-            var component = components[index]
+            let component = components[index]
             switch component.componentType{
             case .ARROW:
                 let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
@@ -223,7 +250,6 @@ class MainViewController: NSViewController {
                     self.reDrawComponts()
                     self.itemCollectionView.reloadData()
                 }
-                
             
             case .BOX:
                 let boxView = BoxView(frame: component.framRect(ratio: ratioSlider.doubleValue))
@@ -264,20 +290,38 @@ class MainViewController: NSViewController {
                     self.itemCollectionView.reloadItems(at: [IndexPath(item: dataIndex, section: 0)])
                 }
                 textView.endEdingCallBack = { newString, dataIndex in
+                    print("textView ReDraw")
                     self.components[dataIndex].text = newString
-                    self.components[dataIndex].isSelected = false
+//                    self.components[dataIndex].isSelected = false
                     self.itemCollectionView.reloadItems(at: [IndexPath(item: dataIndex, section: 0)])
                     self.reDrawComponts()
                 }
                 self.documentView.addSubview(textView)
-                textView.enableEdit = component.isSelected
+
                 if component.isSelected{
                     documentView.selectedSubView = textView
+                }
+                textView.enableEdit = component.isSelected
+                textView.endEditAction = {
+                    self.components[index] = $0
+                    self.reDrawComponts()
+                    self.itemCollectionView.reloadData()
                 }
                 if component.isMouseOverMode{
                     let editView = SelectView(frame: textView.frame)
                     self.documentView.addSubview(editView)
                 }
+
+            }
+        }
+        
+        if let url = self.currentFileUrl {
+            self.currentFileUrl = url
+            do {
+                try SMFireManager.shared.updateJSON(in: url,
+                                                    newJSONString: getComponentsJSON() ?? "")
+            }catch{
+                print(error.localizedDescription)
             }
         }
     }
@@ -528,6 +572,26 @@ class MainViewController: NSViewController {
         
         return (rect: newRect, scale: scale)
     }
+    
+    
+    func getComponentsJSON()->String?{
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+
+        do {
+            let jsonData = try encoder.encode(components)
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                print("JSON 字串：\n\(jsonString)")
+                return jsonString
+            }
+        } catch {
+            print("編碼失敗：\(error)")
+            return nil
+        }
+        return nil
+    }
+    
+    
 
 }
 
