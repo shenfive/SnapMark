@@ -10,9 +10,22 @@
 		F81852022E376B6A00183060 /* SnapMark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapMark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F8AD6B812E781CCD00051331 /* Exceptions for "SnapMark" folder in "SnapMark" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F81852012E376B6A00183060 /* SnapMark */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F81852042E376B6A00183060 /* SnapMark */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F8AD6B812E781CCD00051331 /* Exceptions for "SnapMark" folder in "SnapMark" target */,
+			);
 			path = SnapMark;
 			sourceTree = "<group>";
 		};
