@@ -20,6 +20,8 @@ class LauncherViewController: NSViewController {
     
     var newImage:NSImage? = nil
     
+    var selectedURL:URL? = nil
+    
     override func viewWillAppear() {
         super.viewWillAppear()
         
@@ -61,6 +63,10 @@ class LauncherViewController: NSViewController {
             if let newImage{
                 nextVC?.editingImage = newImage
             }
+            if let selectedURL{
+                nextVC?.currentFileUrl = selectedURL
+                
+            }
             
         }
     }
@@ -100,5 +106,25 @@ class LauncherViewController: NSViewController {
             }
         }
     }
+    
+    
+    @IBAction func actionReadCurrentFile(_ sender: Any) {
+        let panel = NSOpenPanel()
+        // 建立自訂的 UTType，對應 .sm 副檔名
+        let smType = UTType(filenameExtension: "sm") ?? UTType.data
+        
+        panel.allowedContentTypes = [smType]
+        panel.canChooseFiles = true
+        panel.canChooseDirectories = false
+        panel.allowsMultipleSelection = false
+        panel.title = "選擇 SnapMark 檔案"
+
+        if panel.runModal() == .OK, let url = panel.url {
+            self.selectedURL = url
+            self.performSegue(withIdentifier: "goMain", sender: nil)
+            
+        }
+    }
+    
     
 }

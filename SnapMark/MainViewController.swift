@@ -48,6 +48,7 @@ class MainViewController: NSViewController {
     //附加元件
     var components:[Component] = []
     
+    // 正在進行的操作檔案位置
     var currentFileUrl:URL? = nil
     
     
@@ -190,12 +191,24 @@ class MainViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        SMFireManager.shared.showSavePanel { url in
-   
-            
-            self.currentFileUrl = url
-            self.openFile()
-            
+        //若沒有檔名，建立新檔案
+        if let url = currentFileUrl{
+            do {
+                let snap = try SMFireManager.shared.loadPackage(from: url)
+                self.editingImage = snap.image1
+                self.setImage()
+                print(snap.metadata)
+                self.components = Component.decodeComponents(from: snap.metadata) ?? []
+                self.reDrawComponts()
+            }catch{
+                
+            }
+
+        }else{
+            SMFireManager.shared.showSavePanel { url in
+                self.currentFileUrl = url
+                self.openFile()
+            }
         }
     }
     

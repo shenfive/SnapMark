@@ -137,4 +137,19 @@ extension Component {
         }
         return nil
     }
+    
+    static func decodeComponents(from jsonString: String) -> [Component]? {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .useDefaultKeys
+
+        guard let data = jsonString.data(using: .utf8) else { return nil }
+
+        do {
+            let components = try decoder.decode([Component].self, from: data)
+            return components
+        } catch {
+            print("解碼失敗：\(error)")
+            return nil
+        }
+    }
 }

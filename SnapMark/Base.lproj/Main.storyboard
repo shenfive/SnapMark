@@ -712,22 +712,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="700" height="385"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="KAw-Zi-1cY">
-                                <rect key="frame" x="160" y="123" width="100" height="144"/>
-                                <buttonCell key="cell" type="square" title="直接進入" bezelStyle="shadowlessSquare" image="character.book.closed.fill.zh" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yPa-NO-iYR">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="IXp-eh-hEk"/>
-                                    <constraint firstAttribute="height" constant="140" id="p8y-KZ-sZE"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="action:" target="R18-HF-aZU" id="7fq-1W-Qf5"/>
-                                </connections>
-                            </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="hay-e7-BCX">
-                                <rect key="frame" x="300" y="123" width="100" height="143"/>
+                                <rect key="frame" x="220" y="123" width="100" height="143"/>
                                 <buttonCell key="cell" type="square" title="拮圖" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TME-Ba-1D6">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -741,7 +727,7 @@
                                 </connections>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="KIO-cf-c01">
-                                <rect key="frame" x="440" y="123" width="100" height="143"/>
+                                <rect key="frame" x="360" y="123" width="100" height="143"/>
                                 <buttonCell key="cell" type="square" title="讀取圖檔" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="7nl-Jv-Qx6">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -754,14 +740,44 @@
                                     <action selector="actionWithReadFile:" target="R18-HF-aZU" id="hhF-1B-GbS"/>
                                 </connections>
                             </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="uBB-i2-AG1">
+                                <rect key="frame" x="500" y="123" width="100" height="143"/>
+                                <buttonCell key="cell" type="square" title="讀取檔案" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jAU-ra-XlW">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="13" name=".PingFangUITextTC-Regular"/>
+                                </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="140" id="Ul0-bJ-CXj"/>
+                                    <constraint firstAttribute="width" constant="100" id="a7E-tj-4M8"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="actionReadCurrentFile:" target="R18-HF-aZU" id="j2U-xc-CPC"/>
+                                </connections>
+                            </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="KAw-Zi-1cY">
+                                <rect key="frame" x="80" y="123" width="100" height="144"/>
+                                <buttonCell key="cell" type="square" title="直接進入" bezelStyle="shadowlessSquare" image="character.book.closed.fill.zh" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yPa-NO-iYR">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="IXp-eh-hEk"/>
+                                    <constraint firstAttribute="height" constant="140" id="p8y-KZ-sZE"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="action:" target="R18-HF-aZU" id="7fq-1W-Qf5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="uBB-i2-AG1" firstAttribute="leading" secondItem="KIO-cf-c01" secondAttribute="trailing" constant="40" id="Fdh-LX-9Dm"/>
+                            <constraint firstItem="KIO-cf-c01" firstAttribute="leading" secondItem="hay-e7-BCX" secondAttribute="trailing" constant="40" id="Ipg-NB-Q7k"/>
                             <constraint firstItem="KAw-Zi-1cY" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="Mx3-9u-2qm"/>
                             <constraint firstItem="hay-e7-BCX" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="Nsj-Ox-qUk"/>
-                            <constraint firstItem="hay-e7-BCX" firstAttribute="centerX" secondItem="w95-pC-OM1" secondAttribute="centerX" id="PII-cp-VrV"/>
+                            <constraint firstItem="hay-e7-BCX" firstAttribute="centerX" secondItem="w95-pC-OM1" secondAttribute="centerX" constant="-80" id="O0Y-ES-Vve"/>
                             <constraint firstItem="KIO-cf-c01" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="X1c-4o-Age"/>
-                            <constraint firstItem="KIO-cf-c01" firstAttribute="centerX" secondItem="w95-pC-OM1" secondAttribute="centerX" multiplier="1.4" id="dE8-9P-xFz"/>
-                            <constraint firstItem="KAw-Zi-1cY" firstAttribute="centerX" secondItem="w95-pC-OM1" secondAttribute="centerX" multiplier="0.6" id="faX-As-nWU"/>
+                            <constraint firstItem="uBB-i2-AG1" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="aiA-xc-wxh"/>
+                            <constraint firstItem="hay-e7-BCX" firstAttribute="leading" secondItem="KAw-Zi-1cY" secondAttribute="trailing" constant="40" id="jMO-ON-aqx"/>
                         </constraints>
                     </view>
                     <connections>
@@ -896,7 +912,7 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="u2x-4v-ZxW">
-                                <rect key="frame" x="80" y="620" width="820" height="100"/>
+                                <rect key="frame" x="80" y="500" width="820" height="100"/>
                                 <subviews>
                                     <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="sXZ-cJ-0Cz">
                                         <rect key="frame" x="0.0" y="0.0" width="820" height="100"/>
