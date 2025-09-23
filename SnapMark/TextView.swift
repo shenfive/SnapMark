@@ -19,14 +19,7 @@ class TextView: NSView {
     @IBOutlet weak var textField: TransparentTextField!
     @IBOutlet weak var frontBox: NSBox!
     @IBOutlet weak var endBox: NSBox!
-    
-    
-//    var startPoint:NSPoint = .zero
-//    var color:NSColor = NSColor.blue
-    
-//    var strokeColor:NSColor = .white
-//    var strokeWidth:CGFloat = 2.0
-    
+        
     var dataIndex:Int = 99999
     var changeTextCallBack:((String,Int)->())? = nil
     var endEdingCallBack:((String,Int)->())? = nil
@@ -88,22 +81,10 @@ class TextView: NSView {
             
             fitSize()
         }
-        
-
-        
-        print("text mouseDragged")
     }
     
     override func mouseUp(with event: NSEvent) {
-//        let location = superview!.convert(event.locationInWindow, from: nil)
-//        let offsetX = (location.x - startMouseDownLocation.x) / ratio
-//        let offsetY = (location.y - startMouseDownLocation.y) / ratio
-//        if sqrt(offsetX * offsetX + offsetY * offsetY) > 3 {
-//            
-//            endEditAction?(textComponent)
-//        }
         endEditAction?(textComponent)
-        print("text mouse UP")
     }
     
     /// 控制是否讓事件穿透
@@ -114,7 +95,6 @@ class TextView: NSView {
         set{
             textField.isMouseTransparent = newValue
         }
-        
     }
     
     override func draw(_ dirtyRect: NSRect) {

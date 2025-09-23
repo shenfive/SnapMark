@@ -28,7 +28,6 @@ class LauncherViewController: NSViewController {
         if let window = self.view.window ,
            let screenFrame = NSScreen.main?.frame {
             // 固定視窗大小
-            
             let windowSize = NSSize(width: 600, height: 300)
             let originX = (screenFrame.width - windowSize.width) / 2
             let originY = (screenFrame.height - windowSize.height) / 2
@@ -61,7 +60,8 @@ class LauncherViewController: NSViewController {
     }
     
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goMain" {
+        switch segue.identifier{
+        case "goMain":
             // 確保 newWindow 已經初始化完成
             DispatchQueue.main.async {
                 self.view.window?.close()
@@ -72,12 +72,10 @@ class LauncherViewController: NSViewController {
             }
             if let selectedURL{
                 nextVC?.currentFileUrl = selectedURL
-                
             }
-            
+        default:
+            break
         }
-        
-
     }
     
 
@@ -87,7 +85,7 @@ class LauncherViewController: NSViewController {
     
     
     @IBAction func action(_ sender: Any) {
-        performSegue(withIdentifier: "goMain", sender: nil)
+        performSegue(withIdentifier: "goSelectSavedFile", sender: nil)
     }
     
     @IBAction func actionWithNewSnap(_ sender: Any) {

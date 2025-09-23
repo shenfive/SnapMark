@@ -80,7 +80,7 @@ class MainViewController: NSViewController {
         flowLayout.itemSize = cellSize
         flowLayout.minimumInteritemSpacing = 10
         flowLayout.minimumLineSpacing = 10
-        flowLayout.scrollDirection = .horizontal
+        flowLayout.scrollDirection = .vertical
         flowLayout.sectionInset = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 
         itemCollectionView.collectionViewLayout = flowLayout
@@ -203,10 +203,6 @@ class MainViewController: NSViewController {
 
         }else{
             openFile()
-//            SMFireManager.shared.showSavePanel { url in
-//                self.currentFileUrl = url
-//                self.openFile()
-//            }
         }
     
     }
@@ -483,6 +479,7 @@ class MainViewController: NSViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
                 self?.setFitWindowRatio(image)
             }
+            self?.openFile()
         }
         controller?.startCapture(from: mainWindow)
     }
@@ -677,8 +674,4 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
         }
         return componentViewItem
     }
-    
-    
-
-    
 }

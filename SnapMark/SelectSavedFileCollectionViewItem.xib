@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24127" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24127"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SelectSavedFileCollectionViewItem" customModule="SnapMark" customModuleProvider="target">
+            <connections>
+                <outlet property="fileLabel" destination="pns-x0-eB3" id="YeY-BF-LHg"/>
+                <outlet property="theImage" destination="9FD-Wi-C6e" id="Zfs-dy-TU9"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="185" height="288"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9FD-Wi-C6e">
+                    <rect key="frame" x="20" y="120" width="145" height="152"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="9FD-Wi-C6e" secondAttribute="height" id="DeR-Gd-Ksh"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSTouchBarQuickLookTemplate" id="e04-87-Y9k"/>
+                </imageView>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pns-x0-eB3">
+                    <rect key="frame" x="18" y="97" width="149" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Label" id="dXu-wh-jfy">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="pns-x0-eB3" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="93t-fF-uYS"/>
+                <constraint firstAttribute="trailing" secondItem="pns-x0-eB3" secondAttribute="trailing" constant="20" id="Qoh-4u-e5g"/>
+                <constraint firstItem="9FD-Wi-C6e" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="VB5-YS-ICZ"/>
+                <constraint firstItem="pns-x0-eB3" firstAttribute="top" secondItem="9FD-Wi-C6e" secondAttribute="bottom" constant="10" id="cOm-F1-8Nu"/>
+                <constraint firstAttribute="trailing" secondItem="9FD-Wi-C6e" secondAttribute="trailing" constant="20" id="fd6-tw-VYN"/>
+                <constraint firstItem="9FD-Wi-C6e" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="xaQ-LV-m3f"/>
+            </constraints>
+            <point key="canvasLocation" x="-193.5" y="193"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="NSTouchBarQuickLookTemplate" width="27" height="16"/>
+    </resources>
+</document>
