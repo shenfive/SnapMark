@@ -40,10 +40,6 @@ class MainViewController: NSViewController {
     
     @IBOutlet weak var itemCollectionView: NSCollectionView!
     
-//    //控制顯示
-//    let cView = ControlView()
-    
-    //
     
     //附加元件
     var components:[Component] = []
@@ -234,8 +230,6 @@ class MainViewController: NSViewController {
     //MARK: 重畫所有元件
     func reDrawComponts(){
 
-//        let _ = getComponentsJSON()
-    
         //移除標註文件
         self.documentView.subviews.forEach {
             if $0.isKind(of: ArrowView.self) { $0.removeFromSuperview() }
@@ -295,14 +289,6 @@ class MainViewController: NSViewController {
                 let textView = TextView()
                 textView.dataIndex = index
                 textView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-//                textView.ratio = ratioSlider.doubleValue
-//                textView.color = component.color
-//                textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
-//                textView.enableEdit = false
-//                textView.textField.stringValue = component.text
-//                textView.fitSize()
-//                
-//                textView.dataIndex = index
                 textView.changeTextCallBack = { newString, dataIndex in
                     self.components[dataIndex].text = newString
                     self.itemCollectionView.reloadItems(at: [IndexPath(item: dataIndex, section: 0)])
@@ -338,6 +324,11 @@ class MainViewController: NSViewController {
             do {
                 try SMFireManager.shared.updateJSON(in: url,
                                                     newJSONString: getComponentsJSON() ?? "")
+                if let image = snapshot(of: documentView){
+                    if let thumbImage = resizeToFitThumb(image){
+                        try SMFireManager.shared.updateThumb(in: url, newThumb:thumbImage)
+                    }
+                }
             }catch{
                 print(error.localizedDescription)
             }
@@ -461,11 +452,6 @@ class MainViewController: NSViewController {
         documentView.cornerRadius = conerRadiusSelected[selectConerRadius.indexOfSelectedItem]
         documentView.redraw()
     }
-    
-
-    
-    
-    
 
     //重繪底圖
     func setImage(){
@@ -473,16 +459,12 @@ class MainViewController: NSViewController {
             //因為與 UI 相關，放在主執行緒才會出現預期的畫面，並利用時間差來正確製造正確的順序與大小
             self.theImageView.image = newImage
             DispatchQueue.main.async{
-//                self.contentWidth.constant = min(self.contentContainerView.frame.width - 16, newImage.size.width - 1) + 16
-//                self.contentHeight.constant = min(self.contentContainerView.frame.height - 16, newImage.size.height - 1) + 16
                 self.contentWidth.constant = min(self.contentContainerView.frame.width, newImage.size.width ) 
                 self.contentHeight.constant = min(self.contentContainerView.frame.height, newImage.size.height)
-                
                 self.setModeDisplayUI()
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.02){
                 self.documentView.frame.size = newImage.size
-
                 self.theImageView.frame = self.documentView.bounds
                 self.reDrawComponts()
             }
@@ -540,19 +522,7 @@ class MainViewController: NSViewController {
     }
     
     
-    //修改圖片大小
-    func resizedImage(_ image: NSImage, scale: Double) -> NSImage? {
-        let newSize = NSSize(width: image.size.width * scale,
-                             height: image.size.height * scale)
-        let newImage = NSImage(size: newSize)
-        newImage.lockFocus()
-        image.draw(in: NSRect(origin: .zero, size: newSize),
-                   from: NSRect(origin: .zero, size: image.size),
-                   operation: .copy,
-                   fraction: 1.0)
-        newImage.unlockFocus()
-        return newImage
-    }
+
 
     //外部視窗大小改變
     @objc func windowDidResize(_ notification: Notification) {
@@ -693,7 +663,6 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             componentViewItem.itemBox.title = "Box"
             let boxView = BoxView(frame: component.framRect(ratio: 1))
             boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-    
             let newVeiwSeting = aspectFitRectAndScale(contentRect: boxView.frame, containerRect: componentViewItem.preView.bounds)
             boxView.ratio = newVeiwSeting.scale
             boxView.frame = newVeiwSeting.rect
@@ -702,11 +671,6 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
         case .TEXT:
             let textView = TextView()
             textView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-//            textView.textField.stringValue = component.text
-//            textView.color = component.color
-//            textView.enableEdit = false
-//            textView.strokeWidth = 0
-//            textView.setFont(font: NSFont(name: component.fontName, size: component.fontSize) ?? NSFont.systemFont(ofSize: component.fontSize))
             textView.frame = componentViewItem.preView.bounds
             textView.isMouseTransparent = true
             componentViewItem.preView.addSubview(textView)

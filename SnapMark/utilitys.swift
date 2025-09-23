@@ -23,6 +23,32 @@ func snapshot(of view: NSView) -> NSImage? {
     return image
 }
 
+//修改圖片大小
+func resizedImage(_ image: NSImage, scale: Double) -> NSImage? {
+    let newSize = NSSize(width: image.size.width * scale,
+                         height: image.size.height * scale)
+    let newImage = NSImage(size: newSize)
+    newImage.lockFocus()
+    image.draw(in: NSRect(origin: .zero, size: newSize),
+               from: NSRect(origin: .zero, size: image.size),
+               operation: .copy,
+               fraction: 1.0)
+    newImage.unlockFocus()
+    return newImage
+}
+
+//修改為縮圖大小
+func resizeToFitThumb(_ image: NSImage,maxDimension:CGFloat = 200) -> NSImage? {
+    let originalSize = image.size
+
+    // 計算縮放比例，維持比例但最大邊不超過 200 (預設值)
+    let widthRatio = maxDimension / originalSize.width
+    let heightRatio = maxDimension / originalSize.height
+    let scale = min(widthRatio, heightRatio)
+
+    return resizedImage(image, scale: scale)
+}
+
 extension NSColor {
     struct CodableWrapper: Codable {
         let red: CGFloat

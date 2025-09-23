@@ -56,6 +56,8 @@ class SMFireManager{
     
     //更新縮圖
     func updateThumb(in packageURL: URL, newThumb:NSImage) throws {
+        
+        
         if let data2 = newThumb.tiffRepresentation,
            let png2 = NSBitmapImageRep(data: data2)?.representation(using: .png, properties: [:]) {
             let image2URL = packageURL.appendingPathComponent("thumb.png")
