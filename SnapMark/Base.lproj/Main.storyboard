@@ -744,7 +744,7 @@
                                 <rect key="frame" x="500" y="123" width="100" height="143"/>
                                 <buttonCell key="cell" type="square" title="讀取檔案" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jAU-ra-XlW">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" size="13" name=".PingFangUITextTC-Regular"/>
+                                    <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="140" id="Ul0-bJ-CXj"/>
@@ -805,7 +805,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="480"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5YH-8c-p1P">
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5YH-8c-p1P">
                                                     <rect key="frame" x="-2" y="332" width="54" height="16"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="GtK-eq-TZe"/>
@@ -960,7 +960,7 @@
                                                                     <font key="font" metaFont="cellTitle"/>
                                                                 </sliderCell>
                                                             </slider>
-                                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tsc-aF-psN">
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tsc-aF-psN">
                                                                 <rect key="frame" x="90" y="42" width="39" height="16"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="100%" id="Ecv-XR-TeH">
                                                                     <font key="font" metaFont="system"/>
@@ -1034,7 +1034,7 @@
                                                                     <action selector="changeConerRadius:" target="XfG-lQ-9wD" id="MsW-Fc-SLl"/>
                                                                 </connections>
                                                             </popUpButton>
-                                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lxP-Fk-b1z">
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lxP-Fk-b1z">
                                                                 <rect key="frame" x="3" y="46" width="90" height="16"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Corner Radius" id="adj-3j-g07">
                                                                     <font key="font" metaFont="system"/>
@@ -1042,7 +1042,7 @@
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zaO-hI-8n6">
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zaO-hI-8n6">
                                                                 <rect key="frame" x="3" y="22" width="114" height="16"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Border Line Width" id="dLB-xW-ilP">
@@ -1111,7 +1111,7 @@
                                                                     <font key="font" metaFont="cellTitle"/>
                                                                 </sliderCell>
                                                             </slider>
-                                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-G7-1ke">
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XN4-G7-1ke">
                                                                 <rect key="frame" x="101" y="21" width="21" height="16"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="40" id="Gpj-oJ-Ecs">
                                                                     <font key="font" metaFont="system"/>
@@ -1122,7 +1122,7 @@
                                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="OwY-CO-mfH">
                                                                 <rect key="frame" x="124" y="5" width="64" height="64"/>
                                                                 <subviews>
-                                                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lOS-hq-eI6">
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lOS-hq-eI6">
                                                                         <rect key="frame" x="7" y="9" width="51" height="47"/>
                                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Aa" id="yVZ-6n-jlE">
                                                                             <font key="font" metaFont="system" size="40"/>

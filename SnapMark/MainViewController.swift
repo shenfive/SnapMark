@@ -195,29 +195,34 @@ class MainViewController: NSViewController {
         if let url = currentFileUrl{
             do {
                 let snap = try SMFireManager.shared.loadPackage(from: url)
-                self.editingImage = snap.image1
+                self.editingImage = snap.bg
                 self.setImage()
                 print(snap.metadata)
                 self.components = Component.decodeComponents(from: snap.metadata) ?? []
                 self.reDrawComponts()
+                self.itemCollectionView.reloadData()
             }catch{
                 
             }
 
         }else{
-            SMFireManager.shared.showSavePanel { url in
-                self.currentFileUrl = url
-                self.openFile()
-            }
+            openFile()
+//            SMFireManager.shared.showSavePanel { url in
+//                self.currentFileUrl = url
+//                self.openFile()
+//            }
         }
+    
     }
     
+    //於預設資料匣建立檔案
     func openFile(){
-        if let url = self.currentFileUrl {
+        if let url = SMFireManager.shared.getDefaultFileURL() {
             self.currentFileUrl = url
             do {
-                try SMFireManager.shared.savePackage(to: url, image1: self.editingImage,
-                                                     image2: self.editingImage,
+                try SMFireManager.shared.savePackage(to: url,
+                                                     bgImage: self.editingImage,
+                                                     thumbIamge: self.editingImage,
                                                      json: "")
             }catch{
                 print(error.localizedDescription)

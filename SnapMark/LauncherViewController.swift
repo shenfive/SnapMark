@@ -53,6 +53,13 @@ class LauncherViewController: NSViewController {
         }
     }
     
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        if SMFireManager.shared.snapMarkFolderURL == nil {
+            SMFireManager.shared.promptUserToSelectSnapMarkLocation()
+        }
+    }
+    
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
         if segue.identifier == "goMain" {
             // 確保 newWindow 已經初始化完成
@@ -69,7 +76,15 @@ class LauncherViewController: NSViewController {
             }
             
         }
+        
+
     }
+    
+
+
+
+    
+    
     
     @IBAction func action(_ sender: Any) {
         performSegue(withIdentifier: "goMain", sender: nil)
