@@ -817,8 +817,8 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="DCs-Sj-CvL">
-                                                    <rect key="frame" x="0.0" y="272" width="50" height="52"/>
-                                                    <buttonCell key="cell" type="square" title="Arrow" bezelStyle="shadowlessSquare" image="arrow.up.forward" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="wBb-uu-J8h">
+                                                    <rect key="frame" x="0.0" y="271" width="50" height="53"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="arrow.up.forward" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="wBb-uu-J8h">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
@@ -831,8 +831,8 @@
                                                     </connections>
                                                 </button>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="r8p-Te-4av">
-                                                    <rect key="frame" x="15" y="410" width="50" height="55"/>
-                                                    <buttonCell key="cell" type="square" title="Snap" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="abA-1l-DsM">
+                                                    <rect key="frame" x="15" y="405" width="50" height="60"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="abA-1l-DsM">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                         <imageReference key="image" image="dot.scope.display" catalog="system" symbolScale="large"/>
@@ -846,8 +846,8 @@
                                                     </connections>
                                                 </button>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="QwF-xk-ozj">
-                                                    <rect key="frame" x="0.0" y="207" width="50" height="53"/>
-                                                    <buttonCell key="cell" type="square" title="Text" bezelStyle="shadowlessSquare" image="character.textbox" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GYY-bW-8FS">
+                                                    <rect key="frame" x="0.0" y="205" width="50" height="55"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="character.textbox" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GYY-bW-8FS">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
@@ -860,8 +860,8 @@
                                                     </connections>
                                                 </button>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="k3k-q6-Oil">
-                                                    <rect key="frame" x="0.0" y="142" width="50" height="53"/>
-                                                    <buttonCell key="cell" type="square" title="Box" bezelStyle="shadowlessSquare" image="square" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="HBG-Cl-Ddb">
+                                                    <rect key="frame" x="0.0" y="140" width="50" height="55"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="square" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="HBG-Cl-Ddb">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                         <connections>
@@ -883,14 +883,31 @@
                                                         <imageReference key="image" image="chevron.compact.forward" catalog="system" symbolScale="large"/>
                                                     </imageCell>
                                                 </imageView>
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="dhv-0t-Srh">
+                                                    <rect key="frame" x="15" y="345" width="50" height="60"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="IjM-Yg-lgN">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                        <imageReference key="image" image="folder.circle" catalog="system" symbolScale="large"/>
+                                                    </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="0Rx-Ge-Jib"/>
+                                                        <constraint firstAttribute="height" constant="50" id="DHZ-bZ-Eqe"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="readFile:" target="XfG-lQ-9wD" id="3tT-2N-YWg"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="VhU-UG-sr4" secondAttribute="bottom" constant="282" id="7L3-xe-xxM"/>
+                                                <constraint firstItem="dhv-0t-Srh" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="Bp4-68-Jdv"/>
                                                 <constraint firstItem="DCs-Sj-CvL" firstAttribute="centerX" secondItem="5YH-8c-p1P" secondAttribute="centerX" id="Eao-l7-7c0"/>
                                                 <constraint firstItem="DCs-Sj-CvL" firstAttribute="top" secondItem="5YH-8c-p1P" secondAttribute="bottom" constant="10" id="GUT-gS-6kG"/>
                                                 <constraint firstItem="5YH-8c-p1P" firstAttribute="centerY" secondItem="vCb-2o-2Cr" secondAttribute="centerY" constant="-100" id="IbO-ho-JhB"/>
                                                 <constraint firstItem="k3k-q6-Oil" firstAttribute="top" secondItem="QwF-xk-ozj" secondAttribute="bottom" constant="15" id="Siv-4m-hQ1"/>
                                                 <constraint firstItem="r8p-Te-4av" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="SyO-ud-Bnb"/>
+                                                <constraint firstItem="dhv-0t-Srh" firstAttribute="top" secondItem="r8p-Te-4av" secondAttribute="bottom" constant="10" symbolic="YES" id="T2R-uX-NW4"/>
                                                 <constraint firstItem="k3k-q6-Oil" firstAttribute="centerX" secondItem="5YH-8c-p1P" secondAttribute="centerX" id="Wgf-pQ-YQx"/>
                                                 <constraint firstItem="VhU-UG-sr4" firstAttribute="leading" secondItem="DCs-Sj-CvL" secondAttribute="trailing" constant="1" id="arb-n9-0e3"/>
                                                 <constraint firstItem="QwF-xk-ozj" firstAttribute="centerX" secondItem="5YH-8c-p1P" secondAttribute="centerX" id="kMv-4Z-N1y"/>
@@ -1194,13 +1211,13 @@
                                         <color key="fillColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </box>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32J-s3-3Zy">
-                                        <rect key="frame" x="282" y="62" width="256" height="256"/>
+                                        <rect key="frame" x="260" y="40" width="300" height="300"/>
                                         <clipView key="contentView" id="ddn-6g-BX3">
-                                            <rect key="frame" x="0.0" y="0.0" width="256" height="256"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="285" height="285"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <view autoresizesSubviews="NO" appearanceType="aqua" id="Gnf-mE-Mhf" customClass="SnapEditView" customModule="SnapMark" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="271" height="271"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="azm-qx-4uP">
@@ -1213,15 +1230,15 @@
                                             </subviews>
                                         </clipView>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="256" id="NF5-wm-esc"/>
-                                            <constraint firstAttribute="height" constant="256" id="Zlk-qs-ie7"/>
+                                            <constraint firstAttribute="width" constant="300" id="Ogw-33-43X"/>
+                                            <constraint firstAttribute="height" constant="300" id="gaw-q6-Jdj"/>
                                         </constraints>
-                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="7W4-fe-Ios">
-                                            <rect key="frame" x="-100" y="-100" width="241" height="15"/>
+                                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="7W4-fe-Ios">
+                                            <rect key="frame" x="0.0" y="285" width="285" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="W7F-pA-Pfw">
-                                            <rect key="frame" x="241" y="0.0" width="15" height="256"/>
+                                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="W7F-pA-Pfw">
+                                            <rect key="frame" x="285" y="0.0" width="15" height="285"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
@@ -1262,13 +1279,13 @@
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAx-vg-vUR">
-                                                                <rect key="frame" x="20" y="11" width="756" height="95"/>
+                                                                <rect key="frame" x="20" y="5" width="756" height="106"/>
                                                                 <clipView key="contentView" id="2vO-3K-l5F">
-                                                                    <rect key="frame" x="1" y="1" width="754" height="93"/>
+                                                                    <rect key="frame" x="1" y="1" width="754" height="104"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <collectionView id="Lmk-dl-dQK">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="754" height="93"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="754" height="104"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                             <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="yJc-Bg-j71">
                                                                                 <size key="itemSize" width="50" height="50"/>
@@ -1277,9 +1294,6 @@
                                                                         </collectionView>
                                                                     </subviews>
                                                                 </clipView>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="95" id="Qf7-2t-8s3"/>
-                                                                </constraints>
                                                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Pi0-ba-S9V">
                                                                     <rect key="frame" x="-100" y="-100" width="233" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
@@ -1291,7 +1305,8 @@
                                                             </scrollView>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstItem="fAx-vg-vUR" firstAttribute="centerY" secondItem="Hpc-Gk-gkH" secondAttribute="centerY" id="bZp-ax-DhU"/>
+                                                            <constraint firstItem="fAx-vg-vUR" firstAttribute="top" secondItem="Hpc-Gk-gkH" secondAttribute="top" constant="5" id="7IX-of-SPE"/>
+                                                            <constraint firstAttribute="bottom" secondItem="fAx-vg-vUR" secondAttribute="bottom" constant="5" id="NmS-ai-MtV"/>
                                                             <constraint firstAttribute="trailing" secondItem="fAx-vg-vUR" secondAttribute="trailing" constant="20" id="mYD-94-1He"/>
                                                             <constraint firstItem="fAx-vg-vUR" firstAttribute="leading" secondItem="Hpc-Gk-gkH" secondAttribute="leading" constant="20" id="zdR-BR-Z8o"/>
                                                         </constraints>
@@ -1341,9 +1356,9 @@
                         <outlet property="boxModeButton" destination="k3k-q6-Oil" id="7dF-1f-jK5"/>
                         <outlet property="colorWell" destination="Ucr-bq-llc" id="jiJ-Zc-Ag8"/>
                         <outlet property="contentContainerView" destination="fS6-gH-cjm" id="orm-LJ-qa2"/>
-                        <outlet property="contentHeight" destination="Zlk-qs-ie7" id="Hd3-gP-avY"/>
+                        <outlet property="contentHeight" destination="gaw-q6-Jdj" id="SFG-OC-IkN"/>
                         <outlet property="contentScrollView" destination="32J-s3-3Zy" id="aXg-BR-hHh"/>
-                        <outlet property="contentWidth" destination="NF5-wm-esc" id="Qit-iM-m86"/>
+                        <outlet property="contentWidth" destination="Ogw-33-43X" id="Iya-AH-EEi"/>
                         <outlet property="documentView" destination="Gnf-mE-Mhf" id="hw0-wg-PCj"/>
                         <outlet property="fontButton" destination="zpP-gZ-l3q" id="Wy3-b7-8jq"/>
                         <outlet property="fontSampleLabel" destination="lOS-hq-eI6" id="yhx-mL-nlo"/>
@@ -1372,6 +1387,7 @@
         <image name="character.textbox" catalog="system" width="20" height="14"/>
         <image name="chevron.compact.forward" catalog="system" width="8" height="17"/>
         <image name="dot.scope.display" catalog="system" width="24" height="19"/>
+        <image name="folder.circle" catalog="system" width="19" height="19"/>
         <image name="moonphase.new.moon.inverse" catalog="system" width="15" height="15"/>
         <image name="square" catalog="system" width="16" height="14"/>
     </resources>

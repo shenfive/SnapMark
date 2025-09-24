@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24127" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24127"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,13 +21,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box boxType="custom" cornerRadius="5" title="Item" translatesAutoresizingMaskIntoConstraints="NO" id="iT3-pj-Xr9">
-                    <rect key="frame" x="0.0" y="0.0" width="101" height="74"/>
+                    <rect key="frame" x="0.0" y="0.0" width="101" height="76"/>
                     <view key="contentView" id="C9H-Vb-MIf">
-                        <rect key="frame" x="1" y="1" width="99" height="72"/>
+                        <rect key="frame" x="1" y="1" width="99" height="74"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="BrF-Jc-A3j" customClass="PreviewView" customModule="SnapMark" customModuleProvider="target">
-                                <rect key="frame" x="5" y="5" width="89" height="62"/>
+                                <rect key="frame" x="5" y="5" width="89" height="64"/>
                             </customView>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="CdT-6u-CmH">
                                 <rect key="frame" x="24" y="-2" width="52" height="25"/>
@@ -56,7 +56,7 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="iT3-pj-Xr9" secondAttribute="trailing" id="5Ee-hR-YX9"/>
                 <constraint firstItem="iT3-pj-Xr9" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="S94-Gt-WPj"/>
-                <constraint firstItem="iT3-pj-Xr9" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="2" id="eJi-tY-cAn"/>
+                <constraint firstItem="iT3-pj-Xr9" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="eJi-tY-cAn"/>
                 <constraint firstAttribute="bottom" secondItem="iT3-pj-Xr9" secondAttribute="bottom" id="gU6-a3-Rok"/>
             </constraints>
             <point key="canvasLocation" x="-296" y="24"/>

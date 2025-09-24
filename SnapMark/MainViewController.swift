@@ -67,7 +67,7 @@ class MainViewController: NSViewController {
     var fontFemilySelectMenuList = ["System Font"]
     
     //Cell Size
-    let cellSize = NSSize(width: 76.0 / 3.0 * 4.0, height: 76.0)
+    let cellSize = NSSize(width: 76.0 / 3.0 * 4.0, height: 86.0)
     
     
     override func viewDidLoad() {
@@ -160,7 +160,7 @@ class MainViewController: NSViewController {
         if let window = self.view.window ,
            let screenFrame = NSScreen.main?.frame {
             
-            let windowSize = NSSize(width: 800, height: 600)
+            let windowSize = NSSize(width: 1400, height: 800)
             let originX = (screenFrame.width - windowSize.width) / 2
             let originY = (screenFrame.height - windowSize.height) / 2
             let centeredRect = NSRect(origin: CGPoint(x: originX, y: originY), size: windowSize)
@@ -190,13 +190,17 @@ class MainViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        initView()
+    
+    }
+    
+    func initView(){
         //若沒有檔名，建立新檔案
         if let url = currentFileUrl{
             do {
                 let snap = try SMFireManager.shared.loadPackage(from: url)
                 self.editingImage = snap.bg
                 self.setImage()
-                print(snap.metadata)
                 self.components = Component.decodeComponents(from: snap.metadata) ?? []
                 self.reDrawComponts()
                 self.itemCollectionView.reloadData()
@@ -207,7 +211,6 @@ class MainViewController: NSViewController {
         }else{
             openFile()
         }
-    
     }
     
     //於預設資料匣建立檔案
@@ -475,7 +478,10 @@ class MainViewController: NSViewController {
     @objc func ratioSliderDidChange(_ sender:NSSlider){
         let value = sender.doubleValue * 100
         ratioLabel.stringValue = String(format: "%.1f%%", value).replacingOccurrences(of: ".0%", with: "%")
-        documentView.ratio = sender.doubleValue
+        setRatio()
+    }
+    func setRatio(){
+        documentView.ratio = ratioSlider.doubleValue
         setImage()
         documentView.redraw()
     }
@@ -507,16 +513,16 @@ class MainViewController: NSViewController {
         if let newImage = resizedImage(editingImage, scale: ratioSlider.doubleValue){
             //因為與 UI 相關，放在主執行緒才會出現預期的畫面，並利用時間差來正確製造正確的順序與大小
             self.theImageView.image = newImage
-            DispatchQueue.main.async{
-                self.contentWidth.constant = min(self.contentContainerView.frame.width, newImage.size.width ) 
-                self.contentHeight.constant = min(self.contentContainerView.frame.height, newImage.size.height)
-                self.setModeDisplayUI()
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.02){
-                self.documentView.frame.size = newImage.size
-                self.theImageView.frame = self.documentView.bounds
-                self.reDrawComponts()
-            }
+            
+            self.contentWidth.constant = min(self.contentContainerView.frame.width, newImage.size.width )
+            self.contentHeight.constant = min(self.contentContainerView.frame.height, newImage.size.height)
+            self.contentContainerView.layoutSubtreeIfNeeded()
+            self.setModeDisplayUI()
+            self.documentView.frame.size = newImage.size
+            self.documentView.layoutSubtreeIfNeeded()
+            self.theImageView.frame = self.documentView.bounds
+            self.reDrawComponts()
+            
         }
     }
     
@@ -537,7 +543,7 @@ class MainViewController: NSViewController {
         controller?.startCapture(from: mainWindow)
     }
     
-    //MARK:設定編輯模式
+    //MARK: 設定編輯模式
     @IBAction func setArrowMode(_ sender: Any) {
         documentView.editMode = .ARROW
         setModeDisplayUI()
@@ -550,6 +556,16 @@ class MainViewController: NSViewController {
     @IBAction func setBoxMode(_ sender: Any) {
         documentView.editMode = .BOX
         setModeDisplayUI()
+    }
+    
+    //MARK: 讀檔
+    @IBAction func readFile(_ sender: Any) {
+        let nextVC = SelectSavedFileViewController()
+        nextVC.selectedFileAction = {
+            self.currentFileUrl = $0
+            self.initView()
+        }
+        self.presentAsModalWindow(nextVC)
     }
     
     //設定編輯模式
@@ -619,7 +635,7 @@ class MainViewController: NSViewController {
         do {
             let jsonData = try encoder.encode(components)
             if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print("JSON 字串：\n\(jsonString)")
+//                print("JSON 字串：\n\(jsonString)")
                 return jsonString
             }
         } catch {
