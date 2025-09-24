@@ -2,7 +2,7 @@
 //  SelectSavedFileViewController.swift
 //  SnapMark
 //
-//  Created by Danny Shen on 2025/9/23.
+//  Created by Danny Shen on 2025/9/24.
 //
 
 import Cocoa
@@ -13,6 +13,8 @@ class SelectSavedFileViewController: NSViewController {
     
     
     var dataFiles:[URL] = []
+    
+    var selectedFileAction:((URL)->())? = nil
     
     //Cell Size
     let cellSize = NSSize(width: 150, height: 200)
@@ -32,6 +34,7 @@ class SelectSavedFileViewController: NSViewController {
 
         theCollectionView.collectionViewLayout = flowLayout
         theCollectionView.isSelectable = true
+        theCollectionView.allowsMultipleSelection = false
         theCollectionView.enclosingScrollView?.hasHorizontalScroller = false
         theCollectionView.enclosingScrollView?.hasVerticalScroller = true
      
@@ -71,7 +74,9 @@ class SelectSavedFileViewController: NSViewController {
         super.viewDidAppear()
         if let folder = SMFireManager.shared.snapMarkFolderURL {
             if let files = listFiles(in: folder){
-                self.dataFiles = files
+                self.dataFiles = files.sorted(by: { u1, u2 in
+                    u1.lastPathComponent > u2.lastPathComponent
+                })
                 self.theCollectionView.reloadData()
             }
         }
@@ -112,7 +117,15 @@ extension SelectSavedFileViewController:NSCollectionViewDelegate,NSCollectionVie
             print(error.localizedDescription)
         }
         
+        
         return selectViewItem
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+        print("cL:\(indexPaths.first!.item)")
+        let fileURL = dataFiles[indexPaths.first!.item]
+        selectedFileAction?(fileURL)
+        view.window?.close()
     }
     
     

@@ -58,10 +58,13 @@ class MainViewController: NSViewController {
     var window:NSWindow!
     
     //line width
-    let boardWidthSelected = [2.0,5.0,10.0]
+    let boardWidthSelectMenuList = [2.0,5.0,10.0]
 
     //cornerRadius
-    let conerRadiusSelected = [0.0,5.0,10.0,20.0,100000.1] //最後一項是取半徑，即藥丸形
+    let conerRadiusSelectMenuList = [0.0,5.0,10.0,20.0,100000.1] //最後一項是取半徑，即藥丸形
+    
+    //FontFemily
+    var fontFemilySelectMenuList = ["System Font"]
     
     //Cell Size
     let cellSize = NSSize(width: 76.0 / 3.0 * 4.0, height: 76.0)
@@ -80,13 +83,13 @@ class MainViewController: NSViewController {
         flowLayout.itemSize = cellSize
         flowLayout.minimumInteritemSpacing = 10
         flowLayout.minimumLineSpacing = 10
-        flowLayout.scrollDirection = .vertical
+        flowLayout.scrollDirection = .horizontal
         flowLayout.sectionInset = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 
         itemCollectionView.collectionViewLayout = flowLayout
         itemCollectionView.isSelectable = true
-        itemCollectionView.enclosingScrollView?.hasHorizontalScroller = true
-        itemCollectionView.enclosingScrollView?.hasVerticalScroller = false
+        itemCollectionView.enclosingScrollView?.hasHorizontalScroller = false
+        itemCollectionView.enclosingScrollView?.hasVerticalScroller = true
 
         //設定字型選擇器
         setFontButton()
@@ -104,8 +107,8 @@ class MainViewController: NSViewController {
         //編輯區關連
         documentView.theImageView = self.theImageView
         documentView.color = colorWell.color
-        documentView.boardWidth = boardWidthSelected[selectLineButton.indexOfSelectedItem]
-        documentView.cornerRadius = conerRadiusSelected[selectConerRadius.indexOfSelectedItem]
+        documentView.boardWidth = boardWidthSelectMenuList[selectLineButton.indexOfSelectedItem]
+        documentView.cornerRadius = conerRadiusSelectMenuList[selectConerRadius.indexOfSelectedItem]
         documentView.editMode = .ARROW
 
 
@@ -252,6 +255,14 @@ class MainViewController: NSViewController {
                 arrowView.enableEdit =  component.isSelected
                 if component.isSelected {
                     documentView.selectedSubView = arrowView
+                    
+                    //設定 UI
+                    self.colorWell.color = component.color
+                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
+                        self.selectLineButton.selectItem(at: boardIndex)
+                    }
+                    
+                 
                 }
                 arrowView.endEditAction = {
                     self.components[index] = $0
@@ -272,6 +283,16 @@ class MainViewController: NSViewController {
                 boxView.enableEdit = component.isSelected
                 if component.isSelected {
                     documentView.selectedSubView = boxView
+                    
+                    //設定 UI
+                    self.colorWell.color = component.color
+                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
+                        self.selectLineButton.selectItem(at: boardIndex)
+                    }
+                    if let conerIndex = conerRadiusSelectMenuList.firstIndex(of: component.cornerRadius){
+                        self.selectConerRadius.selectItem(at: conerIndex)
+                    }
+                    
                 }
                 boxView.endEditAction = {
                     self.components[index] = $0
@@ -290,9 +311,8 @@ class MainViewController: NSViewController {
                     self.itemCollectionView.reloadItems(at: [IndexPath(item: dataIndex, section: 0)])
                 }
                 textView.endEdingCallBack = { newString, dataIndex in
-                    print("textView ReDraw")
+                    
                     self.components[dataIndex].text = newString
-//                    self.components[dataIndex].isSelected = false
                     self.itemCollectionView.reloadItems(at: [IndexPath(item: dataIndex, section: 0)])
                     self.reDrawComponts()
                 }
@@ -300,6 +320,15 @@ class MainViewController: NSViewController {
 
                 if component.isSelected{
                     documentView.selectedSubView = textView
+                    
+                    //設定 UI
+                    self.colorWell.color = component.color
+                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
+                        self.selectLineButton.selectItem(at: boardIndex)
+                    }
+                    self.fontSizeSlider.doubleValue = component.fontSize
+                    self.fontSizeLabel.stringValue = "\(fontSizeSlider.intValue)"
+                    
                 }
                 textView.enableEdit = component.isSelected
                 textView.endEditAction = {
@@ -315,6 +344,7 @@ class MainViewController: NSViewController {
             }
         }
         
+        //更新實體檔案
         if let url = self.currentFileUrl {
             self.currentFileUrl = url
             do {
@@ -329,6 +359,8 @@ class MainViewController: NSViewController {
                 print(error.localizedDescription)
             }
         }
+        
+        
     }
 
     
@@ -359,6 +391,11 @@ class MainViewController: NSViewController {
             fontSampleLabel.font = font
             fontSampleLabel.textColor = colorWell.color
             documentView.redraw()
+            if let index = components.firstIndex(where: { $0.isSelected }) {
+                components[index].fontName = font.fontName
+                components[index].fontSize = font.pointSize
+                reDrawComponts()
+            }
         }
     }
     
@@ -382,7 +419,7 @@ class MainViewController: NSViewController {
         for family in NSFontManager.shared.availableFontFamilies {
             guard let font = NSFont(name: family, size: 14) else { continue }
             let attrTitle = NSAttributedString(string: family, attributes: [.font: font])
-
+            self.fontFemilySelectMenuList.append(family)
             let item = NSMenuItem()
             item.attributedTitle = attrTitle
             item.representedObject = font
@@ -391,6 +428,7 @@ class MainViewController: NSViewController {
 
             fontMenu.addItem(item)
         }
+        print(self.fontFemilySelectMenuList)
         fontButton.menu = fontMenu
     }
 
@@ -402,6 +440,11 @@ class MainViewController: NSViewController {
     @IBAction func changeColor(_ sender: Any) {
         documentView.color = colorWell.color
         documentView.redraw()
+        if let index = components.firstIndex(where: { $0.isSelected }) {
+            components[index].color = documentView.color
+            reDrawComponts()
+        }
+
     }
     
     
@@ -437,16 +480,26 @@ class MainViewController: NSViewController {
         documentView.redraw()
     }
     
-    
+    //MARK:設定線寬
     @IBAction func changeLineWidth(_ sender: Any) {
-        documentView.boardWidth = boardWidthSelected[selectLineButton.indexOfSelectedItem]
+        documentView.boardWidth = boardWidthSelectMenuList[selectLineButton.indexOfSelectedItem]
         documentView.redraw()
+    
+        if let index = components.firstIndex(where: { $0.isSelected }) {
+            components[index].boardWidth = documentView.boardWidth
+            reDrawComponts()
+        }
+        
     }
     
     //選擇圓角
     @IBAction func changeConerRadius(_ sender: Any) {
-        documentView.cornerRadius = conerRadiusSelected[selectConerRadius.indexOfSelectedItem]
+        documentView.cornerRadius = conerRadiusSelectMenuList[selectConerRadius.indexOfSelectedItem]
         documentView.redraw()
+        if let index = components.firstIndex(where: { $0.isSelected }) {
+            components[index].cornerRadius = documentView.cornerRadius
+            reDrawComponts()
+        }
     }
 
     //重繪底圖

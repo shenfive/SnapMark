@@ -99,14 +99,17 @@ class SnapEditView: NSView {
             textView.ratio = ratio
             textView.textComponent.color = color
             textView.setFont(font: font)
+
         case .ARROW:
             arrowView.arrowComponent.color = color
             arrowView.arrowComponent.boardWidth = boardWidth
+    
         case .BOX:
             boxView.boxComponent.color = color
             boxView.boxComponent.cornerRadius = cornerRadius
             boxView.boxComponent.boardWidth = boardWidth
-        }  
+           
+        }
     }
 
     override func mouseDragged(with event: NSEvent) {

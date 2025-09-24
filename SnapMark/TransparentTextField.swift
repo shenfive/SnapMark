@@ -11,7 +11,7 @@ class TransparentTextField: NSTextField {
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-
+        cell?.usesSingleLineMode = true
         // Drawing code here.
     }
     

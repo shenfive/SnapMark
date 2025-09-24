@@ -48,17 +48,20 @@ class BoxView: NSView {
 
         theBoxView.wantsLayer = true
         theBoxView.layer?.borderColor = boxComponent.color.cgColor
-        theBoxView.layer?.borderWidth = boxComponent.boardWidth
+        theBoxView.layer?.borderWidth = boxComponent.boardWidth * ratio
         theBoxView.layer?.shadowColor = NSColor.white.cgColor
         theBoxView.layer?.shadowOpacity = 1
         theBoxView.layer?.shadowOffset = .zero
         theBoxView.layer?.shadowRadius = 1 * ratio
-        
-        let displayConerRadius = min(boxComponent.cornerRadius * ratio,theBoxView.frame.size.height / 2.0,theBoxView.frame.size.width / 2.0)
-        theBoxView.layer?.cornerRadius = displayConerRadius
-        
+
+ 
+        //藥丸形狀就是實體短邊的一半
         if boxComponent.cornerRadius == 100000.1{
             theBoxView.layer?.cornerRadius = min(theBoxView.frame.height,theBoxView.frame.width) / 2
+        }else{
+            //圓角最大不得超過實體的一半
+            let displayConerRadius = min(boxComponent.cornerRadius * ratio,theBoxView.frame.size.height / 2.0,theBoxView.frame.size.width / 2.0)
+            theBoxView.layer?.cornerRadius = displayConerRadius
         }
 
         if enableEdit {

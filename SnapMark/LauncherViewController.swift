@@ -85,7 +85,15 @@ class LauncherViewController: NSViewController {
     
     
     @IBAction func action(_ sender: Any) {
-        performSegue(withIdentifier: "goSelectSavedFile", sender: nil)
+        let nextVC = SelectSavedFileViewController()
+//        self.present(nextVC, animator: any NSViewControllerPresentationAnimator)
+        nextVC.selectedFileAction = {
+            self.selectedURL = $0
+            self.performSegue(withIdentifier: "goMain", sender: nil)
+        }
+        
+        self.presentAsModalWindow(nextVC)
+
     }
     
     @IBAction func actionWithNewSnap(_ sender: Any) {

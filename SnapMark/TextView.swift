@@ -19,7 +19,10 @@ class TextView: NSView {
     @IBOutlet weak var textField: TransparentTextField!
     @IBOutlet weak var frontBox: NSBox!
     @IBOutlet weak var endBox: NSBox!
-        
+    
+    @IBOutlet weak var textViewContaner: NSScrollView!
+    @IBOutlet var textView: NSTextView!
+    
     var dataIndex:Int = 99999
     var changeTextCallBack:((String,Int)->())? = nil
     var endEdingCallBack:((String,Int)->())? = nil
@@ -29,8 +32,10 @@ class TextView: NSView {
             return _enableEdit
         }
         set{
-            frontBox.isHidden = !newValue
-            endBox.isHidden = !newValue
+            frontBox.fillColor = newValue ? NSColor.red : NSColor.clear
+            frontBox.borderColor = newValue ? NSColor.gray : NSColor.clear
+            endBox.fillColor = newValue ? NSColor.red : NSColor.clear
+            endBox.borderColor = newValue ? NSColor.gray : NSColor.clear
             textField.isEditable = newValue
             textField.isSelectable = true
             _enableEdit = newValue
@@ -41,6 +46,36 @@ class TextView: NSView {
                 }
             }
         }
+    }
+    
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+
+        let text = textField.stringValue
+        let font = textField.font ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        let shadow = NSShadow()
+        shadow.shadowColor = NSColor.white
+        shadow.shadowOffset = .zero
+        shadow.shadowBlurRadius = 5
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+    
+
+        let attributes: [NSAttributedString.Key: Any] = [
+            .shadow: shadow,
+            .font: font,
+            .baselineOffset: 30,
+            .paragraphStyle: paragraphStyle,
+            .foregroundColor: textComponent.color
+        ]
+        textField.attributedStringValue = NSAttributedString(string: text, attributes: attributes)
+        
+        textViewContaner.frame = textField.frame
+        textView.textStorage?.setAttributedString(NSAttributedString(string: text, attributes: attributes))
+        textView.isHidden = enableEdit
+        textField.isHidden = !enableEdit
+
     }
     
     override func hitTest(_ point: NSPoint) -> NSView? {
@@ -97,25 +132,7 @@ class TextView: NSView {
         }
     }
     
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
 
-        let text = textField.stringValue
-        let font = textField.font ?? NSFont.systemFont(ofSize: NSFont.systemFontSize)
-        let shadow = NSShadow()
-        shadow.shadowColor = NSColor.white
-        shadow.shadowOffset = .zero
-        shadow.shadowBlurRadius = 5
-    
-
-        let attributes: [NSAttributedString.Key: Any] = [
-            .shadow: shadow,
-            .font: font,
-            .foregroundColor: textComponent.color
-        ]
-        textField.attributedStringValue = NSAttributedString(string: text, attributes: attributes)
-
-    }
     
     
     func fitSize(){
