@@ -95,6 +95,9 @@ class SelectSavedFileViewController: NSViewController {
     }
 
     
+    @IBAction func closeAction(_ sender: Any) {
+        view.window?.close()
+    }
     
     
 }

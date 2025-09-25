@@ -43,14 +43,33 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="TAy-yD-cPH">
+                    <rect key="frame" x="720" y="431" width="48" height="54"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="qGk-tL-TNO">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="48" id="bcW-LM-7G7"/>
+                        <constraint firstAttribute="height" constant="48" id="nOW-7a-s9z"/>
+                    </constraints>
+                    <connections>
+                        <action selector="closeAction:" target="-2" id="vzx-i5-fum"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="qye-oU-Q6C" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="50" id="9la-tp-QAu"/>
+                <constraint firstItem="TAy-yD-cPH" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="DmO-sG-Nmo"/>
                 <constraint firstAttribute="trailing" secondItem="qye-oU-Q6C" secondAttribute="trailing" constant="10" id="OqY-6r-sH0"/>
+                <constraint firstAttribute="trailing" secondItem="TAy-yD-cPH" secondAttribute="trailing" constant="10" id="qdg-Hu-8QC"/>
                 <constraint firstItem="qye-oU-Q6C" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="sx0-JH-Lm1"/>
                 <constraint firstAttribute="bottom" secondItem="qye-oU-Q6C" secondAttribute="bottom" constant="10" id="tyK-N3-hhb"/>
             </constraints>
-            <point key="canvasLocation" x="244" y="-4"/>
+            <point key="canvasLocation" x="102" y="59"/>
         </customView>
     </objects>
+    <resources>
+        <image name="xmark.circle.fill" catalog="system" width="15" height="15"/>
+    </resources>
 </document>
