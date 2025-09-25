@@ -17,7 +17,7 @@ class SelectSavedFileViewController: NSViewController {
     var selectedFileAction:((URL)->())? = nil
     
     //Cell Size
-    let cellSize = NSSize(width: 150, height: 200)
+    let cellSize = NSSize(width: 120, height: 170)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,7 +115,26 @@ extension SelectSavedFileViewController:NSCollectionViewDelegate,NSCollectionVie
         do {
             let snap = try SMFireManager.shared.loadPackage(from: fileURL)
             selectViewItem.fileThumb = snap.thumb
-            selectViewItem.fileTitle = fileURL.lastPathComponent
+            let parts = fileURL.lastPathComponent.components(separatedBy: ["_", "."])
+            if parts.count >= 2 {
+                let timestamp = parts[1]  // "23110747"
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyMMdd"  // 假設是「年年月月日日」格式
+
+                if let date = dateFormatter.date(from: parts[0]) {
+                    dateFormatter.dateFormat = "yyyy/MM/dd"
+                    let formattedDate = dateFormatter.string(from: date)
+//                    print(formattedDate)  // 輸出：2025/09/25
+                    selectViewItem.fileTitle = "\(formattedDate)\n\(timestamp)"
+                } else {
+                    //print("無法解析日期")
+                    selectViewItem.fileTitle = fileURL.lastPathComponent
+                }
+                
+            }else{
+                selectViewItem.fileTitle = fileURL.lastPathComponent
+            }
         }catch{
             print(error.localizedDescription)
         }

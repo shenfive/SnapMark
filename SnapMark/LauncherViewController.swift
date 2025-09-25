@@ -62,16 +62,17 @@ class LauncherViewController: NSViewController {
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
         switch segue.identifier{
         case "goMain":
-            // 確保 newWindow 已經初始化完成
-            DispatchQueue.main.async {
-                self.view.window?.close()
-            }
+
             let nextVC = segue.destinationController as? MainViewController
             if let newImage{
                 nextVC?.editingImage = newImage
             }
             if let selectedURL{
                 nextVC?.currentFileUrl = selectedURL
+            }
+            // 確保 newWindow 已經初始化完成
+            DispatchQueue.main.async {
+                self.view.window?.close()
             }
         default:
             break
@@ -86,7 +87,6 @@ class LauncherViewController: NSViewController {
     
     @IBAction func action(_ sender: Any) {
         let nextVC = SelectSavedFileViewController()
-//        self.present(nextVC, animator: any NSViewControllerPresentationAnimator)
         nextVC.selectedFileAction = {
             self.selectedURL = $0
             self.performSegue(withIdentifier: "goMain", sender: nil)

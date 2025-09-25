@@ -47,15 +47,14 @@ class MainViewController: NSViewController {
     // 正在進行的操作檔案位置
     var currentFileUrl:URL? = nil
     
-    
     //拮取畫面控制器
     var controller:ScreenCaptureController? = ScreenCaptureController()
     
     //編輯中的影像
-    var editingImage:NSImage = NSImage(named: "start2") ?? NSImage()
+    var editingImage:NSImage = NSImage()
     
     //頁面的 Window
-    var window:NSWindow!
+//    var window:NSWindow!
     
     //line width
     let boardWidthSelectMenuList = [2.0,5.0,10.0]
@@ -67,13 +66,12 @@ class MainViewController: NSViewController {
     var fontFemilySelectMenuList = ["System Font"]
     
     //Cell Size
-    let cellSize = NSSize(width: 76.0 / 3.0 * 4.0, height: 86.0)
+    let cellSize = NSSize(width: 86.0 / 3.0 * 4.0, height: 86.0)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setImage()
         
         
         //Collection View 設定
@@ -169,12 +167,12 @@ class MainViewController: NSViewController {
             window.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
             setModeDisplayUI()
             //初始化編輯區
-            if let image = theImageView.image{
-                editingImage = image
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                    self.setImage()
-                }
-            }
+//            if let image = theImageView.image{
+//                editingImage = image
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+//                    self.setImage()
+//                }
+//            }
 
         }
         
@@ -184,7 +182,7 @@ class MainViewController: NSViewController {
             self,
             selector: #selector(windowDidResize(_:)),
             name: NSWindow.didResizeNotification,
-            object: self.window
+            object: self.view.window
         )
     }
     
@@ -201,11 +199,12 @@ class MainViewController: NSViewController {
                 let snap = try SMFireManager.shared.loadPackage(from: url)
                 self.editingImage = snap.bg
                 self.setImage()
-                self.components = Component.decodeComponents(from: snap.metadata) ?? []
+                let theComponents =  Component.decodeComponents(from: snap.metadata) ?? []
+                self.components = theComponents
                 self.reDrawComponts()
                 self.itemCollectionView.reloadData()
             }catch{
-                
+                print(error.localizedDescription)
             }
 
         }else{
@@ -215,6 +214,7 @@ class MainViewController: NSViewController {
     
     //於預設資料匣建立檔案
     func openFile(){
+        self.setImage()
         if let url = SMFireManager.shared.getDefaultFileURL() {
             self.currentFileUrl = url
             do {
@@ -362,8 +362,6 @@ class MainViewController: NSViewController {
                 print(error.localizedDescription)
             }
         }
-        
-        
     }
 
     
@@ -514,14 +512,14 @@ class MainViewController: NSViewController {
             //因為與 UI 相關，放在主執行緒才會出現預期的畫面，並利用時間差來正確製造正確的順序與大小
             self.theImageView.image = newImage
             
-            self.contentWidth.constant = min(self.contentContainerView.frame.width, newImage.size.width )
-            self.contentHeight.constant = min(self.contentContainerView.frame.height, newImage.size.height)
+            self.contentWidth.constant = min(self.contentContainerView.frame.width, newImage.size.width + 16)
+            self.contentHeight.constant = min(self.contentContainerView.frame.height, newImage.size.height + 16)
             self.contentContainerView.layoutSubtreeIfNeeded()
             self.setModeDisplayUI()
             self.documentView.frame.size = newImage.size
             self.documentView.layoutSubtreeIfNeeded()
             self.theImageView.frame = self.documentView.bounds
-            self.reDrawComponts()
+//            self.reDrawComponts()
             
         }
     }
@@ -533,12 +531,9 @@ class MainViewController: NSViewController {
         controller?.onCaptureComplete = { [weak self] image in
             self?.editingImage = image
             self?.components.removeAll()
-            self?.setImage()
             self?.itemCollectionView.reloadData()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
-                self?.setFitWindowRatio(image)
-            }
             self?.openFile()
+//            self?.setFitWindowRatio(self as Any)
         }
         controller?.startCapture(from: mainWindow)
     }

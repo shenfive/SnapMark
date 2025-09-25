@@ -79,13 +79,13 @@ class SMFireManager{
         // 讀取 image1.png
         let image1URL = url.appendingPathComponent("bg.png")
         guard let image1 = NSImage(contentsOf: image1URL) else {
-            throw NSError(domain: "SnapMarkError", code: 2, userInfo: [NSLocalizedDescriptionKey: "無法讀取 image1.png"])
+            throw NSError(domain: "SnapMarkError", code: 2, userInfo: [NSLocalizedDescriptionKey: "無法讀取 bg.png"])
         }
 
         // 讀取 image2.png
         let image2URL = url.appendingPathComponent("thumb.png")
         guard let image2 = NSImage(contentsOf: image2URL) else {
-            throw NSError(domain: "SnapMarkError", code: 3, userInfo: [NSLocalizedDescriptionKey: "無法讀取 image2.png"])
+            throw NSError(domain: "SnapMarkError", code: 3, userInfo: [NSLocalizedDescriptionKey: "無法讀取 thumb.png"])
         }
 
         // 讀取 metadata.json
