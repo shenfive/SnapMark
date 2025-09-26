@@ -16,6 +16,8 @@ class SelectSavedFileViewController: NSViewController {
     
     var selectedFileAction:((URL)->())? = nil
     
+    var workingURL:URL? = nil //要排除正在工作中的檔案
+    
     //Cell Size
     let cellSize = NSSize(width: 120, height: 170)
     
@@ -72,15 +74,25 @@ class SelectSavedFileViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        reloadData()
+    }
+    
+    func reloadData(){
         if let folder = SMFireManager.shared.snapMarkFolderURL {
             if let files = listFiles(in: folder){
                 self.dataFiles = files.sorted(by: { u1, u2 in
                     u1.lastPathComponent > u2.lastPathComponent
                 })
+                
+                //排除目前的檔案
+                if let workingURL{
+                    self.dataFiles  = self.dataFiles.filter { $0 != workingURL}
+                }
                 self.theCollectionView.reloadData()
             }
         }
     }
+    
     
     func listFiles(in folderURL: URL) -> [URL]? {
         let fileManager = FileManager.default
@@ -125,7 +137,6 @@ extension SelectSavedFileViewController:NSCollectionViewDelegate,NSCollectionVie
                 if let date = dateFormatter.date(from: parts[0]) {
                     dateFormatter.dateFormat = "yyyy/MM/dd"
                     let formattedDate = dateFormatter.string(from: date)
-//                    print(formattedDate)  // 輸出：2025/09/25
                     selectViewItem.fileTitle = "\(formattedDate)\n\(timestamp)"
                 } else {
                     //print("無法解析日期")
@@ -137,6 +148,10 @@ extension SelectSavedFileViewController:NSCollectionViewDelegate,NSCollectionVie
             }
         }catch{
             print(error.localizedDescription)
+        }
+        selectViewItem.fileURL = fileURL
+        selectViewItem.reloadMenuAction = {
+            self.reloadData()
         }
         
         

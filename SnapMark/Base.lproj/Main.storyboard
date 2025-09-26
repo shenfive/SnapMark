@@ -831,15 +831,15 @@
                                                     </connections>
                                                 </button>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="r8p-Te-4av">
-                                                    <rect key="frame" x="15" y="405" width="50" height="60"/>
+                                                    <rect key="frame" x="20" y="425" width="40" height="50"/>
                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="abA-1l-DsM">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                         <imageReference key="image" image="dot.scope.display" catalog="system" symbolScale="large"/>
                                                     </buttonCell>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="9Bg-jX-22n"/>
-                                                        <constraint firstAttribute="height" constant="50" id="Uh7-lC-4Oh"/>
+                                                        <constraint firstAttribute="width" constant="40" id="9Bg-jX-22n"/>
+                                                        <constraint firstAttribute="height" constant="40" id="Uh7-lC-4Oh"/>
                                                     </constraints>
                                                     <connections>
                                                         <action selector="newSnap:" target="XfG-lQ-9wD" id="Hdj-Kx-1I0"/>
@@ -884,35 +884,52 @@
                                                     </imageCell>
                                                 </imageView>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="dhv-0t-Srh">
-                                                    <rect key="frame" x="15" y="345" width="50" height="60"/>
+                                                    <rect key="frame" x="20" y="385" width="40" height="50"/>
                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="IjM-Yg-lgN">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                         <imageReference key="image" image="folder.circle" catalog="system" symbolScale="large"/>
                                                     </buttonCell>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="0Rx-Ge-Jib"/>
-                                                        <constraint firstAttribute="height" constant="50" id="DHZ-bZ-Eqe"/>
+                                                        <constraint firstAttribute="width" constant="40" id="0Rx-Ge-Jib"/>
+                                                        <constraint firstAttribute="height" constant="40" id="DHZ-bZ-Eqe"/>
                                                     </constraints>
                                                     <connections>
                                                         <action selector="readFile:" target="XfG-lQ-9wD" id="3tT-2N-YWg"/>
                                                     </connections>
                                                 </button>
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="Dn9-P5-QRy">
+                                                    <rect key="frame" x="20" y="344" width="42" height="51"/>
+                                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ikO-gE-wdG">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                        <imageReference key="image" image="photo.badge.arrow.down" catalog="system" symbolScale="large"/>
+                                                    </buttonCell>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="lmp-bd-BzP"/>
+                                                        <constraint firstAttribute="width" constant="40" id="uVn-Vb-IZ3"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="savePNG:" target="XfG-lQ-9wD" id="zRY-nQ-hwQ"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="VhU-UG-sr4" secondAttribute="bottom" constant="282" id="7L3-xe-xxM"/>
+                                                <constraint firstItem="Dn9-P5-QRy" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="7qe-E4-a47"/>
                                                 <constraint firstItem="dhv-0t-Srh" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="Bp4-68-Jdv"/>
                                                 <constraint firstItem="DCs-Sj-CvL" firstAttribute="centerX" secondItem="5YH-8c-p1P" secondAttribute="centerX" id="Eao-l7-7c0"/>
                                                 <constraint firstItem="DCs-Sj-CvL" firstAttribute="top" secondItem="5YH-8c-p1P" secondAttribute="bottom" constant="10" id="GUT-gS-6kG"/>
                                                 <constraint firstItem="5YH-8c-p1P" firstAttribute="centerY" secondItem="vCb-2o-2Cr" secondAttribute="centerY" constant="-100" id="IbO-ho-JhB"/>
                                                 <constraint firstItem="k3k-q6-Oil" firstAttribute="top" secondItem="QwF-xk-ozj" secondAttribute="bottom" constant="15" id="Siv-4m-hQ1"/>
                                                 <constraint firstItem="r8p-Te-4av" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" id="SyO-ud-Bnb"/>
-                                                <constraint firstItem="dhv-0t-Srh" firstAttribute="top" secondItem="r8p-Te-4av" secondAttribute="bottom" constant="10" symbolic="YES" id="T2R-uX-NW4"/>
+                                                <constraint firstItem="dhv-0t-Srh" firstAttribute="top" secondItem="r8p-Te-4av" secondAttribute="bottom" id="T2R-uX-NW4"/>
+                                                <constraint firstItem="Dn9-P5-QRy" firstAttribute="top" secondItem="dhv-0t-Srh" secondAttribute="bottom" id="Trr-HY-KX8"/>
                                                 <constraint firstItem="k3k-q6-Oil" firstAttribute="centerX" secondItem="5YH-8c-p1P" secondAttribute="centerX" id="Wgf-pQ-YQx"/>
                                                 <constraint firstItem="VhU-UG-sr4" firstAttribute="leading" secondItem="DCs-Sj-CvL" secondAttribute="trailing" constant="1" id="arb-n9-0e3"/>
                                                 <constraint firstItem="QwF-xk-ozj" firstAttribute="centerX" secondItem="5YH-8c-p1P" secondAttribute="centerX" id="kMv-4Z-N1y"/>
                                                 <constraint firstItem="QwF-xk-ozj" firstAttribute="top" secondItem="DCs-Sj-CvL" secondAttribute="bottom" constant="15" id="lnI-8f-L4X"/>
-                                                <constraint firstItem="r8p-Te-4av" firstAttribute="top" secondItem="vCb-2o-2Cr" secondAttribute="top" constant="20" id="r5Z-cv-a8S"/>
+                                                <constraint firstItem="r8p-Te-4av" firstAttribute="top" secondItem="vCb-2o-2Cr" secondAttribute="top" constant="10" id="r5Z-cv-a8S"/>
                                                 <constraint firstItem="5YH-8c-p1P" firstAttribute="centerX" secondItem="vCb-2o-2Cr" secondAttribute="centerX" constant="-15" id="su6-ia-dre"/>
                                             </constraints>
                                         </view>
@@ -1213,11 +1230,11 @@
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32J-s3-3Zy">
                                         <rect key="frame" x="260" y="40" width="300" height="300"/>
                                         <clipView key="contentView" id="ddn-6g-BX3">
-                                            <rect key="frame" x="0.0" y="0.0" width="285" height="285"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <view autoresizesSubviews="NO" appearanceType="aqua" id="Gnf-mE-Mhf" customClass="SnapEditView" customModule="SnapMark" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="315" height="315"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="azm-qx-4uP">
@@ -1233,11 +1250,11 @@
                                             <constraint firstAttribute="width" constant="300" id="Ogw-33-43X"/>
                                             <constraint firstAttribute="height" constant="300" id="gaw-q6-Jdj"/>
                                         </constraints>
-                                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="7W4-fe-Ios">
+                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="7W4-fe-Ios">
                                             <rect key="frame" x="0.0" y="285" width="285" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="W7F-pA-Pfw">
+                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="W7F-pA-Pfw">
                                             <rect key="frame" x="285" y="0.0" width="15" height="285"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
@@ -1389,6 +1406,7 @@
         <image name="dot.scope.display" catalog="system" width="24" height="19"/>
         <image name="folder.circle" catalog="system" width="19" height="19"/>
         <image name="moonphase.new.moon.inverse" catalog="system" width="15" height="15"/>
+        <image name="photo.badge.arrow.down" catalog="system" width="26" height="20"/>
         <image name="square" catalog="system" width="16" height="14"/>
     </resources>
 </document>

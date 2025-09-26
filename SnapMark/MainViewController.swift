@@ -6,7 +6,7 @@
 //
 
 import Cocoa
-
+import UniformTypeIdentifiers
 
 
 
@@ -514,13 +514,11 @@ class MainViewController: NSViewController {
             
             self.contentWidth.constant = min(self.contentContainerView.frame.width, newImage.size.width + 16)
             self.contentHeight.constant = min(self.contentContainerView.frame.height, newImage.size.height + 16)
-            self.contentContainerView.layoutSubtreeIfNeeded()
+            self.contentContainerView.layoutSubtreeIfNeeded()//等待完成繪製
             self.setModeDisplayUI()
             self.documentView.frame.size = newImage.size
             self.documentView.layoutSubtreeIfNeeded()
             self.theImageView.frame = self.documentView.bounds
-//            self.reDrawComponts()
-            
         }
     }
     
@@ -533,7 +531,7 @@ class MainViewController: NSViewController {
             self?.components.removeAll()
             self?.itemCollectionView.reloadData()
             self?.openFile()
-//            self?.setFitWindowRatio(self as Any)
+            self?.setFitWindowRatio(self as Any)
         }
         controller?.startCapture(from: mainWindow)
     }
@@ -556,12 +554,69 @@ class MainViewController: NSViewController {
     //MARK: 讀檔
     @IBAction func readFile(_ sender: Any) {
         let nextVC = SelectSavedFileViewController()
+        nextVC.workingURL = currentFileUrl
         nextVC.selectedFileAction = {
             self.currentFileUrl = $0
             self.initView()
         }
         self.presentAsModalWindow(nextVC)
     }
+    
+    //MARK: 存成圖檔
+    @IBAction func savePNG(_ sender: Any) {
+        
+        // 1️⃣ 推導預設檔名
+        guard let originalName = currentFileUrl?.lastPathComponent else { return }
+        let baseName = (originalName as NSString).deletingPathExtension
+        let defaultFileName = baseName + ".png"
+
+        // 2️⃣ 建立 Save Panel
+        let panel = NSSavePanel()
+        if #available(macOS 12.0, *) {
+            panel.allowedContentTypes = [UTType.png]
+        } else {
+            panel.allowedFileTypes = ["png"] // 舊寫法作為 fallback
+        }
+        panel.nameFieldStringValue = defaultFileName
+        panel.canCreateDirectories = true
+        panel.title = "儲存 PNG 圖片"
+        panel.message = "選擇儲存位置"
+        
+        // 3️⃣ 顯示 Panel 並處理結果
+        panel.begin { response in
+            guard response == .OK, let outputURL = panel.url else { return }
+            
+            // 4️⃣ 建立 bitmap representation
+            
+            //重覆比例
+            let currentRation = self.documentView.ratio
+            self.resetRatio(self as Any)
+            
+            
+            let bounds = self.documentView.bounds
+            guard let rep = self.documentView.bitmapImageRepForCachingDisplay(in: bounds) else { return }
+            self.documentView.cacheDisplay(in: bounds, to: rep)
+            
+            // 恢復原比例
+            self.ratioSlider.doubleValue = currentRation
+            self.setRatio()
+            
+            // 5️⃣ 轉成 PNG 資料
+            guard let pngData = rep.representation(using: .png, properties: [:]) else { return }
+
+            // 6️⃣ 寫入檔案
+            do {
+                try pngData.write(to: outputURL)
+                print("匯出成功：\(outputURL.path)")
+            } catch {
+                print("匯出失敗：\(error)")
+            }
+        }
+    }
+    
+    
+    
+    
     
     //設定編輯模式
     func setModeDisplayUI(){

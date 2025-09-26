@@ -26,7 +26,7 @@
                     </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSTouchBarQuickLookTemplate" id="e04-87-Y9k"/>
                 </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pns-x0-eB3">
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pns-x0-eB3">
                     <rect key="frame" x="18" y="97" width="149" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Label" id="dXu-wh-jfy">
                         <font key="font" metaFont="system"/>
