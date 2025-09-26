@@ -707,10 +707,10 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let component = components[indexPath.item]
         let componentViewItem = ComponentViewItem(nibName: "ComponentViewItem", bundle: nil)
-        componentViewItem.view.bounds.size = cellSize
-        componentViewItem.itemBox.bounds.size = cellSize
+//        componentViewItem.view.bounds.size = cellSize
+//        componentViewItem.itemBox.bounds.size = cellSize
         componentViewItem.componentId = indexPath.item
-        
+//        
         //按下去時的動作
         componentViewItem.selectAction = {
             if self.components[$0].isSelected == true {
@@ -724,11 +724,11 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             self.itemCollectionView.reloadData()
             self.reDrawComponts()
         }
-        
-        if component.isSelected {
-            componentViewItem.itemBox.borderColor = .red
-            componentViewItem.itemBox.borderWidth = 3
-        }
+//        
+//        if component.isSelected {
+//            componentViewItem.itemBox.borderColor = .red
+//            componentViewItem.itemBox.borderWidth = 3
+//        }
         componentViewItem.mouseOverEnterAction = {
             print("on Main Enter:\($0)")
             if self.components[$0].isSelected != true{
@@ -743,54 +743,54 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             componentViewItem.deleteButton.isHidden = true
             self.reDrawComponts()
         }
-        componentViewItem.deleteAction = {
-            let alert = NSAlert()
-            alert.messageText = "提示"
-            alert.informativeText = "刪除這個元件？"
-            alert.alertStyle = .warning
-            alert.addButton(withTitle: "確定")
-            alert.addButton(withTitle: "取消")
-
-            // 指定圖示
-            if let image = snapshot(of: componentViewItem.preView) {
-                alert.icon = image
-            }
-            
-            
-            let response = alert.runModal()
-            if response == .alertFirstButtonReturn {
-                // 使用者按下「確定」
-                self.components.remove(at: indexPath.item)
-                self.reDrawComponts()
-                self.itemCollectionView.reloadData()
-            }
-        }
-
-        switch component.componentType{
-        case .ARROW:
-            componentViewItem.itemBox.title = "Arrow"
-            let arrowView = ArrowView(frame: component.framRect(ratio: 1))
-            arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-            let newVeiwSeting = aspectFitRectAndScale(contentRect: arrowView.frame, containerRect: componentViewItem.preView.bounds)
-            arrowView.ratio = newVeiwSeting.scale
-            arrowView.frame = newVeiwSeting.rect
-            componentViewItem.preView.addSubview(arrowView)
-        case .BOX:
-            componentViewItem.itemBox.title = "Box"
-            let boxView = BoxView(frame: component.framRect(ratio: 1))
-            boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-            let newVeiwSeting = aspectFitRectAndScale(contentRect: boxView.frame, containerRect: componentViewItem.preView.bounds)
-            boxView.ratio = newVeiwSeting.scale
-            boxView.frame = newVeiwSeting.rect
-            componentViewItem.preView.addSubview(boxView)
-       
-        case .TEXT:
-            let textView = TextView()
-            textView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-            textView.frame = componentViewItem.preView.bounds
-            textView.isMouseTransparent = true
-            componentViewItem.preView.addSubview(textView)
-        }
+//        componentViewItem.deleteAction = {
+//            let alert = NSAlert()
+//            alert.messageText = "提示"
+//            alert.informativeText = "刪除這個元件？"
+//            alert.alertStyle = .warning
+//            alert.addButton(withTitle: "確定")
+//            alert.addButton(withTitle: "取消")
+//
+//            // 指定圖示
+//            if let image = snapshot(of: componentViewItem.preView) {
+//                alert.icon = image
+//            }
+//            
+//            
+//            let response = alert.runModal()
+//            if response == .alertFirstButtonReturn {
+//                // 使用者按下「確定」
+//                self.components.remove(at: indexPath.item)
+//                self.reDrawComponts()
+//                self.itemCollectionView.reloadData()
+//            }
+//        }
+//
+//        switch component.componentType{
+//        case .ARROW:
+//            componentViewItem.itemBox.title = "Arrow"
+//            let arrowView = ArrowView(frame: component.framRect(ratio: 1))
+//            arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+//            let newVeiwSeting = aspectFitRectAndScale(contentRect: arrowView.frame, containerRect: componentViewItem.preView.bounds)
+//            arrowView.ratio = newVeiwSeting.scale
+//            arrowView.frame = newVeiwSeting.rect
+//            componentViewItem.preView.addSubview(arrowView)
+//        case .BOX:
+//            componentViewItem.itemBox.title = "Box"
+//            let boxView = BoxView(frame: component.framRect(ratio: 1))
+//            boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+//            let newVeiwSeting = aspectFitRectAndScale(contentRect: boxView.frame, containerRect: componentViewItem.preView.bounds)
+//            boxView.ratio = newVeiwSeting.scale
+//            boxView.frame = newVeiwSeting.rect
+//            componentViewItem.preView.addSubview(boxView)
+//       
+//        case .TEXT:
+//            let textView = TextView()
+//            textView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+//            textView.frame = componentViewItem.preView.bounds
+//            textView.isMouseTransparent = true
+//            componentViewItem.preView.addSubview(textView)
+//        }
         return componentViewItem
     }
 }

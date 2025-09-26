@@ -30,7 +30,7 @@
                                 <rect key="frame" x="5" y="5" width="89" height="64"/>
                             </customView>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="CdT-6u-CmH">
-                                <rect key="frame" x="25" y="0.0" width="50" height="22"/>
+                                <rect key="frame" x="24" y="-2" width="52" height="25"/>
                                 <buttonCell key="cell" type="squareTextured" title="Delete" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zzu-Gm-LyA">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
