@@ -10,6 +10,7 @@ import Cocoa
 class SelectSavedFileViewController: NSViewController {
 
     @IBOutlet weak var theCollectionView: NSCollectionView!
+    @IBOutlet weak var fileLocationLabel: NSTextField!
     
     
     var dataFiles:[URL] = []
@@ -26,7 +27,11 @@ class SelectSavedFileViewController: NSViewController {
         theCollectionView.delegate = self
         theCollectionView.dataSource = self
         
-
+        if let fileLocation = SMFireManager.shared.snapMarkFolderURL?.absoluteString {
+            fileLocationLabel.stringValue = "Default folder【 \(fileLocation) 】"
+        }
+        
+        
         let flowLayout = NSCollectionViewFlowLayout()
         flowLayout.itemSize = cellSize
         flowLayout.minimumInteritemSpacing = 10
@@ -67,8 +72,7 @@ class SelectSavedFileViewController: NSViewController {
             window.standardWindowButton(.zoomButton)?.isHidden = true
             
             // 可選：移除標題欄互動
-            window.titleVisibility = .hidden
-            window.titlebarAppearsTransparent = true
+            window.title = "Select Snap"
         }
     }
     
@@ -84,15 +88,25 @@ class SelectSavedFileViewController: NSViewController {
                     u1.lastPathComponent > u2.lastPathComponent
                 })
                 
-                //排除目前的檔案
+                //排除目前的檔案名稱
                 if let workingURL{
-                    self.dataFiles  = self.dataFiles.filter { $0 != workingURL}
+                    self.dataFiles  = self.dataFiles.filter {
+                        $0.lastPathComponent != workingURL.lastPathComponent
+                    }
                 }
                 self.theCollectionView.reloadData()
             }
         }
     }
     
+    @IBAction func changeFolderAction(_ sender: Any) {
+        SMFireManager.shared.promptUserToSelectSnapMarkLocation(view:self.view){
+            if let fileLocation = SMFireManager.shared.snapMarkFolderURL?.absoluteString {
+                self.fileLocationLabel.stringValue = "Default folder【 \(fileLocation) 】"
+            }
+            self.reloadData()
+        }
+    }
     
     func listFiles(in folderURL: URL) -> [URL]? {
         let fileManager = FileManager.default

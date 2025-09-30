@@ -23,7 +23,7 @@
                         <rect key="frame" x="2" y="2" width="130" height="80"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
-                    <color key="borderColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    <color key="borderColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                 </box>
             </subviews>
             <constraints>

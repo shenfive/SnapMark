@@ -34,9 +34,9 @@ class SelectSavedFileCollectionViewItem: NSCollectionViewItem {
         super.rightMouseDown(with: event)
         print("right click")
         
-        let menu = NSMenu(title: "選單")
+        let menu = NSMenu(title: "Menu")
         
-        menu.addItem(withTitle: "將元件移到垃圾桶", action: #selector(deleteItem(_:)), keyEquivalent: "")
+        menu.addItem(withTitle: "Delete File?", action: #selector(deleteItem(_:)), keyEquivalent: "")
         
         NSMenu.popUpContextMenu(menu, with: event, for: self.view)
     }
@@ -45,11 +45,11 @@ class SelectSavedFileCollectionViewItem: NSCollectionViewItem {
         print("執行動作一")
         
         let alert = NSAlert()
-        alert.messageText = "提示"
-        alert.informativeText = "移到垃圾桶？"
+        alert.messageText = "Alert"
+        alert.informativeText = "Delete？"
         alert.alertStyle = .warning
-        alert.addButton(withTitle: "確定")
-        alert.addButton(withTitle: "取消")
+        alert.addButton(withTitle: "OK")
+        alert.addButton(withTitle: "Cancel")
         
         // 指定圖示
         alert.icon = theImage.image

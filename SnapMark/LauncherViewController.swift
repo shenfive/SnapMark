@@ -55,7 +55,7 @@ class LauncherViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         if SMFireManager.shared.snapMarkFolderURL == nil {
-            SMFireManager.shared.promptUserToSelectSnapMarkLocation()
+            SMFireManager.shared.promptUserToSelectSnapMarkLocation(view:self.view) 
         }
     }
     

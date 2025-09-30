@@ -29,33 +29,33 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="BrF-Jc-A3j" customClass="PreviewView" customModule="SnapMark" customModuleProvider="target">
                                 <rect key="frame" x="5" y="5" width="89" height="64"/>
                             </customView>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="CdT-6u-CmH">
-                                <rect key="frame" x="24" y="-2" width="52" height="25"/>
-                                <buttonCell key="cell" type="squareTextured" title="Delete" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zzu-Gm-LyA">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="deleteAction:" target="-2" id="RNb-ae-gva"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="BrF-Jc-A3j" firstAttribute="top" secondItem="C9H-Vb-MIf" secondAttribute="top" constant="5" id="1Nx-JS-9jT"/>
                             <constraint firstAttribute="trailing" secondItem="BrF-Jc-A3j" secondAttribute="trailing" constant="5" id="E3l-mX-Ar3"/>
                             <constraint firstAttribute="bottom" secondItem="BrF-Jc-A3j" secondAttribute="bottom" constant="5" id="Lir-wW-ww6"/>
-                            <constraint firstAttribute="bottom" secondItem="CdT-6u-CmH" secondAttribute="bottom" id="P3m-AW-RBs"/>
-                            <constraint firstItem="CdT-6u-CmH" firstAttribute="centerX" secondItem="C9H-Vb-MIf" secondAttribute="centerX" id="cnk-jq-E6Q"/>
                             <constraint firstItem="BrF-Jc-A3j" firstAttribute="leading" secondItem="C9H-Vb-MIf" secondAttribute="leading" constant="5" id="fL5-at-htE"/>
                         </constraints>
                     </view>
                     <color key="borderColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                     <color key="fillColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </box>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="CdT-6u-CmH">
+                    <rect key="frame" x="28" y="-2" width="46" height="25"/>
+                    <buttonCell key="cell" type="squareTextured" title="Menu" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zzu-Gm-LyA">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="menuAction:" target="-2" id="RNb-ae-gva"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="CdT-6u-CmH" secondAttribute="bottom" id="1LR-tb-B4P"/>
                 <constraint firstAttribute="trailing" secondItem="iT3-pj-Xr9" secondAttribute="trailing" id="5Ee-hR-YX9"/>
                 <constraint firstItem="iT3-pj-Xr9" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="S94-Gt-WPj"/>
+                <constraint firstItem="CdT-6u-CmH" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="VTL-gV-GKV"/>
                 <constraint firstItem="iT3-pj-Xr9" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="eJi-tY-cAn"/>
                 <constraint firstAttribute="bottom" secondItem="iT3-pj-Xr9" secondAttribute="bottom" id="gU6-a3-Rok"/>
             </constraints>

@@ -117,37 +117,78 @@ class SMFireManager{
     }
     
     //設定預設資料夾
-    func promptUserToSelectSnapMarkLocation() {
-        let panel = NSOpenPanel()
-        panel.title = "選擇 SnapMark 儲存位置"
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.allowsMultipleSelection = false
-    
+//    func promptUserToSelectSnapMarkLocation(view:NSView,completion: @escaping (() -> Void)? = nil) {
         
+        
+//    func promptUserToSelectSnapMarkLocation(view: NSView, completion: (() -> Void)? = nil) {
+    func promptUserToSelectSnapMarkLocation(view: NSView, completion: @escaping (() -> Void) = {}) {
 
-        panel.begin { result in
-            if result == .OK, let baseFolderURL = panel.url {
-                let snapMarkFolderURL = baseFolderURL.appendingPathComponent("SnapMark")
-                self.createSnapMarkFolder(at: snapMarkFolderURL)
-            }else{
-                
-                
-                // 使用者取消 → 可提示或再次開啟
-                let alert = NSAlert()
-                alert.messageText = "必須選擇檔案才能繼續使用 SnapMark"
-                alert.addButton(withTitle: "重新選擇")
-                alert.addButton(withTitle: "離開")
-                alert.alertStyle = .warning
-                alert.icon = NSImage(named: "arrow2")
-                let response = alert.runModal()
-                if response == .alertFirstButtonReturn {
-                    self.promptUserToSelectSnapMarkLocation() // 再次開啟
-                } else {
-                    NSApp.terminate(nil)
+        let panel = NSOpenPanel()
+            panel.title = "選擇 SnapMark 儲存位置"
+            panel.canChooseDirectories = true
+            panel.canChooseFiles = false
+            panel.allowsMultipleSelection = false
+
+            // 確保綁定到目前視窗
+            if let window = view.window {
+                panel.beginSheetModal(for: window) { result in
+                    if result == .OK, let baseFolderURL = panel.url {
+                        let snapMarkFolderURL = baseFolderURL.appendingPathComponent("SnapMark")
+       
+                        self.createSnapMarkFolder(at: snapMarkFolderURL)
+                        completion()
+                    } else {
+                        let alert = NSAlert()
+                        alert.messageText = "You must select a default folder to continue using SnapMark"
+                        alert.addButton(withTitle: "Retry")
+//                        alert.addButton(withTitle: "離開")
+                        alert.alertStyle = .warning
+//                        alert.icon = NSImage(named: "arrow2")
+
+                        alert.beginSheetModal(for: window) { response in
+                            if response == .alertFirstButtonReturn {
+                                self.promptUserToSelectSnapMarkLocation(view:view) // 再次開啟
+                            } else {
+                                NSApp.terminate(nil)
+                            }
+                        }
+                    }
                 }
             }
-        }
+        
+        
+        
+        
+//        let panel = NSOpenPanel()
+//        panel.title = "選擇 SnapMark 儲存位置"
+//        panel.canChooseDirectories = true
+//        panel.canChooseFiles = false
+//        panel.allowsMultipleSelection = false
+//    
+//        
+//
+//        panel.begin { result in
+//            if result == .OK, let baseFolderURL = panel.url {
+//                let snapMarkFolderURL = baseFolderURL.appendingPathComponent("SnapMark")
+//                self.createSnapMarkFolder(at: snapMarkFolderURL)
+//            }else{
+//                
+//                
+//                // 使用者取消 → 可提示或再次開啟
+//                let alert = NSAlert()
+//                alert.messageText = "必須選擇檔案才能繼續使用 SnapMark"
+//                alert.addButton(withTitle: "重新選擇")
+//                alert.addButton(withTitle: "離開")
+//                alert.alertStyle = .warning
+//                alert.icon = NSImage(named: "arrow2")
+//                let response = alert.runModal()
+//                if response == .alertFirstButtonReturn {
+//                    self.promptUserToSelectSnapMarkLocation() // 再次開啟
+//                } else {
+//                    NSApp.terminate(nil)
+//                }
+//            }
+//        }
         
         
 
@@ -156,13 +197,74 @@ class SMFireManager{
     //建立預設資料夾
     func createSnapMarkFolder(at url: URL) {
         do {
-            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+            
+            let currentFolder = snapMarkFolderURL
+            let fileManager = FileManager.default
+            if !fileManager.fileExists(atPath: url.path) {
+                try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
+            }
             try saveFolderBookmark(url)
             print("✅ SnapMark 資料匣建立成功：\(url.path)")
+            
+            if let currentFolder,let snapMarkFolderURL{
+                let alert = NSAlert()
+                alert.messageText = "Alert"
+                alert.informativeText = "Marge Data？"
+                alert.alertStyle = .warning
+                alert.addButton(withTitle: "OK")
+                alert.addButton(withTitle: "Cancel")
+                
+                // 指定圖示
+//                if let image = snapshot(of: componentViewItem.preView) {
+//                    alert.icon = image
+//                }
+                
+                
+                let response = alert.runModal()
+                if response == .alertFirstButtonReturn {
+                    // 使用者按下「確定」
+                    try copyContents(from: currentFolder, to: snapMarkFolderURL)
+                    try FileManager.default.removeItem(at: currentFolder)
+                }
+                
+            }
         } catch {
             print("❌ 建立 SnapMark 資料匣失敗：\(error)")
         }
     }
+    
+    
+    //複製內容
+    func copyContents(from sourceURL: URL, to destinationURL: URL) throws {
+        let fileManager = FileManager.default
+
+        // 確保目的地資料夾存在
+        if !fileManager.fileExists(atPath: destinationURL.path) {
+            try fileManager.createDirectory(at: destinationURL, withIntermediateDirectories: true, attributes: nil)
+        }
+
+        // 取得來源資料夾的所有項目
+        let items = try fileManager.contentsOfDirectory(at: sourceURL, includingPropertiesForKeys: nil, options: [])
+
+        for item in items {
+            let originalName = item.lastPathComponent
+            var destinationItemURL = destinationURL.appendingPathComponent(originalName)
+
+            // 若檔案已存在，則加上編號
+            var counter = 1
+            while fileManager.fileExists(atPath: destinationItemURL.path) {
+                let baseName = item.deletingPathExtension().lastPathComponent
+                let ext = item.pathExtension
+                let newName = ext.isEmpty ? "\(baseName) (\(counter))" : "\(baseName) (\(counter)).\(ext)"
+                destinationItemURL = destinationURL.appendingPathComponent(newName)
+                counter += 1
+            }
+
+            try fileManager.copyItem(at: item, to: destinationItemURL)
+        }
+    }
+
+    
     
     
     //記錄預設資料匣

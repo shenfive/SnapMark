@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SelectSavedFileViewController" customModule="SnapMark" customModuleProvider="target">
             <connections>
+                <outlet property="fileLocationLabel" destination="yca-S2-IRT" id="qXd-cH-W14"/>
                 <outlet property="theCollectionView" destination="DX3-v9-5wP" id="vZd-wJ-R3W"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -18,14 +19,14 @@
             <rect key="frame" x="0.0" y="0.0" width="778" height="482"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qye-oU-Q6C">
-                    <rect key="frame" x="10" y="10" width="758" height="422"/>
+                <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qye-oU-Q6C">
+                    <rect key="frame" x="10" y="10" width="758" height="402"/>
                     <clipView key="contentView" id="sqg-Iu-Czr">
-                        <rect key="frame" x="1" y="1" width="756" height="420"/>
+                        <rect key="frame" x="1" y="1" width="756" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView id="DX3-v9-5wP">
-                                <rect key="frame" x="0.0" y="0.0" width="756" height="158"/>
+                                <rect key="frame" x="0.0" y="0.0" width="756" height="400"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="0nb-2Y-lcA">
                                     <size key="itemSize" width="50" height="50"/>
@@ -35,7 +36,7 @@
                         </subviews>
                     </clipView>
                     <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="nMR-1V-7ca">
-                        <rect key="frame" x="1" y="144" width="233" height="15"/>
+                        <rect key="frame" x="-100" y="-100" width="233" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="KFe-Ls-jBz">
@@ -57,14 +58,36 @@
                         <action selector="closeAction:" target="-2" id="vzx-i5-fum"/>
                     </connections>
                 </button>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yca-S2-IRT">
+                    <rect key="frame" x="10" y="450" width="107" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Default Location:" id="3cP-rp-5sW">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AjM-wa-8Gv">
+                    <rect key="frame" x="5" y="415" width="123" height="32"/>
+                    <buttonCell key="cell" type="push" title="Change Folder" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Jcq-um-QI3">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="changeFolderAction:" target="-2" id="bod-Ec-WDt"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="qye-oU-Q6C" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="50" id="9la-tp-QAu"/>
+                <constraint firstItem="qye-oU-Q6C" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="70" id="9la-tp-QAu"/>
                 <constraint firstItem="TAy-yD-cPH" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="DmO-sG-Nmo"/>
                 <constraint firstAttribute="trailing" secondItem="qye-oU-Q6C" secondAttribute="trailing" constant="10" id="OqY-6r-sH0"/>
+                <constraint firstItem="yca-S2-IRT" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="12" id="ahU-UX-ah2"/>
+                <constraint firstItem="AjM-wa-8Gv" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="12" id="bxg-Ff-VWc"/>
                 <constraint firstAttribute="trailing" secondItem="TAy-yD-cPH" secondAttribute="trailing" constant="10" id="qdg-Hu-8QC"/>
+                <constraint firstItem="AjM-wa-8Gv" firstAttribute="top" secondItem="yca-S2-IRT" secondAttribute="bottom" constant="8" symbolic="YES" id="qwA-TX-hac"/>
                 <constraint firstItem="qye-oU-Q6C" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="sx0-JH-Lm1"/>
                 <constraint firstAttribute="bottom" secondItem="qye-oU-Q6C" secondAttribute="bottom" constant="10" id="tyK-N3-hhb"/>
+                <constraint firstItem="yca-S2-IRT" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="16" id="vnC-8g-fkg"/>
             </constraints>
             <point key="canvasLocation" x="102" y="59"/>
         </customView>

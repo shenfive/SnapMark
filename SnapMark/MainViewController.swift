@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 
 
 class MainViewController: NSViewController {
-
+    
     @IBOutlet weak var theImageView: NSImageView!
     @IBOutlet weak var documentView: SnapEditView!
     
@@ -23,14 +23,13 @@ class MainViewController: NSViewController {
     @IBOutlet weak var contentWidth: NSLayoutConstraint!
     @IBOutlet weak var contentScrollView: NSScrollView!
     @IBOutlet weak var colorWell: NSColorWell!
-    
-    @IBOutlet weak var modeImage: NSImageView!
     @IBOutlet weak var selectLineButton: NSPopUpButton!
+    
     
     @IBOutlet weak var arrowModeButton: NSButton!
     @IBOutlet weak var textModeButton: NSButton!
     @IBOutlet weak var boxModeButton: NSButton!
-    @IBOutlet weak var modeArrowPosition: NSLayoutConstraint!
+
     
     @IBOutlet weak var selectConerRadius: NSPopUpButton!
     @IBOutlet weak var fontButton: NSPopUpButton!
@@ -54,11 +53,11 @@ class MainViewController: NSViewController {
     var editingImage:NSImage = NSImage()
     
     //頁面的 Window
-//    var window:NSWindow!
+    //    var window:NSWindow!
     
     //line width
     let boardWidthSelectMenuList = [2.0,5.0,10.0]
-
+    
     //cornerRadius
     let conerRadiusSelectMenuList = [0.0,5.0,10.0,20.0,100000.1] //最後一項是取半徑，即藥丸形
     
@@ -83,12 +82,12 @@ class MainViewController: NSViewController {
         flowLayout.minimumLineSpacing = 10
         flowLayout.scrollDirection = .horizontal
         flowLayout.sectionInset = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-
+        
         itemCollectionView.collectionViewLayout = flowLayout
         itemCollectionView.isSelectable = true
         itemCollectionView.enclosingScrollView?.hasHorizontalScroller = false
         itemCollectionView.enclosingScrollView?.hasVerticalScroller = true
-
+        
         //設定字型選擇器
         setFontButton()
         
@@ -108,8 +107,8 @@ class MainViewController: NSViewController {
         documentView.boardWidth = boardWidthSelectMenuList[selectLineButton.indexOfSelectedItem]
         documentView.cornerRadius = conerRadiusSelectMenuList[selectConerRadius.indexOfSelectedItem]
         documentView.editMode = .ARROW
-
-
+        
+        
         //新增物件時的動作
         documentView.startAction = {
             //移除空白字串的 TextView
@@ -130,8 +129,8 @@ class MainViewController: NSViewController {
         
         //完成新增物件時的動作
         documentView.endAction = {
-
-                        
+            
+            
             self.components.append(self.documentView.getComponet(ratio: self.ratioSlider.doubleValue))
             switch self.components.last?.componentType{
             case .TEXT:
@@ -143,11 +142,11 @@ class MainViewController: NSViewController {
                 self.reDrawComponts()
                 self.itemCollectionView.reloadData()
             }
-
+            
             //回傳物件View
             print($0)
         }
-     
+        
     }
     
     override func viewWillAppear() {
@@ -166,17 +165,9 @@ class MainViewController: NSViewController {
             window.setFrame(centeredRect, display: true)
             window.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
             setModeDisplayUI()
-            //初始化編輯區
-//            if let image = theImageView.image{
-//                editingImage = image
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-//                    self.setImage()
-//                }
-//            }
-
         }
         
-
+        
         //抓取外部視窗動作
         NotificationCenter.default.addObserver(
             self,
@@ -189,7 +180,7 @@ class MainViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         initView()
-    
+        
     }
     
     func initView(){
@@ -206,7 +197,7 @@ class MainViewController: NSViewController {
             }catch{
                 print(error.localizedDescription)
             }
-
+            
         }else{
             openFile()
         }
@@ -231,7 +222,7 @@ class MainViewController: NSViewController {
     
     //MARK: 重畫所有元件
     func reDrawComponts(){
-
+        
         //移除標註文件
         self.documentView.subviews.forEach {
             if $0.isKind(of: ArrowView.self) { $0.removeFromSuperview() }
@@ -239,8 +230,8 @@ class MainViewController: NSViewController {
             if $0.isKind(of: TextView.self) { $0.removeFromSuperview() }
             if $0.isKind(of: SelectView.self) {$0.removeFromSuperview()}
         }
-     
-
+        
+        
         documentView.selectedSubView = nil
         
         //重繪標註文件
@@ -261,22 +252,24 @@ class MainViewController: NSViewController {
                     
                     //設定 UI
                     self.colorWell.color = component.color
-                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
-                        self.selectLineButton.selectItem(at: boardIndex)
-                    }
+                    self.documentView.editMode = .ARROW
+                    self.setModeDisplayUI()
+//                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
+//                        self.selectLineButton.selectItem(at: boardIndex)
+//                    }
                     
-                 
+                    
                 }
                 arrowView.endEditAction = {
                     self.components[index] = $0
                     self.reDrawComponts()
                     self.itemCollectionView.reloadData()
                 }
-            
+                
             case .BOX:
                 let boxView = BoxView(frame: component.framRect(ratio: ratioSlider.doubleValue))
                 boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-       
+                
                 self.documentView.addSubview(boxView)
                 if component.isMouseOverMode{
                     let editView = SelectView(frame: boxView.frame)
@@ -289,9 +282,11 @@ class MainViewController: NSViewController {
                     
                     //設定 UI
                     self.colorWell.color = component.color
-                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
-                        self.selectLineButton.selectItem(at: boardIndex)
-                    }
+                    self.documentView.editMode = .BOX
+                    setModeDisplayUI()
+//                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
+//                        self.selectLineButton.selectItem(at: boardIndex)
+//                    }
                     if let conerIndex = conerRadiusSelectMenuList.firstIndex(of: component.cornerRadius){
                         self.selectConerRadius.selectItem(at: conerIndex)
                     }
@@ -303,7 +298,7 @@ class MainViewController: NSViewController {
                     self.itemCollectionView.reloadData()
                 }
                 
-       
+                
             case .TEXT:
                 print("show:\(index) string:\(component.text)")
                 let textView = TextView()
@@ -320,15 +315,17 @@ class MainViewController: NSViewController {
                     self.reDrawComponts()
                 }
                 self.documentView.addSubview(textView)
-
+                
                 if component.isSelected{
                     documentView.selectedSubView = textView
                     
                     //設定 UI
                     self.colorWell.color = component.color
-                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
-                        self.selectLineButton.selectItem(at: boardIndex)
-                    }
+                    self.documentView.editMode = .BOX
+                    setModeDisplayUI()
+//                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
+//                        self.selectLineButton.selectItem(at: boardIndex)
+//                    }
                     self.fontSizeSlider.doubleValue = component.fontSize
                     self.fontSizeLabel.stringValue = "\(fontSizeSlider.intValue)"
                     
@@ -343,7 +340,7 @@ class MainViewController: NSViewController {
                     let editView = SelectView(frame: textView.frame)
                     self.documentView.addSubview(editView)
                 }
-
+                
             }
         }
         
@@ -363,12 +360,12 @@ class MainViewController: NSViewController {
             }
         }
     }
-
     
-
-
-
-
+    
+    
+    
+    
+    
     //MARK: 字形相關
     
     //設定字型大小動作
@@ -407,15 +404,15 @@ class MainViewController: NSViewController {
         // 加入 System Font 項目
         let systemFont = NSFont.systemFont(ofSize: 14)
         let systemAttrTitle = NSAttributedString(string: "System Font", attributes: [.font: systemFont])
-
+        
         let systemItem = NSMenuItem()
         systemItem.attributedTitle = systemAttrTitle
         systemItem.representedObject = systemFont
         systemItem.action = #selector(fontSelected(_:))
         systemItem.target = self
-
+        
         fontMenu.addItem(systemItem)
-
+        
         // 加入其他字型家族
         for family in NSFontManager.shared.availableFontFamilies {
             guard let font = NSFont(name: family, size: 14) else { continue }
@@ -426,16 +423,16 @@ class MainViewController: NSViewController {
             item.representedObject = font
             item.action = #selector(fontSelected(_:))
             item.target = self
-
+            
             fontMenu.addItem(item)
         }
         print(self.fontFemilySelectMenuList)
         fontButton.menu = fontMenu
     }
-
     
     
-
+    
+    
     
     //設定顏色
     @IBAction func changeColor(_ sender: Any) {
@@ -445,7 +442,7 @@ class MainViewController: NSViewController {
             components[index].color = documentView.color
             reDrawComponts()
         }
-
+        
     }
     
     
@@ -481,14 +478,14 @@ class MainViewController: NSViewController {
     func setRatio(){
         documentView.ratio = ratioSlider.doubleValue
         setImage()
-        documentView.redraw()
+        reDrawComponts()
     }
     
     //MARK:設定線寬
     @IBAction func changeLineWidth(_ sender: Any) {
         documentView.boardWidth = boardWidthSelectMenuList[selectLineButton.indexOfSelectedItem]
         documentView.redraw()
-    
+        
         if let index = components.firstIndex(where: { $0.isSelected }) {
             components[index].boardWidth = documentView.boardWidth
             reDrawComponts()
@@ -505,7 +502,7 @@ class MainViewController: NSViewController {
             reDrawComponts()
         }
     }
-
+    
     //重繪底圖
     func setImage(){
         if let newImage = resizedImage(editingImage, scale: ratioSlider.doubleValue){
@@ -515,7 +512,6 @@ class MainViewController: NSViewController {
             self.contentWidth.constant = min(self.contentContainerView.frame.width, newImage.size.width + 16)
             self.contentHeight.constant = min(self.contentContainerView.frame.height, newImage.size.height + 16)
             self.contentContainerView.layoutSubtreeIfNeeded()//等待完成繪製
-            self.setModeDisplayUI()
             self.documentView.frame.size = newImage.size
             self.documentView.layoutSubtreeIfNeeded()
             self.theImageView.frame = self.documentView.bounds
@@ -542,7 +538,6 @@ class MainViewController: NSViewController {
         setModeDisplayUI()
     }
     @IBAction func setTextMode(_ sender: Any) {
-
         documentView.editMode = .TEXT
         setModeDisplayUI()
     }
@@ -569,7 +564,7 @@ class MainViewController: NSViewController {
         guard let originalName = currentFileUrl?.lastPathComponent else { return }
         let baseName = (originalName as NSString).deletingPathExtension
         let defaultFileName = baseName + ".png"
-
+        
         // 2️⃣ 建立 Save Panel
         let panel = NSSavePanel()
         if #available(macOS 12.0, *) {
@@ -579,19 +574,19 @@ class MainViewController: NSViewController {
         }
         panel.nameFieldStringValue = defaultFileName
         panel.canCreateDirectories = true
-        panel.title = "儲存 PNG 圖片"
-        panel.message = "選擇儲存位置"
+        panel.title = "Save as PNG"
+        panel.message = "Select File Location"
         
         // 3️⃣ 顯示 Panel 並處理結果
         panel.begin { response in
-            guard response == .OK, let outputURL = panel.url else { return }
+            
+            guard response == .OK,let outputURL = panel.url else { return }
             
             // 4️⃣ 建立 bitmap representation
             
             //重覆比例
             let currentRation = self.documentView.ratio
             self.resetRatio(self as Any)
-            
             
             let bounds = self.documentView.bounds
             guard let rep = self.documentView.bitmapImageRepForCachingDisplay(in: bounds) else { return }
@@ -603,7 +598,7 @@ class MainViewController: NSViewController {
             
             // 5️⃣ 轉成 PNG 資料
             guard let pngData = rep.representation(using: .png, properties: [:]) else { return }
-
+            
             // 6️⃣ 寫入檔案
             do {
                 try pngData.write(to: outputURL)
@@ -620,72 +615,39 @@ class MainViewController: NSViewController {
     
     //設定編輯模式
     func setModeDisplayUI(){
-        var sender = NSButton()
+        arrowModeButton.contentTintColor = NSColor.systemGray
+        textModeButton.contentTintColor = NSColor.systemGray
+        boxModeButton.contentTintColor = NSColor.systemGray
         switch documentView.editMode {
-        case .TEXT:
-            sender = textModeButton
+
         case .ARROW:
-            sender = arrowModeButton
+            arrowModeButton.contentTintColor = NSColor.red
+        case .TEXT:
+            textModeButton.contentTintColor = NSColor.red
         case .BOX:
-            sender = boxModeButton
+            boxModeButton.contentTintColor = NSColor.red
         }
         //箭頭移動的動畫
-        NSAnimationContext.runAnimationGroup { context in
-            context.duration = 0.25
-            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-            modeArrowPosition.animator().constant = sender.frame.minY + 20
-        }
     }
     
     
-
-
+    
+    
     //外部視窗大小改變
     @objc func windowDidResize(_ notification: Notification) {
         setImage()
     }
     
-    /// 計算 aspectFit 並回傳 rect 與縮放比例
-    func aspectFitRectAndScale(contentRect: NSRect, containerRect: NSRect) -> (rect: NSRect, scale: CGFloat) {
-        let contentSize = contentRect.size
-        let containerSize = containerRect.size
-
-        let contentAspect = contentSize.width / contentSize.height
-        let containerAspect = containerSize.width / containerSize.height
-
-        var fitSize: NSSize
-        var scale: CGFloat
-
-        if contentAspect > containerAspect {
-            // 限制寬度
-            scale = containerSize.width / contentSize.width
-            fitSize = NSSize(width: containerSize.width,
-                             height: contentSize.height * scale)
-        } else {
-            // 限制高度
-            scale = containerSize.height / contentSize.height
-            fitSize = NSSize(width: contentSize.width * scale,
-                             height: containerSize.height)
-        }
-
-        // 計算置中位置
-        let originX = containerRect.origin.x + (containerSize.width - fitSize.width) / 2
-        let originY = containerRect.origin.y + (containerSize.height - fitSize.height) / 2
-
-        let newRect = NSRect(origin: NSPoint(x: originX, y: originY), size: fitSize)
-        
-        return (rect: newRect, scale: scale)
-    }
     
     
     func getComponentsJSON()->String?{
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-
+        
         do {
             let jsonData = try encoder.encode(components)
             if let jsonString = String(data: jsonData, encoding: .utf8) {
-//                print("JSON 字串：\n\(jsonString)")
+                //                print("JSON 字串：\n\(jsonString)")
                 return jsonString
             }
         } catch {
@@ -696,7 +658,7 @@ class MainViewController: NSViewController {
     }
     
     
-
+    
 }
 
 extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource{
@@ -707,10 +669,9 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let component = components[indexPath.item]
         let componentViewItem = ComponentViewItem(nibName: "ComponentViewItem", bundle: nil)
-//        componentViewItem.view.bounds.size = cellSize
-//        componentViewItem.itemBox.bounds.size = cellSize
+        
         componentViewItem.componentId = indexPath.item
-//        
+        //
         //按下去時的動作
         componentViewItem.selectAction = {
             if self.components[$0].isSelected == true {
@@ -724,11 +685,7 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             self.itemCollectionView.reloadData()
             self.reDrawComponts()
         }
-//        
-//        if component.isSelected {
-//            componentViewItem.itemBox.borderColor = .red
-//            componentViewItem.itemBox.borderWidth = 3
-//        }
+        
         componentViewItem.mouseOverEnterAction = {
             print("on Main Enter:\($0)")
             if self.components[$0].isSelected != true{
@@ -743,54 +700,30 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             componentViewItem.deleteButton.isHidden = true
             self.reDrawComponts()
         }
-//        componentViewItem.deleteAction = {
-//            let alert = NSAlert()
-//            alert.messageText = "提示"
-//            alert.informativeText = "刪除這個元件？"
-//            alert.alertStyle = .warning
-//            alert.addButton(withTitle: "確定")
-//            alert.addButton(withTitle: "取消")
-//
-//            // 指定圖示
-//            if let image = snapshot(of: componentViewItem.preView) {
-//                alert.icon = image
-//            }
-//            
-//            
-//            let response = alert.runModal()
-//            if response == .alertFirstButtonReturn {
-//                // 使用者按下「確定」
-//                self.components.remove(at: indexPath.item)
-//                self.reDrawComponts()
-//                self.itemCollectionView.reloadData()
-//            }
-//        }
-//
-//        switch component.componentType{
-//        case .ARROW:
-//            componentViewItem.itemBox.title = "Arrow"
-//            let arrowView = ArrowView(frame: component.framRect(ratio: 1))
-//            arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-//            let newVeiwSeting = aspectFitRectAndScale(contentRect: arrowView.frame, containerRect: componentViewItem.preView.bounds)
-//            arrowView.ratio = newVeiwSeting.scale
-//            arrowView.frame = newVeiwSeting.rect
-//            componentViewItem.preView.addSubview(arrowView)
-//        case .BOX:
-//            componentViewItem.itemBox.title = "Box"
-//            let boxView = BoxView(frame: component.framRect(ratio: 1))
-//            boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-//            let newVeiwSeting = aspectFitRectAndScale(contentRect: boxView.frame, containerRect: componentViewItem.preView.bounds)
-//            boxView.ratio = newVeiwSeting.scale
-//            boxView.frame = newVeiwSeting.rect
-//            componentViewItem.preView.addSubview(boxView)
-//       
-//        case .TEXT:
-//            let textView = TextView()
-//            textView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-//            textView.frame = componentViewItem.preView.bounds
-//            textView.isMouseTransparent = true
-//            componentViewItem.preView.addSubview(textView)
-//        }
+        componentViewItem.deleteAction = {
+            let alert = NSAlert()
+            alert.messageText = "Alert"
+            alert.informativeText = "Delete Component？"
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "OK")
+            alert.addButton(withTitle: "Cancel")
+            
+            // 指定圖示
+            if let image = snapshot(of: componentViewItem.preView) {
+                alert.icon = image
+            }
+            
+            
+            let response = alert.runModal()
+            if response == .alertFirstButtonReturn {
+                // 使用者按下「確定」
+                self.components.remove(at: indexPath.item)
+                self.reDrawComponts()
+                self.itemCollectionView.reloadData()
+            }
+        }
+        
+        componentViewItem.component = component
         return componentViewItem
     }
 }
