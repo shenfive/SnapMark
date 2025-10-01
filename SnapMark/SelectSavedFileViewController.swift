@@ -107,10 +107,15 @@ class SelectSavedFileViewController: NSViewController {
                     u1.lastPathComponent > u2.lastPathComponent
                 })
                 
-                //排除目前的檔案名稱
+                
                 if let workingURL{
+                    //排除目前的檔案名稱
                     self.dataFiles  = self.dataFiles.filter {
                         $0.lastPathComponent != workingURL.lastPathComponent
+                    }
+                    //只保留最後的字元
+                    self.dataFiles = self.dataFiles.filter {
+                        $0.lastPathComponent.contains(".sm")
                     }
                 }
                 self.theCollectionView.reloadData()
