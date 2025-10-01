@@ -27,10 +27,7 @@ class SelectSavedFileViewController: NSViewController {
         theCollectionView.delegate = self
         theCollectionView.dataSource = self
         
-        if let fileLocation = SMFireManager.shared.snapMarkFolderURL?.absoluteString {
-            fileLocationLabel.stringValue = "Default folder【 \(fileLocation) 】"
-        }
-        
+        showFileLocation()
         
         let flowLayout = NSCollectionViewFlowLayout()
         flowLayout.itemSize = cellSize
@@ -46,6 +43,28 @@ class SelectSavedFileViewController: NSViewController {
         theCollectionView.enclosingScrollView?.hasVerticalScroller = true
      
     }
+    
+    //顯示資料匣位置
+    func showFileLocation(){
+        if let fileLocation = SMFireManager.shared.snapMarkFolderURL?.absoluteString {
+            
+            let folderType = SMFireManager.shared.identifyCloudService()
+            switch folderType{
+            case .GoogleDrive:
+                fileLocationLabel.stringValue = "Google Drive【 \(fileLocation) 】"
+            case .OneDrive:
+                fileLocationLabel.stringValue = "One Drive【 \(fileLocation) 】"
+            case .iCloud:
+                fileLocationLabel.stringValue = "iCloud【 \(fileLocation) 】"
+            case .unknown:
+                fileLocationLabel.stringValue = "Local Folder【 \(fileLocation) 】"
+            }
+            
+        }else{
+            fileLocationLabel.stringValue = "unknow location"
+        }
+    }
+    
     
     
     override func viewWillAppear() {
@@ -101,8 +120,8 @@ class SelectSavedFileViewController: NSViewController {
     
     @IBAction func changeFolderAction(_ sender: Any) {
         SMFireManager.shared.promptUserToSelectSnapMarkLocation(view:self.view){
-            if let fileLocation = SMFireManager.shared.snapMarkFolderURL?.absoluteString {
-                self.fileLocationLabel.stringValue = "Default folder【 \(fileLocation) 】"
+            if SMFireManager.shared.snapMarkFolderURL != nil {
+                self.showFileLocation()
             }
             self.reloadData()
         }

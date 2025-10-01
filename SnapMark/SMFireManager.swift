@@ -7,6 +7,10 @@
 import Cocoa
 
 
+enum CloudService {
+    case iCloud, OneDrive, GoogleDrive, unknown
+}
+
 struct SnapMarkPackage {
     let bg: NSImage
     let thumb: NSImage
@@ -19,34 +23,34 @@ class SMFireManager{
     
     private init(){}
     
-
+    
     //儲存檔案
     func savePackage(to url: URL, bgImage: NSImage, thumbIamge: NSImage, json: String) throws {
         let fileManager = FileManager.default
-
+        
         // 建立封裝資料匣
         try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
-
+        
         // 儲存 image1.png
         if let data1 = bgImage.tiffRepresentation,
            let png1 = NSBitmapImageRep(data: data1)?.representation(using: .png, properties: [:]) {
             let image1URL = url.appendingPathComponent("bg.png")
             try png1.write(to: image1URL)
         }
-
+        
         // 儲存 image2.png
         if let data2 = thumbIamge.tiffRepresentation,
            let png2 = NSBitmapImageRep(data: data2)?.representation(using: .png, properties: [:]) {
             let image2URL = url.appendingPathComponent("thumb.png")
             try png2.write(to: image2URL)
         }
-
+        
         // 儲存 metadata.json
         let jsonURL = url.appendingPathComponent("metadata.json")
         let jsonData = Data(json.utf8)
         try jsonData.write(to: jsonURL)
     }
-
+    
     //更新 JSON
     func updateJSON(in packageURL: URL, newJSONString: String) throws {
         let jsonURL = packageURL.appendingPathComponent("metadata.json")
@@ -70,34 +74,34 @@ class SMFireManager{
     //讀取檔案
     func loadPackage(from url: URL) throws -> SnapMarkPackage {
         let fileManager = FileManager.default
-
+        
         // 檢查資料匣是否存在
         guard fileManager.fileExists(atPath: url.path) else {
             throw NSError(domain: "SnapMarkError", code: 1, userInfo: [NSLocalizedDescriptionKey: "指定的資料匣不存在"])
         }
-
+        
         // 讀取 image1.png
         let image1URL = url.appendingPathComponent("bg.png")
         guard let image1 = NSImage(contentsOf: image1URL) else {
             throw NSError(domain: "SnapMarkError", code: 2, userInfo: [NSLocalizedDescriptionKey: "無法讀取 bg.png"])
         }
-
+        
         // 讀取 image2.png
         let image2URL = url.appendingPathComponent("thumb.png")
         guard let image2 = NSImage(contentsOf: image2URL) else {
             throw NSError(domain: "SnapMarkError", code: 3, userInfo: [NSLocalizedDescriptionKey: "無法讀取 thumb.png"])
         }
-
+        
         // 讀取 metadata.json
         let jsonURL = url.appendingPathComponent("metadata.json")
         let jsonData = try Data(contentsOf: jsonURL)
         guard let metadata = String(data: jsonData, encoding: .utf8) else {
             throw NSError(domain: "SnapMarkError", code: 4, userInfo: [NSLocalizedDescriptionKey: "無法解析 metadata.json"])
         }
-
+        
         return SnapMarkPackage(bg: image1, thumb: image2, metadata: metadata)
     }
-
+    
     //選擇檔案
     func showSavePanel(completion: @escaping (URL?) -> Void) {
         let panel = NSSavePanel()
@@ -117,83 +121,40 @@ class SMFireManager{
     }
     
     //設定預設資料夾
-//    func promptUserToSelectSnapMarkLocation(view:NSView,completion: @escaping (() -> Void)? = nil) {
-        
-        
-//    func promptUserToSelectSnapMarkLocation(view: NSView, completion: (() -> Void)? = nil) {
     func promptUserToSelectSnapMarkLocation(view: NSView, completion: @escaping (() -> Void) = {}) {
-
+        
         let panel = NSOpenPanel()
-            panel.title = "選擇 SnapMark 儲存位置"
-            panel.canChooseDirectories = true
-            panel.canChooseFiles = false
-            panel.allowsMultipleSelection = false
-
-            // 確保綁定到目前視窗
-            if let window = view.window {
-                panel.beginSheetModal(for: window) { result in
-                    if result == .OK, let baseFolderURL = panel.url {
-                        let snapMarkFolderURL = baseFolderURL.appendingPathComponent("SnapMark")
-       
-                        self.createSnapMarkFolder(at: snapMarkFolderURL)
-                        completion()
-                    } else {
-                        let alert = NSAlert()
-                        alert.messageText = "You must select a default folder to continue using SnapMark"
-                        alert.addButton(withTitle: "Retry")
-//                        alert.addButton(withTitle: "離開")
-                        alert.alertStyle = .warning
-//                        alert.icon = NSImage(named: "arrow2")
-
-                        alert.beginSheetModal(for: window) { response in
-                            if response == .alertFirstButtonReturn {
-                                self.promptUserToSelectSnapMarkLocation(view:view) // 再次開啟
-                            } else {
-                                NSApp.terminate(nil)
-                            }
+        panel.title = "選擇 SnapMark 儲存位置"
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.allowsMultipleSelection = false
+        
+        // 確保綁定到目前視窗
+        if let window = view.window {
+            panel.beginSheetModal(for: window) { result in
+                if result == .OK, let baseFolderURL = panel.url {
+                    let snapMarkFolderURL = baseFolderURL.appendingPathComponent("SnapMark")
+                    
+                    self.createSnapMarkFolder(at: snapMarkFolderURL)
+                    completion()
+                } else {
+                    let alert = NSAlert()
+                    alert.messageText = "You must select a default folder to continue using SnapMark"
+                    alert.addButton(withTitle: "Retry")
+                    alert.alertStyle = .warning
+                    
+                    alert.beginSheetModal(for: window) { response in
+                        if response == .alertFirstButtonReturn {
+                            self.promptUserToSelectSnapMarkLocation(view:view) // 再次開啟
+                        } else {
+                            NSApp.terminate(nil)
                         }
                     }
                 }
             }
-        
-        
-        
-        
-//        let panel = NSOpenPanel()
-//        panel.title = "選擇 SnapMark 儲存位置"
-//        panel.canChooseDirectories = true
-//        panel.canChooseFiles = false
-//        panel.allowsMultipleSelection = false
-//    
-//        
-//
-//        panel.begin { result in
-//            if result == .OK, let baseFolderURL = panel.url {
-//                let snapMarkFolderURL = baseFolderURL.appendingPathComponent("SnapMark")
-//                self.createSnapMarkFolder(at: snapMarkFolderURL)
-//            }else{
-//                
-//                
-//                // 使用者取消 → 可提示或再次開啟
-//                let alert = NSAlert()
-//                alert.messageText = "必須選擇檔案才能繼續使用 SnapMark"
-//                alert.addButton(withTitle: "重新選擇")
-//                alert.addButton(withTitle: "離開")
-//                alert.alertStyle = .warning
-//                alert.icon = NSImage(named: "arrow2")
-//                let response = alert.runModal()
-//                if response == .alertFirstButtonReturn {
-//                    self.promptUserToSelectSnapMarkLocation() // 再次開啟
-//                } else {
-//                    NSApp.terminate(nil)
-//                }
-//            }
-//        }
-        
-        
-
+        }
     }
-
+    
     //建立預設資料夾
     func createSnapMarkFolder(at url: URL) {
         do {
@@ -215,9 +176,9 @@ class SMFireManager{
                 alert.addButton(withTitle: "Cancel")
                 
                 // 指定圖示
-//                if let image = snapshot(of: componentViewItem.preView) {
-//                    alert.icon = image
-//                }
+                //                if let image = snapshot(of: componentViewItem.preView) {
+                //                    alert.icon = image
+                //                }
                 
                 
                 let response = alert.runModal()
@@ -237,19 +198,19 @@ class SMFireManager{
     //複製內容
     func copyContents(from sourceURL: URL, to destinationURL: URL) throws {
         let fileManager = FileManager.default
-
+        
         // 確保目的地資料夾存在
         if !fileManager.fileExists(atPath: destinationURL.path) {
             try fileManager.createDirectory(at: destinationURL, withIntermediateDirectories: true, attributes: nil)
         }
-
+        
         // 取得來源資料夾的所有項目
         let items = try fileManager.contentsOfDirectory(at: sourceURL, includingPropertiesForKeys: nil, options: [])
-
+        
         for item in items {
             let originalName = item.lastPathComponent
             var destinationItemURL = destinationURL.appendingPathComponent(originalName)
-
+            
             // 若檔案已存在，則加上編號
             var counter = 1
             while fileManager.fileExists(atPath: destinationItemURL.path) {
@@ -259,11 +220,11 @@ class SMFireManager{
                 destinationItemURL = destinationURL.appendingPathComponent(newName)
                 counter += 1
             }
-
+            
             try fileManager.copyItem(at: item, to: destinationItemURL)
         }
     }
-
+    
     
     
     
@@ -278,7 +239,7 @@ class SMFireManager{
         guard let bookmarkData = UserDefaults.standard.data(forKey: "SnapMarkFolderBookmark") else {
             return nil
         }
-
+        
         var isStale = false
         do {
             let url = try URL(resolvingBookmarkData: bookmarkData, options: .withSecurityScope, relativeTo: nil, bookmarkDataIsStale: &isStale)
@@ -286,7 +247,7 @@ class SMFireManager{
                 print("⚠️ Bookmark 已過期")
                 return nil
             }
-
+            
             if url.startAccessingSecurityScopedResource() {
                 return url
             } else {
@@ -310,16 +271,16 @@ class SMFireManager{
         components.hour = 0
         components.minute = 0
         components.second = 1
-
+        
         let calendar = Calendar(identifier: .gregorian)
         guard let epoch = calendar.date(from: components) else {
             return nil
         }
-
+        
         // 計算目前時間與基準時間的秒數差
         let now = Date()
         let seconds = Int(now.timeIntervalSince(epoch))
-
+        
         // 第一秒為 1，所以 +1
         let adjusted = max(0, seconds) + 1
         
@@ -329,10 +290,16 @@ class SMFireManager{
         let datePrefix = formatter.string(from: now)
         
         return snapMarkFolderURL?.appendingPathComponent("\(datePrefix)_\(adjusted).sm")
-  
     }
 
 
-    
+    func identifyCloudService() -> CloudService {
+        if let path = snapMarkFolderURL?.path {
+            if path.contains("Mobile Documents") { return .iCloud }
+            if path.contains("OneDrive") { return .OneDrive }
+            if path.contains("Google Drive") || path.contains("Drive File Stream") { return .GoogleDrive }
+        }
+        return .unknown
+    }
     
 }

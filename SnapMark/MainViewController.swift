@@ -701,26 +701,10 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             self.reDrawComponts()
         }
         componentViewItem.deleteAction = {
-            let alert = NSAlert()
-            alert.messageText = "Alert"
-            alert.informativeText = "Delete Component？"
-            alert.alertStyle = .warning
-            alert.addButton(withTitle: "OK")
-            alert.addButton(withTitle: "Cancel")
             
-            // 指定圖示
-            if let image = snapshot(of: componentViewItem.preView) {
-                alert.icon = image
-            }
-            
-            
-            let response = alert.runModal()
-            if response == .alertFirstButtonReturn {
-                // 使用者按下「確定」
-                self.components.remove(at: indexPath.item)
-                self.reDrawComponts()
-                self.itemCollectionView.reloadData()
-            }
+            self.components.remove(at: indexPath.item)
+            self.itemCollectionView.reloadData()
+            self.reDrawComponts()
         }
         
         componentViewItem.component = component

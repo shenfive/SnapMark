@@ -1323,6 +1323,42 @@
                                                         <constraint firstAttribute="width" constant="200" id="QdM-wv-kir"/>
                                                     </constraints>
                                                 </box>
+                                                <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ba1-Nf-5Yd">
+                                                    <rect key="frame" x="5" y="133" width="183" height="73"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <clipView key="contentView" drawsBackground="NO" id="3K1-7F-Ulk">
+                                                        <rect key="frame" x="0.0" y="0.0" width="168" height="73"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="snb-YV-XED">
+                                                                <rect key="frame" x="0.0" y="0.0" width="168" height="73"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                <size key="minSize" width="168" height="73"/>
+                                                                <size key="maxSize" width="225" height="10000000"/>
+                                                                <attributedString key="textStorage">
+                                                                    <fragment content="test">
+                                                                        <attributes>
+                                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                            <font key="NSFont" size="12" name="Helvetica"/>
+                                                                            <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                </attributedString>
+                                                            </textView>
+                                                        </subviews>
+                                                    </clipView>
+                                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="hyL-zy-2AI">
+                                                        <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                    </scroller>
+                                                    <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Aj7-J3-agE">
+                                                        <rect key="frame" x="168" y="0.0" width="15" height="73"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                    </scroller>
+                                                </scrollView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="A5C-oJ-ae4" firstAttribute="top" secondItem="gtx-c2-sPX" secondAttribute="bottom" constant="20" id="25v-7w-PRK"/>
