@@ -26,6 +26,7 @@ class TextView: NSView {
     var dataIndex:Int = 99999
     var changeTextCallBack:((String,Int)->())? = nil
     var endEdingCallBack:((String,Int)->())? = nil
+    var inMoving = false
     
     var enableEdit:Bool  {
         get{
@@ -69,12 +70,15 @@ class TextView: NSView {
             .paragraphStyle: paragraphStyle,
             .foregroundColor: textComponent.color
         ]
+ 
         textField.attributedStringValue = NSAttributedString(string: text, attributes: attributes)
         
-        textViewContaner.frame = textField.frame
+        if !inMoving{
+            textViewContaner.frame = textField.frame
+        }
         textView.textStorage?.setAttributedString(NSAttributedString(string: text, attributes: attributes))
-        textView.isHidden = enableEdit
-        textField.isHidden = !enableEdit
+        textView.isHidden = enableEdit  && !inMoving
+        textField.isHidden = !textView.isHidden
 
     }
     
@@ -87,38 +91,41 @@ class TextView: NSView {
     
     var startMouseDownStartPoint:CGPoint = .zero
     var startMouseDownEndPoint:CGPoint = .zero
+    var startMovingFrame:CGRect = .zero
     
     override func mouseDown(with event: NSEvent) {
         print("text mouseDown")
         let location = superview!.convert(event.locationInWindow, from: nil)
+        startMovingFrame = self.frame
         startMouseDownLocation = location
         startMouseDownStartPoint = textComponent.startPoint
         startMouseDownEndPoint = textComponent.endPoint
-        textField.window?.makeFirstResponder(self.textField)
-        
     }
     
     override func mouseDragged(with event: NSEvent) {
+        inMoving = true
         let location = superview!.convert(event.locationInWindow, from: nil)
         
-        let offsetX = (location.x - startMouseDownLocation.x) / ratio
-        let offsetY = (location.y - startMouseDownLocation.y) / ratio
+        let offsetX = (location.x - startMouseDownLocation.x)
+        let offsetY = (location.y - startMouseDownLocation.y)
         
         if sqrt(offsetX * offsetX + offsetY * offsetY) > 3 {
             textField.window?.makeFirstResponder(nil)
             
-            textComponent.startPoint = CGPoint(x: startMouseDownStartPoint.x + offsetX,
-                                               y: startMouseDownStartPoint.y + offsetY)
-            textComponent.endPoint = CGPoint(x: startMouseDownEndPoint.x + offsetX,
-                                             y: startMouseDownEndPoint.y + offsetY)
+            textComponent.startPoint = CGPoint(x: startMouseDownStartPoint.x + offsetX / ratio,
+                                               y: startMouseDownStartPoint.y + offsetY / ratio)
+            textComponent.endPoint = CGPoint(x: startMouseDownEndPoint.x + offsetX / ratio,
+                                             y: startMouseDownEndPoint.y + offsetY / ratio)
             
-            self.frame = textComponent.framRect(ratio: ratio)
+            self.frame = CGRect(origin: CGPoint(x: startMovingFrame.minX + offsetX,
+                                                y: startMovingFrame.minY + offsetY),
+                                size: startMovingFrame.size)
             
-            fitSize()
         }
     }
     
     override func mouseUp(with event: NSEvent) {
+        inMoving = false
         endEditAction?(textComponent)
     }
     
