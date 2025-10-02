@@ -113,7 +113,7 @@ class SelectSavedFileViewController: NSViewController {
                     self.dataFiles  = self.dataFiles.filter {
                         $0.lastPathComponent != workingURL.lastPathComponent
                     }
-                    //只保留最後的字元
+                    //只保留最後的字元 為 .sm
                     self.dataFiles = self.dataFiles.filter {
                         $0.lastPathComponent.contains(".sm")
                     }
