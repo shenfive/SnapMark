@@ -12,9 +12,11 @@ class OverlayController {
     let window: NSWindow
     let fullButton: NSButton
     let partialButton: NSButton
+    let cancelButton: NSButton
 
     var onFullCapture: ((NSScreen) -> Void)?
     var onPartialCapture: ((NSScreen) -> Void)?
+    var onCancel:(()->Void)?
 
     init(screen: NSScreen) {
         self.screen = screen
@@ -35,9 +37,11 @@ class OverlayController {
 
         fullButton = OverlayController.makeButton(title: "Full Screen", action: #selector(fullCapture))
         partialButton = OverlayController.makeButton(title: "Partial Screen", action: #selector(partialCapture))
+        cancelButton = OverlayController.makeButton(title: "Cencel", action: #selector(cancel))
 
         fullButton.target = self
         partialButton.target = self
+        cancelButton.target = self
         
         fullButton.image = NSImage(systemSymbolName: "display.and.arrow.down", accessibilityDescription: nil)
         fullButton.imagePosition = .imageLeading // 圖在左、字在右
@@ -48,11 +52,13 @@ class OverlayController {
 
         container.addSubview(fullButton)
         container.addSubview(partialButton)
+        container.addSubview(cancelButton)
 
         // 置中排列
         let center = CGPoint(x: frame.width / 2, y: frame.height / 2)
         fullButton.frame.origin = CGPoint(x: center.x - 130, y: center.y)
         partialButton.frame.origin = CGPoint(x: center.x - 130, y: center.y - 80)
+        cancelButton.frame.origin = CGPoint(x:center.x - 130, y: center.y - 160)
 
         window.contentView = container
     }
@@ -68,9 +74,13 @@ class OverlayController {
     @objc private func fullCapture() {
         onFullCapture?(screen)
     }
-
+    
     @objc private func partialCapture() {
         onPartialCapture?(screen)
+    }
+    
+    @objc private func cancel(){
+        onCancel?()
     }
 
     private static func makeButton(title: String, action: Selector) -> NSButton {

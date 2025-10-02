@@ -781,9 +781,6 @@
                             <constraint firstItem="hay-e7-BCX" firstAttribute="leading" secondItem="KAw-Zi-1cY" secondAttribute="trailing" constant="40" id="jMO-ON-aqx"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="XfG-lQ-9wD" kind="show" identifier="goMain" id="KTk-Lg-QAg"/>
-                    </connections>
                 </viewController>
                 <customObject id="QOc-qu-mXt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -792,7 +789,7 @@
         <!--Main View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="MainViewController" customModule="SnapMark" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainViewController" id="XfG-lQ-9wD" customClass="MainViewController" customModule="SnapMark" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="900" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -906,7 +903,7 @@
                                                         <constraint firstAttribute="height" constant="100" id="2pa-S6-WAT"/>
                                                         <constraint firstAttribute="width" constant="20" id="dCw-Jz-0nf"/>
                                                     </constraints>
-                                                    <sliderCell key="cell" state="on" alignment="left" minValue="0.25" maxValue="4" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="R8W-Wd-Rqc">
+                                                    <sliderCell key="cell" state="on" alignment="left" minValue="0.25" maxValue="4" doubleValue="1" tickMarkPosition="left" sliderType="linear" id="R8W-Wd-Rqc">
                                                         <font key="font" metaFont="cellTitle"/>
                                                     </sliderCell>
                                                 </slider>
@@ -943,25 +940,38 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="u2x-4v-ZxW">
-                                <rect key="frame" x="50" y="600" width="640" height="0.0"/>
+                                <rect key="frame" x="50" y="580" width="640" height="20"/>
+                                <subviews>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bg9-eW-ydt">
+                                        <rect key="frame" x="8" y="2" width="624" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="file" id="5YZ-VD-tuv">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" id="xNt-gU-wpP"/>
+                                    <constraint firstItem="bg9-eW-ydt" firstAttribute="leading" secondItem="u2x-4v-ZxW" secondAttribute="leading" constant="10" id="CQa-FN-4Hz"/>
+                                    <constraint firstItem="bg9-eW-ydt" firstAttribute="centerY" secondItem="u2x-4v-ZxW" secondAttribute="centerY" id="HP6-rc-L2C"/>
+                                    <constraint firstAttribute="trailing" secondItem="bg9-eW-ydt" secondAttribute="trailing" constant="10" id="tLy-xE-phM"/>
+                                    <constraint firstAttribute="height" constant="20" id="xNt-gU-wpP"/>
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="fS6-gH-cjm">
-                                <rect key="frame" x="50" y="120" width="640" height="480"/>
+                                <rect key="frame" x="50" y="120" width="640" height="460"/>
                                 <subviews>
                                     <box boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="DwW-UX-xqM">
-                                        <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="640" height="460"/>
                                         <view key="contentView" id="3a6-kO-THO">
-                                            <rect key="frame" x="1" y="1" width="638" height="478"/>
+                                            <rect key="frame" x="1" y="1" width="638" height="458"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <color key="borderColor" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         <color key="fillColor" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </box>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32J-s3-3Zy">
-                                        <rect key="frame" x="170" y="90" width="300" height="300"/>
+                                        <rect key="frame" x="170" y="80" width="300" height="300"/>
                                         <clipView key="contentView" id="ddn-6g-BX3">
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1366,6 +1376,7 @@
                         <outlet property="contentScrollView" destination="32J-s3-3Zy" id="aXg-BR-hHh"/>
                         <outlet property="contentWidth" destination="Ogw-33-43X" id="Iya-AH-EEi"/>
                         <outlet property="documentView" destination="Gnf-mE-Mhf" id="hw0-wg-PCj"/>
+                        <outlet property="fileLabel" destination="bg9-eW-ydt" id="J0k-NK-ulr"/>
                         <outlet property="fontButton" destination="OHh-1T-ZfH" id="ngJ-bB-Isl"/>
                         <outlet property="fontSampleLabel" destination="g9T-Dt-MzR" id="5tA-FS-Bhc"/>
                         <outlet property="fontSizeLabel" destination="aAP-5g-GKA" id="r0v-qC-Bci"/>

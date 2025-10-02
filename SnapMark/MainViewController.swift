@@ -39,6 +39,7 @@ class MainViewController: NSViewController {
     
     @IBOutlet weak var itemCollectionView: NSCollectionView!
     
+    @IBOutlet weak var fileLabel: NSTextField!
     
     //附加元件
     var components:[Component] = []
@@ -151,23 +152,6 @@ class MainViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        
-        
-        //初始化晝面大小 與標題
-        if let window = self.view.window ,
-           let screenFrame = NSScreen.main?.frame {
-            
-            let windowSize = NSSize(width: 1400, height: 800)
-            let originX = (screenFrame.width - windowSize.width) / 2
-            let originY = (screenFrame.height - windowSize.height) / 2
-            let centeredRect = NSRect(origin: CGPoint(x: originX, y: originY), size: windowSize)
-            window.minSize = NSSize(width: 700, height: 500)
-            window.setFrame(centeredRect, display: true)
-            window.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
-            setModeDisplayUI()
-        }
-        
-        
         //抓取外部視窗動作
         NotificationCenter.default.addObserver(
             self,
@@ -175,17 +159,33 @@ class MainViewController: NSViewController {
             name: NSWindow.didResizeNotification,
             object: self.view.window
         )
+        
+
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        
         initView()
         
+        setModeDisplayUI()
+        //初始化晝面大小 與標題
+        if let window = self.view.window ,
+           let screenFrame = NSScreen.main?.frame {
+            window.title = "Snap Mark‼️  💻 👀" //NSLocalizedString("SnapMark", comment: "Window 標題")
+            let windowSize = NSSize(width: 1400, height: 800)
+            let originX = (screenFrame.width - windowSize.width) / 2
+            let originY = (screenFrame.height - windowSize.height) / 2
+            let centeredRect = NSRect(origin: CGPoint(x: originX, y: originY), size: windowSize)
+            window.minSize = NSSize(width: 700, height: 500)
+            window.setFrame(centeredRect, display: true, animate: true)
+        }
     }
     
     func initView(){
         //若沒有檔名，建立新檔案
         if let url = currentFileUrl{
+            fileLabel.stringValue = "\(url.lastPathComponent)"
             do {
                 let snap = try SMFireManager.shared.loadPackage(from: url)
                 self.editingImage = snap.bg
@@ -208,6 +208,7 @@ class MainViewController: NSViewController {
         self.setImage()
         if let url = SMFireManager.shared.getDefaultFileURL() {
             self.currentFileUrl = url
+            fileLabel.stringValue = "\(url.lastPathComponent)"
             do {
                 try SMFireManager.shared.savePackage(to: url,
                                                      bgImage: self.editingImage,
@@ -273,7 +274,6 @@ class MainViewController: NSViewController {
                 self.documentView.addSubview(boxView)
                 if component.isMouseOverMode{
                     let editView = SelectView(frame: boxView.frame)
-                    print("e:\(editView.frame)")
                     self.documentView.addSubview(editView)
                 }
                 boxView.enableEdit = component.isSelected
@@ -415,7 +415,6 @@ class MainViewController: NSViewController {
             
             fontMenu.addItem(item)
         }
-        print(self.fontFemilySelectMenuList)
         fontButton.menu = fontMenu
     }
     
@@ -517,13 +516,15 @@ class MainViewController: NSViewController {
             mainWindow.toggleFullScreen(nil)
         }
         controller?.onCaptureComplete = { [weak self] image in
-            self?.editingImage = image
-            self?.components.removeAll()
-            self?.itemCollectionView.reloadData()
-            self?.openFile()
-            self?.setFitWindowRatio(self as Any)
+            if let image{
+                self?.editingImage = image
+                self?.components.removeAll()
+                self?.itemCollectionView.reloadData()
+                self?.openFile()
+                self?.setFitWindowRatio(self as Any)
+            }
         }
-        controller?.startCapture()
+        controller?.startCapture(from: mainWindow)
     }
     
     //MARK: 設定編輯模式

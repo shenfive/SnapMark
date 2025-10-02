@@ -59,37 +59,32 @@ class LauncherViewController: NSViewController {
         }
     }
     
-    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-        switch segue.identifier{
-        case "goMain":
 
-            let nextVC = segue.destinationController as? MainViewController
-            if let newImage{
-                nextVC?.editingImage = newImage
-            }
-            if let selectedURL{
-                nextVC?.currentFileUrl = selectedURL
-            }
-            // 確保 newWindow 已經初始化完成
-            DispatchQueue.main.async {
-                self.view.window?.close()
-            }
-        default:
-            break
+    func goMainPage(){
+        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        let nextVC = storyboard.instantiateController(withIdentifier: "mainViewController") as! MainViewController
+        if let newImage{
+            nextVC.editingImage = newImage
         }
+        if let selectedURL{
+            nextVC.currentFileUrl = selectedURL
+        }
+        // 確保 newWindow 已經初始化完成
+        DispatchQueue.main.async {
+            self.view.window?.close()
+        }
+        self.presentAsModalWindow(nextVC)
     }
-    
-
-
 
     
     
     
     @IBAction func action(_ sender: Any) {
+            
         let nextVC = SelectSavedFileViewController()
         nextVC.selectedFileAction = {
             self.selectedURL = $0
-            self.performSegue(withIdentifier: "goMain", sender: nil)
+            self.goMainPage()
         }
         
         self.presentAsModalWindow(nextVC)
@@ -97,11 +92,14 @@ class LauncherViewController: NSViewController {
     }
     
     @IBAction func actionWithNewSnap(_ sender: Any) {
+        guard let mainWindow = self.view.window else { return }
         controller?.onCaptureComplete = { [weak self] image in
-            self?.newImage = image
-            self?.performSegue(withIdentifier: "goMain", sender: nil)
+            if let image{
+                self?.newImage = image
+                self?.goMainPage()
+            }
         }
-        controller?.startCapture()
+        controller?.startCapture(from: mainWindow)
     }
     
     @IBAction func actionWithReadFile(_ sender: Any) {
@@ -122,7 +120,7 @@ class LauncherViewController: NSViewController {
         if panel.runModal() == .OK, let url = panel.url {
             if let image  = NSImage(contentsOf: url){
                 self.newImage = image
-                self.performSegue(withIdentifier: "goMain", sender: nil)
+                self.goMainPage()
             }
         }
     }
@@ -141,7 +139,7 @@ class LauncherViewController: NSViewController {
 
         if panel.runModal() == .OK, let url = panel.url {
             self.selectedURL = url
-            self.performSegue(withIdentifier: "goMain", sender: nil)
+            self.goMainPage()
             
         }
     }
