@@ -284,9 +284,6 @@ class MainViewController: NSViewController {
                     self.colorWell.color = component.color
                     self.documentView.editMode = .BOX
                     setModeDisplayUI()
-//                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
-//                        self.selectLineButton.selectItem(at: boardIndex)
-//                    }
                     if let conerIndex = conerRadiusSelectMenuList.firstIndex(of: component.cornerRadius){
                         self.selectConerRadius.selectItem(at: conerIndex)
                     }
@@ -323,9 +320,6 @@ class MainViewController: NSViewController {
                     self.colorWell.color = component.color
                     self.documentView.editMode = .BOX
                     setModeDisplayUI()
-//                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
-//                        self.selectLineButton.selectItem(at: boardIndex)
-//                    }
                     self.fontSizeSlider.doubleValue = component.fontSize
                     self.fontSizeLabel.stringValue = "\(fontSizeSlider.intValue)"
                     
@@ -360,11 +354,6 @@ class MainViewController: NSViewController {
             }
         }
     }
-    
-    
-    
-    
-    
     
     //MARK: 字形相關
     
@@ -521,7 +510,12 @@ class MainViewController: NSViewController {
     
     //MARK: 新增拮圖
     @IBAction func newSnap(_ sender: Any) {
+
         guard let mainWindow = self.view.window else { return }
+        
+        if (mainWindow.styleMask.contains(.fullScreen)) {
+            mainWindow.toggleFullScreen(nil)
+        }
         controller?.onCaptureComplete = { [weak self] image in
             self?.editingImage = image
             self?.components.removeAll()
@@ -529,7 +523,7 @@ class MainViewController: NSViewController {
             self?.openFile()
             self?.setFitWindowRatio(self as Any)
         }
-        controller?.startCapture(from: mainWindow)
+        controller?.startCapture()
     }
     
     //MARK: 設定編輯模式
@@ -609,17 +603,12 @@ class MainViewController: NSViewController {
         }
     }
     
-    
-    
-    
-    
     //設定編輯模式
     func setModeDisplayUI(){
         arrowModeButton.contentTintColor = NSColor.systemGray
         textModeButton.contentTintColor = NSColor.systemGray
         boxModeButton.contentTintColor = NSColor.systemGray
         switch documentView.editMode {
-
         case .ARROW:
             arrowModeButton.contentTintColor = NSColor.red
         case .TEXT:
@@ -627,18 +616,12 @@ class MainViewController: NSViewController {
         case .BOX:
             boxModeButton.contentTintColor = NSColor.red
         }
-        //箭頭移動的動畫
     }
-    
-    
-    
     
     //外部視窗大小改變
     @objc func windowDidResize(_ notification: Notification) {
         setImage()
     }
-    
-    
     
     func getComponentsJSON()->String?{
         let encoder = JSONEncoder()

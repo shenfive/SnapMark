@@ -97,12 +97,11 @@ class LauncherViewController: NSViewController {
     }
     
     @IBAction func actionWithNewSnap(_ sender: Any) {
-        guard let mainWindow = self.view.window else { return }
         controller?.onCaptureComplete = { [weak self] image in
             self?.newImage = image
             self?.performSegue(withIdentifier: "goMain", sender: nil)
         }
-        controller?.startCapture(from: mainWindow)
+        controller?.startCapture()
     }
     
     @IBAction func actionWithReadFile(_ sender: Any) {

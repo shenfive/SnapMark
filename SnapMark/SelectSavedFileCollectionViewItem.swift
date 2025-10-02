@@ -36,60 +36,60 @@ class SelectSavedFileCollectionViewItem: NSCollectionViewItem {
         
         let menu = NSMenu(title: "Menu")
         
-        menu.addItem(withTitle: "Delete File?", action: #selector(deleteItem(_:)), keyEquivalent: "")
+        menu.addItem(withTitle: "Move to the Trash", action: #selector(deleteItem(_:)), keyEquivalent: "")
         
         NSMenu.popUpContextMenu(menu, with: event, for: self.view)
     }
     
     @objc func deleteItem(_ sender: Any?) {
         print("執行動作一")
+        movetotheTrash()
         
-        let alert = NSAlert()
-        alert.messageText = "Alert"
-        alert.informativeText = "Delete？"
-        alert.alertStyle = .warning
-        alert.addButton(withTitle: "OK")
-        alert.addButton(withTitle: "Cancel")
-        
-        // 指定圖示
-        alert.icon = theImage.image
-        
-        
-        
-        let response = alert.runModal()
-        if response == .alertFirstButtonReturn {
-            // 使用者按下「確定」
-            
-            if let fileURL{
-                //取得版本案例
-//                let osVersion = ProcessInfo.processInfo.operatingSystemVersion
-//                let major = osVersion.majorVersion
-//                let minor = osVersion.minorVersion
+        //是否先提醒？
+//        let alert = NSAlert()
+//        alert.messageText = "Alert"
+//        alert.informativeText = "Move to the Trash？"
+//        alert.alertStyle = .warning
+//        alert.addButton(withTitle: "OK")
+//        alert.addButton(withTitle: "Cancel")
+//        
+//        // 指定圖示
+//        alert.icon = theImage.image
+//        
+//        
+//        
+//        let response = alert.runModal()
+//        if response == .alertFirstButtonReturn {
+//            // 使用者按下「確定」
+//            movetotheTrash()
+//
+//        }
+    }
+    
+    func movetotheTrash(){
+        if let fileURL{
+            // macOS 13+ 使用 NSWorkspace.recycle
+            if #available(macOS 13.0, *) {
+                NSWorkspace.shared.recycle([fileURL]) { recycledURLs, error in
+                    if let error = error {
+                        print("移到垃圾桶失敗：\(error)")
+                    } else {
+                        print("檔案已移到垃圾桶：\(recycledURLs)")
+                        self.reloadMenuAction?()
+                    }
+                }
+            }else{
+                // macOS 11–12 手動搬移到 ~/.Trash
+                let trashURL = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".Trash")
+                let destinationURL = trashURL.appendingPathComponent(fileURL.lastPathComponent)
                 
-                // macOS 13+ 使用 NSWorkspace.recycle
-                if #available(macOS 13.0, *) {
-                    NSWorkspace.shared.recycle([fileURL]) { recycledURLs, error in
-                        if let error = error {
-                            print("移到垃圾桶失敗：\(error)")
-                        } else {
-                            print("檔案已移到垃圾桶：\(recycledURLs)")
-                            self.reloadMenuAction?()
-                        }
-                    }
-                }else{
-                    // macOS 11–12 手動搬移到 ~/.Trash
-                    let trashURL = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".Trash")
-                    let destinationURL = trashURL.appendingPathComponent(fileURL.lastPathComponent)
-                    
-                    do {
-                        try FileManager.default.moveItem(at: fileURL, to: destinationURL)
-                        print("已手動移到垃圾桶：\(destinationURL.path)")
-                    } catch {
-                        print("搬移失敗：\(error)")
-                    }
+                do {
+                    try FileManager.default.moveItem(at: fileURL, to: destinationURL)
+                    print("已手動移到垃圾桶：\(destinationURL.path)")
+                } catch {
+                    print("搬移失敗：\(error)")
                 }
             }
         }
     }
-    
 }
