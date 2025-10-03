@@ -11,29 +11,34 @@ class ScreenCaptureController: NSObject {
     private var selectionView: SelectionView?
     private weak var mainWindow: NSWindow?
     
+    private override init() {
+        super .init()
+    }
+    
+    static var share = ScreenCaptureController()
     private var overlayControllers: [OverlayController] = []
-
+    
     /// 截圖完成後的回呼
     var onCaptureComplete: ((NSImage?) -> Void)?
 
     /// 開始選取截圖流程，並暫時隱藏主視窗
     func startCapture(from window: NSWindow) {
+        
+
 
         self.mainWindow = window
-        window.orderOut(nil)
-
+        
+        mainWindow?.orderOut(nil)
+        NSApp.activate(ignoringOtherApps: true)
 
         overlayControllers = NSScreen.screens.map { screen in
             let controller = OverlayController(screen: screen)
-
-            controller.onFullCapture = { [weak self] screen in
             
-
+            controller.onFullCapture = { [weak self] screen in
                 self?.captureFullScreen(screen)
             }
 
             controller.onPartialCapture = { [weak self] screen in
-
                 self?.startPartialCapture(on: screen)
             }
             
@@ -42,7 +47,6 @@ class ScreenCaptureController: NSObject {
                 self?.overlayControllers.removeAll()
                 self?.mainWindow?.makeKeyAndOrderFront(nil)
                 self?.onCaptureComplete?(nil)
-
             }
 
             controller.show()
@@ -66,8 +70,6 @@ class ScreenCaptureController: NSObject {
         }
     }
 
-    
-    
     //部份畫面
     private func startPartialCapture(on screen: NSScreen) {
         prepareForCapture(){[weak self] in

@@ -15,8 +15,8 @@ class LauncherViewController: NSViewController {
         // Do view setup here.
     }
     
-    //拮取畫面控制器
-    var controller:ScreenCaptureController? = ScreenCaptureController()
+//    //拮取畫面控制器
+//    var captureController:ScreenCaptureController? = ScreenCaptureController()
     
     var newImage:NSImage? = nil
     
@@ -41,8 +41,8 @@ class LauncherViewController: NSViewController {
             window.maxSize = fixedSize
             window.styleMask.remove(.resizable)
             
-            // 移除三個按鈕
-            window.standardWindowButton(.closeButton)?.isHidden = true
+            // 右上角三個按鈕
+            window.standardWindowButton(.closeButton)?.isHidden = false
             window.standardWindowButton(.miniaturizeButton)?.isHidden = true
             window.standardWindowButton(.zoomButton)?.isHidden = true
             
@@ -59,6 +59,35 @@ class LauncherViewController: NSViewController {
         }
     }
     
+    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+        
+        
+        // 關閉正在編輯中的
+        if let mainVC = NSApp.windows
+            .compactMap({ $0.contentViewController as? MainViewController})
+            .first {
+            mainVC.dismiss(mainVC)
+        }
+        
+        
+        switch segue.identifier{
+        case "goMain":
+
+            let nextVC = segue.destinationController as? MainViewController
+            if let newImage{
+                nextVC?.editingImage = newImage
+            }
+            if let selectedURL{
+                nextVC?.currentFileUrl = selectedURL
+            }
+            // 確保 newWindow 已經初始化完成
+            DispatchQueue.main.async {
+                self.view.window?.close()
+            }
+        default:
+            break
+        }
+    }
 
     func goMainPage(){
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
@@ -69,11 +98,12 @@ class LauncherViewController: NSViewController {
         if let selectedURL{
             nextVC.currentFileUrl = selectedURL
         }
+        
+        self.presentAsModalWindow(nextVC)
         // 確保 newWindow 已經初始化完成
         DispatchQueue.main.async {
             self.view.window?.close()
         }
-        self.presentAsModalWindow(nextVC)
     }
 
     
@@ -81,28 +111,41 @@ class LauncherViewController: NSViewController {
     
     @IBAction func action(_ sender: Any) {
             
+        openHistory()
+
+    }
+    func openHistory(){
         let nextVC = SelectSavedFileViewController()
         nextVC.selectedFileAction = {
             self.selectedURL = $0
-            self.goMainPage()
+            self.performSegue(withIdentifier: "goMain", sender: nil)
+//            self.goMainPage()
         }
-        
-        self.presentAsModalWindow(nextVC)
-
+        self.presentAsSheet(nextVC)
     }
     
+    
     @IBAction func actionWithNewSnap(_ sender: Any) {
+        newSnap()
+    }
+    func newSnap(){
         guard let mainWindow = self.view.window else { return }
-        controller?.onCaptureComplete = { [weak self] image in
+        ScreenCaptureController.share.onCaptureComplete = { [weak self] image in
             if let image{
+
                 self?.newImage = image
-                self?.goMainPage()
+                self?.performSegue(withIdentifier: "goMain", sender: nil)
+//                self?.goMainPage()
             }
         }
-        controller?.startCapture(from: mainWindow)
+        ScreenCaptureController.share.startCapture(from: mainWindow)
     }
     
     @IBAction func actionWithReadFile(_ sender: Any) {
+        readFile()
+
+    }
+    func readFile(){
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [
             UTType.png,
@@ -115,16 +158,15 @@ class LauncherViewController: NSViewController {
         panel.canChooseFiles = true
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = false
-        panel.title = "選擇一張圖片"
-
+        panel.title = "Select Image File"
         if panel.runModal() == .OK, let url = panel.url {
             if let image  = NSImage(contentsOf: url){
                 self.newImage = image
-                self.goMainPage()
+                self.performSegue(withIdentifier: "goMain", sender: nil)
+//                self.goMainPage()
             }
         }
     }
-    
     
     @IBAction func actionReadCurrentFile(_ sender: Any) {
         let panel = NSOpenPanel()
@@ -139,8 +181,8 @@ class LauncherViewController: NSViewController {
 
         if panel.runModal() == .OK, let url = panel.url {
             self.selectedURL = url
-            self.goMainPage()
-            
+//            self.goMainPage()
+            self.performSegue(withIdentifier: "goMain", sender: nil)
         }
     }
     

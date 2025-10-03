@@ -708,7 +708,7 @@
         <!--Launcher View Controller-->
         <scene sceneID="9pW-iY-L9B">
             <objects>
-                <viewController id="R18-HF-aZU" customClass="LauncherViewController" customModule="SnapMark" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="launcherViewController" id="R18-HF-aZU" customClass="LauncherViewController" customModule="SnapMark" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="w95-pC-OM1">
                         <rect key="frame" x="0.0" y="0.0" width="700" height="385"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -757,7 +757,7 @@
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="KAw-Zi-1cY">
                                 <rect key="frame" x="80" y="123" width="100" height="143"/>
-                                <buttonCell key="cell" type="square" title="History Snap" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yPa-NO-iYR">
+                                <buttonCell key="cell" type="square" title="History Files" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yPa-NO-iYR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -781,6 +781,9 @@
                             <constraint firstItem="hay-e7-BCX" firstAttribute="leading" secondItem="KAw-Zi-1cY" secondAttribute="trailing" constant="40" id="jMO-ON-aqx"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="XfG-lQ-9wD" kind="show" identifier="goMain" id="g1M-vY-6y8"/>
+                    </connections>
                 </viewController>
                 <customObject id="QOc-qu-mXt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1175,7 +1178,7 @@
                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NRl-0p-rr8">
                                                                 <rect key="frame" x="96" y="32" width="101" height="25"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <popUpButtonCell key="cell" type="push" title="10 pt" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="xYL-PU-nKs" id="XsP-Dv-Ge6">
+                                                                <popUpButtonCell key="cell" type="push" title="0 pt" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Ia0-72-ze1" id="XsP-Dv-Ge6">
                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="message"/>
                                                                     <menu key="menu" id="RZ9-2d-kUh">
@@ -1186,6 +1189,7 @@
                                                                             </menuItem>
                                                                             <menuItem title="10 pt" state="on" id="xYL-PU-nKs"/>
                                                                             <menuItem title="20 pt" id="HFk-Fj-A2c"/>
+                                                                            <menuItem title="30 pt" id="YlF-GO-hXl"/>
                                                                             <menuItem title="Pill-Shape" id="aq0-ca-tUf" userLabel="Pill-Shape"/>
                                                                         </items>
                                                                     </menu>
@@ -1214,7 +1218,7 @@
                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QXi-3U-stS">
                                                                 <rect key="frame" x="120" y="8" width="77" height="25"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <popUpButtonCell key="cell" type="push" title="5 pt" bezelStyle="rounded" alignment="right" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Kes-LI-KBd" id="P9P-hG-DJT">
+                                                                <popUpButtonCell key="cell" type="push" title="2 pt" bezelStyle="rounded" alignment="right" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="brF-co-on1" id="P9P-hG-DJT">
                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="message"/>
                                                                     <menu key="menu" id="xhn-ug-fft">
@@ -1222,6 +1226,7 @@
                                                                             <menuItem title="2 pt" id="brF-co-on1"/>
                                                                             <menuItem title="5 pt" state="on" id="Kes-LI-KBd"/>
                                                                             <menuItem title="10 pt" id="XPw-fc-2iK"/>
+                                                                            <menuItem title="20 pt" id="Ure-lc-5GA"/>
                                                                         </items>
                                                                     </menu>
                                                                 </popUpButtonCell>

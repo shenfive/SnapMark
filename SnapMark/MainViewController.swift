@@ -47,8 +47,8 @@ class MainViewController: NSViewController {
     // 正在進行的操作檔案位置
     var currentFileUrl:URL? = nil
     
-    //拮取畫面控制器
-    var controller:ScreenCaptureController? = ScreenCaptureController()
+//    //拮取畫面控制器
+//    var captureCcontrolle:ScreenCaptureController? = ScreenCaptureController()
     
     //編輯中的影像
     var editingImage:NSImage = NSImage()
@@ -57,28 +57,26 @@ class MainViewController: NSViewController {
     //    var window:NSWindow!
     
     //line width
-    let boardWidthSelectMenuList = [2.0,5.0,10.0]
+    let boardWidthSelectMenuList = [2.0,5.0,10.0,20.0]
     
     //cornerRadius
-    let conerRadiusSelectMenuList = [0.0,5.0,10.0,20.0,100000.1] //最後一項是取半徑，即藥丸形
+    let conerRadiusSelectMenuList = [0.0,5.0,10.0,20.0,30.0,100000.1] //最後一項是取半徑，即藥丸形
     
     //FontFemily
     var fontFemilySelectMenuList = ["System Font"]
     
     //Cell Size
-    let cellSize = NSSize(width: 86.0 / 3.0 * 4.0, height: 86.0)
+    let markCellSize = NSSize(width: 86.0 / 3.0 * 4.0, height: 86.0)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         //Collection View 設定
         itemCollectionView.delegate = self
         itemCollectionView.dataSource = self
         let flowLayout = NSCollectionViewFlowLayout()
-        flowLayout.itemSize = cellSize
+        flowLayout.itemSize = markCellSize
         flowLayout.minimumInteritemSpacing = 10
         flowLayout.minimumLineSpacing = 10
         flowLayout.scrollDirection = .horizontal
@@ -165,7 +163,7 @@ class MainViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        
+        self.view.window?.makeKeyAndOrderFront(nil)
         initView()
         
         setModeDisplayUI()
@@ -318,7 +316,7 @@ class MainViewController: NSViewController {
                     
                     //設定 UI
                     self.colorWell.color = component.color
-                    self.documentView.editMode = .BOX
+                    self.documentView.editMode = .TEXT
                     setModeDisplayUI()
                     self.fontSizeSlider.doubleValue = component.fontSize
                     self.fontSizeLabel.stringValue = "\(fontSizeSlider.intValue)"
@@ -509,13 +507,33 @@ class MainViewController: NSViewController {
     
     //MARK: 新增拮圖
     @IBAction func newSnap(_ sender: Any) {
-
-        guard let mainWindow = self.view.window else { return }
-        
-        if (mainWindow.styleMask.contains(.fullScreen)) {
-            mainWindow.toggleFullScreen(nil)
+        guard let mainWindow = NSApp.mainWindow else {
+            print("⚠️ 無法取得主視窗")
+            return
         }
-        controller?.onCaptureComplete = { [weak self] image in
+
+        if mainWindow.styleMask.contains(.fullScreen) {
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(windowDidExitFullScreen(_:)),
+                name: NSWindow.didExitFullScreenNotification,
+                object: mainWindow
+            )
+            mainWindow.toggleFullScreen(nil)
+        } else {
+            snapScreen(mainWindow: mainWindow)
+        }
+    }
+    @objc func windowDidExitFullScreen(_ notification: Notification) {
+        NotificationCenter.default.removeObserver(self, name: NSWindow.didExitFullScreenNotification, object: notification.object)
+
+        if let window = notification.object as? NSWindow {
+            snapScreen(mainWindow: window)
+        }
+    }
+
+    func snapScreen(mainWindow:NSWindow){
+        ScreenCaptureController.share.onCaptureComplete = { [weak self] image in
             if let image{
                 self?.editingImage = image
                 self?.components.removeAll()
@@ -524,8 +542,9 @@ class MainViewController: NSViewController {
                 self?.setFitWindowRatio(self as Any)
             }
         }
-        controller?.startCapture(from: mainWindow)
+        ScreenCaptureController.share.startCapture(from: mainWindow)
     }
+    
     
     //MARK: 設定編輯模式
     @IBAction func setArrowMode(_ sender: Any) {
@@ -549,7 +568,7 @@ class MainViewController: NSViewController {
             self.currentFileUrl = $0
             self.initView()
         }
-        self.presentAsModalWindow(nextVC)
+        self.presentAsSheet(nextVC)
     }
     
     //MARK: 存成圖檔

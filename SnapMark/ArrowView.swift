@@ -75,7 +75,7 @@ class ArrowView: NSView {
             )
         }
 
-        let arrowLength: CGFloat = min(length, (15 + arrowComponent.boardWidth) * ratio)
+        let arrowLength: CGFloat = min(length, (15 + arrowComponent.boardWidth * 2) * ratio)
         let arrowAngle: CGFloat = 30.0 * (.pi / 180.0)
 
         let leftVector = rotatedVector(angle: arrowAngle)
