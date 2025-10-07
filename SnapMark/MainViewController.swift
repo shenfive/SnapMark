@@ -43,6 +43,10 @@ class MainViewController: NSViewController {
     
     //附加元件
     var components:[Component] = []
+    //編輯曆程
+    var componentsHistory:[[Component]] = []
+    var componentsHistoryIndex = 0
+    
     
     // 正在進行的操作檔案位置
     var currentFileUrl:URL? = nil
@@ -145,6 +149,8 @@ class MainViewController: NSViewController {
             //回傳物件View
             print($0)
         }
+
+        
         
     }
     
@@ -157,6 +163,7 @@ class MainViewController: NSViewController {
             name: NSWindow.didResizeNotification,
             object: self.view.window
         )
+        self.view.window?.makeFirstResponder(self.view)
         
 
     }
@@ -164,6 +171,7 @@ class MainViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         self.view.window?.makeKeyAndOrderFront(nil)
+        self.view.window?.makeFirstResponder(self.view)
         initView()
         
         setModeDisplayUI()
@@ -179,6 +187,12 @@ class MainViewController: NSViewController {
             window.setFrame(centeredRect, display: true, animate: true)
         }
     }
+    
+    
+    func updateItems(){
+        
+    }
+    
     
     func initView(){
         //若沒有檔名，建立新檔案
@@ -465,6 +479,45 @@ class MainViewController: NSViewController {
         documentView.ratio = ratioSlider.doubleValue
         setImage()
         reDrawComponts()
+    }
+    
+    //MARK: undo/redo 的 MENU 連結
+    @objc func undo(_ sender: Any?) {
+        print("自訂 Undo 被觸發")
+    }
+    @objc func redo(_ sender: Any?) {
+        print("自訂 Redo 被觸發")
+    }
+    @objc func delete(_ sender: Any?) {
+        print("自訂 Delete 被觸發")
+        if let index = components.firstIndex(where: { $0.isSelected }) {
+            components.remove(at: index)
+        }
+        itemCollectionView.reloadData()
+        reDrawComponts()
+    }
+    @objc func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
+        switch item.action {
+        case #selector(undo(_:)):
+            return componentsHistory.count > 1
+        case #selector(redo(_:)):
+            return  componentsHistory.count > componentsHistoryIndex
+        case #selector(delete(_:)):
+            return components.first { $0.isSelected } != nil
+        default:
+            return false
+        }
+    }
+
+    //MARK: Undo/Redo 實作
+    func undo(){
+        
+    }
+    func redo(){
+        
+    }
+    func pushComponent(){
+        
     }
     
     //MARK:設定線寬
