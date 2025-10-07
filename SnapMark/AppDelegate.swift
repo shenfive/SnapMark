@@ -10,18 +10,18 @@ import Cocoa
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    var item : NSStatusItem? = nil
+    var statusBarItem : NSStatusItem? = nil
     
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         
-        item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        item?.image = NSImage(systemSymbolName: "laptopcomputer.and.arrow.down", accessibilityDescription: nil)
+        statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusBarItem?.image = NSImage(systemSymbolName: "laptopcomputer.and.arrow.down", accessibilityDescription: nil)
         let menu = NSMenu()
         menu.addItem(NSMenuItem(title: "Open File", action: #selector(openHistoy), keyEquivalent: ""))
         menu.addItem(NSMenuItem(title: "New Snap", action: #selector(newSnap), keyEquivalent: ""))
-        item?.menu = menu
+        statusBarItem?.menu = menu
     }
     
     @objc func newSnap(_ sender:Any){
@@ -34,6 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // 可選：確保視窗在最前面
             mainVC.view.window?.makeKeyAndOrderFront(nil)
             
+            mainVC.view.layoutSubtreeIfNeeded()
             // ✅ 已存在 → 呼叫你要的 function
             mainVC.newSnap(self as Any)
             return
@@ -46,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             // 可選：確保視窗在最前面
             launcherVC.view.window?.makeKeyAndOrderFront(nil)
-            
+            launcherVC.view.layoutSubtreeIfNeeded()
             // ✅ 已存在 → 呼叫你要的 function
             launcherVC.newSnap()
             
@@ -131,7 +132,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
     }
-    
+
+    //避免重複開啟
+    var aboutWindowController: NSWindowController?
+
+    @IBAction func aboutSnapMarkAction(_ sender: Any) {
+        //避免重複開啟
+        if let controller = aboutWindowController {
+            controller.showWindow(nil)
+            NSApp.activate(ignoringOtherApps: true)
+            return
+        }
+        
+        let aboutVC = AboutViewController()
+        let window = NSWindow(
+            contentRect: NSMakeRect(0, 0, 600, 400),
+            styleMask: [.titled, .closable, .resizable],
+            backing: .buffered,
+            defer: false
+        )
+        window.contentViewController = aboutVC
+        window.center()
+
+        let controller = NSWindowController(window: window)
+        controller.shouldCascadeWindows = true
+        controller.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
+        
+        aboutWindowController = controller
+    }
+
     
 }
 

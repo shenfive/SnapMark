@@ -21,7 +21,7 @@
                                         <menuItem title="About SnapMark" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
+                                                <action selector="aboutSnapMarkAction:" target="Voe-Tx-rLC" id="fe0-D5-BtE"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
@@ -681,7 +681,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-99" y="-195"/>
+            <point key="canvasLocation" x="-372" y="-383"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -715,7 +715,7 @@
                         <subviews>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="hay-e7-BCX">
                                 <rect key="frame" x="220" y="123" width="100" height="143"/>
-                                <buttonCell key="cell" type="square" title="Snap" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TME-Ba-1D6">
+                                <buttonCell key="cell" type="square" title="New Snap" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TME-Ba-1D6">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -729,7 +729,7 @@
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="KIO-cf-c01">
                                 <rect key="frame" x="360" y="123" width="100" height="143"/>
-                                <buttonCell key="cell" type="square" title="Start with Image File" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="7nl-Jv-Qx6">
+                                <buttonCell key="cell" type="square" title="Image File" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="7nl-Jv-Qx6">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -743,7 +743,7 @@
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="uBB-i2-AG1">
                                 <rect key="frame" x="500" y="123" width="100" height="143"/>
-                                <buttonCell key="cell" type="square" title="Strart with SnapMark File" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jAU-ra-XlW">
+                                <buttonCell key="cell" type="square" title="Open SnapMark File" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jAU-ra-XlW">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -757,7 +757,7 @@
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="KAw-Zi-1cY">
                                 <rect key="frame" x="80" y="123" width="100" height="143"/>
-                                <buttonCell key="cell" type="square" title="History Files" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yPa-NO-iYR">
+                                <buttonCell key="cell" type="square" title="Open Recent" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yPa-NO-iYR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -1178,16 +1178,16 @@
                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NRl-0p-rr8">
                                                                 <rect key="frame" x="96" y="32" width="101" height="25"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <popUpButtonCell key="cell" type="push" title="0 pt" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Ia0-72-ze1" id="XsP-Dv-Ge6">
+                                                                <popUpButtonCell key="cell" type="push" title="0 pt" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Ia0-72-ze1" id="XsP-Dv-Ge6">
                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="message"/>
                                                                     <menu key="menu" id="RZ9-2d-kUh">
                                                                         <items>
-                                                                            <menuItem title="0 pt" id="Ia0-72-ze1"/>
+                                                                            <menuItem title="0 pt" state="on" id="Ia0-72-ze1"/>
                                                                             <menuItem title="5 pt" id="HhI-NQ-GIk" userLabel="5 pt">
                                                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                                                             </menuItem>
-                                                                            <menuItem title="10 pt" state="on" id="xYL-PU-nKs"/>
+                                                                            <menuItem title="10 pt" id="xYL-PU-nKs"/>
                                                                             <menuItem title="20 pt" id="HFk-Fj-A2c"/>
                                                                             <menuItem title="30 pt" id="YlF-GO-hXl"/>
                                                                             <menuItem title="Pill-Shape" id="aq0-ca-tUf" userLabel="Pill-Shape"/>
@@ -1218,13 +1218,13 @@
                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QXi-3U-stS">
                                                                 <rect key="frame" x="120" y="8" width="77" height="25"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <popUpButtonCell key="cell" type="push" title="2 pt" bezelStyle="rounded" alignment="right" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="brF-co-on1" id="P9P-hG-DJT">
+                                                                <popUpButtonCell key="cell" type="push" title="2 pt" bezelStyle="rounded" alignment="right" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="brF-co-on1" id="P9P-hG-DJT">
                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="message"/>
                                                                     <menu key="menu" id="xhn-ug-fft">
                                                                         <items>
-                                                                            <menuItem title="2 pt" id="brF-co-on1"/>
-                                                                            <menuItem title="5 pt" state="on" id="Kes-LI-KBd"/>
+                                                                            <menuItem title="2 pt" state="on" id="brF-co-on1"/>
+                                                                            <menuItem title="5 pt" id="Kes-LI-KBd"/>
                                                                             <menuItem title="10 pt" id="XPw-fc-2iK"/>
                                                                             <menuItem title="20 pt" id="Ure-lc-5GA"/>
                                                                         </items>
