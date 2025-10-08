@@ -63,6 +63,9 @@ class ComponentViewItem: NSCollectionViewItem {
         if component.isSelected {
             itemBox.borderColor = .red
             itemBox.borderWidth = 3
+        }else{
+            itemBox.borderColor = .black
+            itemBox.borderWidth = 1
         }
         
         switch self.component.componentType{

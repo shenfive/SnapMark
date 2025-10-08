@@ -121,7 +121,13 @@ class MainViewController: NSViewController {
             }
             
             self.view.window?.makeFirstResponder(self.view)
-            self.itemCollectionView.reloadData()
+            self.reDrawComponts()
+            self.itemCollectionView.visibleItems().forEach { itemView in
+                (itemView as? ComponentViewItem)?.itemBox.borderWidth = 1
+                (itemView as? ComponentViewItem)?.itemBox.borderColor = .black
+            }
+            
+            
         }
         
         //MARK: 完成新增物件時的動作
