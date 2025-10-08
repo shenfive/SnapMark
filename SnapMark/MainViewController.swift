@@ -25,11 +25,9 @@ class MainViewController: NSViewController {
     @IBOutlet weak var colorWell: NSColorWell!
     @IBOutlet weak var selectLineButton: NSPopUpButton!
     
-    
     @IBOutlet weak var arrowModeButton: NSButton!
     @IBOutlet weak var textModeButton: NSButton!
     @IBOutlet weak var boxModeButton: NSButton!
-
     
     @IBOutlet weak var selectConerRadius: NSPopUpButton!
     @IBOutlet weak var fontButton: NSPopUpButton!
@@ -38,29 +36,22 @@ class MainViewController: NSViewController {
     @IBOutlet weak var fontSampleLabel: NSTextField!
     
     @IBOutlet weak var itemCollectionView: NSCollectionView!
-    
     @IBOutlet weak var fileLabel: NSTextField!
     
     //附加元件
     var components:[Component] = []
+    
     //編輯曆程
     var componentsHistory:[[Component]] = []
     var componentsHistoryIndex = 0
     
-    
     // 正在進行的操作檔案位置
     var currentFileUrl:URL? = nil
-    
-//    //拮取畫面控制器
-//    var captureCcontrolle:ScreenCaptureController? = ScreenCaptureController()
     
     //編輯中的影像
     var editingImage:NSImage = NSImage()
     
-    //頁面的 Window
-    //    var window:NSWindow!
-    
-    //line width
+    //line width Menu
     let boardWidthSelectMenuList = [2.0,5.0,10.0,20.0]
     
     //cornerRadius
@@ -112,7 +103,7 @@ class MainViewController: NSViewController {
         documentView.editMode = .ARROW
         
         
-        //新增物件時的動作
+        //新增物件開始時的動作
         documentView.startAction = {
             //移除空白字串的 TextView
             self.components.removeAll {
@@ -123,25 +114,31 @@ class MainViewController: NSViewController {
             for i in self.components.indices {
                 self.components[i].isSelected = false
             }
+       
             //結束所有編輯
             for view in self.documentView.subviews{
                 view.window?.makeFirstResponder(nil)
             }
+            
+            self.view.window?.makeFirstResponder(self.view)
             self.itemCollectionView.reloadData()
         }
         
-        //完成新增物件時的動作
+        //MARK: 完成新增物件時的動作
         documentView.endAction = {
             
-            
             self.components.append(self.documentView.getComponet(ratio: self.ratioSlider.doubleValue))
+            
+            //若新增了一個 Text 就進入編輯文字模式
             switch self.components.last?.componentType{
             case .TEXT:
                 self.components[self.components.count-1].isSelected = true
             default:
                 break
             }
+            
             DispatchQueue.main.async {
+                self.pushComponent()
                 self.reDrawComponts()
                 self.itemCollectionView.reloadData()
             }
@@ -163,9 +160,6 @@ class MainViewController: NSViewController {
             name: NSWindow.didResizeNotification,
             object: self.view.window
         )
-        self.view.window?.makeFirstResponder(self.view)
-        
-
     }
     
     override func viewDidAppear() {
@@ -188,14 +182,39 @@ class MainViewController: NSViewController {
         }
     }
     
-    
-    func updateItems(){
+    //設定字形選單
+    func setFontButton(){
+        //初始化選字型選單
+        let fontMenu = NSMenu()
+        // 加入系統字型 System Font 項目
+        let systemFont = NSFont.systemFont(ofSize: 14)
+        let systemAttrTitle = NSAttributedString(string: "System Font", attributes: [.font: systemFont])
+        let systemItem = NSMenuItem()
+        systemItem.attributedTitle = systemAttrTitle
+        systemItem.representedObject = systemFont
+        systemItem.action = #selector(fontSelected(_:))
+        systemItem.target = self
+        fontMenu.addItem(systemItem)
         
+        // 加入其他字型家族
+        for family in NSFontManager.shared.availableFontFamilies {
+            guard let font = NSFont(name: family, size: 14) else { continue }
+            let attrTitle = NSAttributedString(string: family, attributes: [.font: font])
+            self.fontFemilySelectMenuList.append(family)
+            let item = NSMenuItem()
+            item.attributedTitle = attrTitle
+            item.representedObject = font
+            item.action = #selector(fontSelected(_:))
+            item.target = self
+            fontMenu.addItem(item)
+        }
+        // 把選單放回 Button
+        fontButton.menu = fontMenu
     }
     
-    
+    //初始化畫面
     func initView(){
-        //若沒有檔名，建立新檔案
+        //若有檔名，讀取檔案
         if let url = currentFileUrl{
             fileLabel.stringValue = "\(url.lastPathComponent)"
             do {
@@ -204,19 +223,22 @@ class MainViewController: NSViewController {
                 self.setImage()
                 let theComponents =  Component.decodeComponents(from: snap.metadata) ?? []
                 self.components = theComponents
+                self.componentsHistory.removeAll()
+                self.componentsHistoryIndex = 0
+                self.pushComponent()
                 self.reDrawComponts()
                 self.itemCollectionView.reloadData()
             }catch{
                 print(error.localizedDescription)
             }
-            
         }else{
-            openFile()
+            //若沒有檔名，建立新檔案
+            createNewFile()
         }
     }
     
     //於預設資料匣建立檔案
-    func openFile(){
+    func createNewFile(){
         self.setImage()
         if let url = SMFireManager.shared.getDefaultFileURL() {
             self.currentFileUrl = url
@@ -226,6 +248,7 @@ class MainViewController: NSViewController {
                                                      bgImage: self.editingImage,
                                                      thumbIamge: self.editingImage,
                                                      json: "")
+                pushComponent()
             }catch{
                 print(error.localizedDescription)
             }
@@ -235,16 +258,15 @@ class MainViewController: NSViewController {
     
     //MARK: 重畫所有元件
     func reDrawComponts(){
-        
-        //移除標註文件
+
+        //移除所有標註文件
         self.documentView.subviews.forEach {
             if $0.isKind(of: ArrowView.self) { $0.removeFromSuperview() }
             if $0.isKind(of: BoxView.self) { $0.removeFromSuperview() }
             if $0.isKind(of: TextView.self) { $0.removeFromSuperview() }
             if $0.isKind(of: SelectView.self) {$0.removeFromSuperview()}
         }
-        
-        
+        //重置選定的 Maker View
         documentView.selectedSubView = nil
         
         //重繪標註文件
@@ -252,64 +274,66 @@ class MainViewController: NSViewController {
             let component = components[index]
             switch component.componentType{
             case .ARROW:
+                //設定 Arrow
                 let arrowView = ArrowView(frame: component.framRect(ratio: ratioSlider.doubleValue))
                 arrowView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
+                arrowView.enableEdit =  component.isSelected
                 self.documentView.addSubview(arrowView)
+                
                 if component.isMouseOverMode{
                     let editView = SelectView(frame: arrowView.frame)
                     self.documentView.addSubview(editView)
                 }
-                arrowView.enableEdit =  component.isSelected
+                
+                //設定控制項為選定 Maker 的內容
                 if component.isSelected {
                     documentView.selectedSubView = arrowView
-                    
-                    //設定 UI
                     self.colorWell.color = component.color
                     self.documentView.editMode = .ARROW
                     self.setModeDisplayUI()
-//                    if let boardIndex = boardWidthSelectMenuList.firstIndex(of: component.boardWidth){
-//                        self.selectLineButton.selectItem(at: boardIndex)
-//                    }
-                    
-                    
                 }
+
+                //完成編輯 (移動，改大小等)
                 arrowView.endEditAction = {
                     self.components[index] = $0
+                    self.pushComponent()
                     self.reDrawComponts()
                     self.itemCollectionView.reloadData()
                 }
                 
             case .BOX:
+                //設定 BOX
                 let boxView = BoxView(frame: component.framRect(ratio: ratioSlider.doubleValue))
                 boxView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
-                
+                boxView.enableEdit = component.isSelected
                 self.documentView.addSubview(boxView)
                 if component.isMouseOverMode{
                     let editView = SelectView(frame: boxView.frame)
                     self.documentView.addSubview(editView)
                 }
-                boxView.enableEdit = component.isSelected
+        
+                //設定控制項為選定 Maker 的內容
                 if component.isSelected {
                     documentView.selectedSubView = boxView
-                    
-                    //設定 UI
                     self.colorWell.color = component.color
                     self.documentView.editMode = .BOX
                     setModeDisplayUI()
                     if let conerIndex = conerRadiusSelectMenuList.firstIndex(of: component.cornerRadius){
                         self.selectConerRadius.selectItem(at: conerIndex)
                     }
-                    
                 }
+                
+                //完成編輯 (移動，改大小等)
                 boxView.endEditAction = {
                     self.components[index] = $0
+                    self.pushComponent()
                     self.reDrawComponts()
                     self.itemCollectionView.reloadData()
                 }
                 
                 
             case .TEXT:
-                print("show:\(index) string:\(component.text)")
+                //設定 TEXT
                 let textView = TextView()
                 textView.dataIndex = index
                 textView.setComponentData(component: component, ratio: ratioSlider.doubleValue)
@@ -318,7 +342,6 @@ class MainViewController: NSViewController {
                     self.itemCollectionView.reloadItems(at: [IndexPath(item: dataIndex, section: 0)])
                 }
                 textView.endEdingCallBack = { newString, dataIndex in
-                    
                     self.components[dataIndex].text = newString
                     self.itemCollectionView.reloadItems(at: [IndexPath(item: dataIndex, section: 0)])
                     self.reDrawComponts()
@@ -334,11 +357,11 @@ class MainViewController: NSViewController {
                     setModeDisplayUI()
                     self.fontSizeSlider.doubleValue = component.fontSize
                     self.fontSizeLabel.stringValue = "\(fontSizeSlider.intValue)"
-                    
                 }
                 textView.enableEdit = component.isSelected
                 textView.endEditAction = {
                     self.components[index] = $0
+                    self.pushComponent()
                     self.reDrawComponts()
                     self.itemCollectionView.reloadData()
                 }
@@ -346,7 +369,6 @@ class MainViewController: NSViewController {
                     let editView = SelectView(frame: textView.frame)
                     self.documentView.addSubview(editView)
                 }
-                
             }
         }
         
@@ -393,46 +415,12 @@ class MainViewController: NSViewController {
             if let index = components.firstIndex(where: { $0.isSelected }) {
                 components[index].fontName = font.fontName
                 components[index].fontSize = font.pointSize
+                pushComponent()
                 reDrawComponts()
             }
         }
     }
-    
-    //設定字形選單
-    func setFontButton(){
-        //設定選字型
-        let fontMenu = NSMenu()
-        // 加入 System Font 項目
-        let systemFont = NSFont.systemFont(ofSize: 14)
-        let systemAttrTitle = NSAttributedString(string: "System Font", attributes: [.font: systemFont])
-        
-        let systemItem = NSMenuItem()
-        systemItem.attributedTitle = systemAttrTitle
-        systemItem.representedObject = systemFont
-        systemItem.action = #selector(fontSelected(_:))
-        systemItem.target = self
-        
-        fontMenu.addItem(systemItem)
-        
-        // 加入其他字型家族
-        for family in NSFontManager.shared.availableFontFamilies {
-            guard let font = NSFont(name: family, size: 14) else { continue }
-            let attrTitle = NSAttributedString(string: family, attributes: [.font: font])
-            self.fontFemilySelectMenuList.append(family)
-            let item = NSMenuItem()
-            item.attributedTitle = attrTitle
-            item.representedObject = font
-            item.action = #selector(fontSelected(_:))
-            item.target = self
-            
-            fontMenu.addItem(item)
-        }
-        fontButton.menu = fontMenu
-    }
-    
-    
-    
-    
+
     
     //設定顏色
     @IBAction func changeColor(_ sender: Any) {
@@ -440,6 +428,7 @@ class MainViewController: NSViewController {
         documentView.redraw()
         if let index = components.firstIndex(where: { $0.isSelected }) {
             components[index].color = documentView.color
+            pushComponent()
             reDrawComponts()
         }
         
@@ -484,22 +473,28 @@ class MainViewController: NSViewController {
     //MARK: undo/redo 的 MENU 連結
     @objc func undo(_ sender: Any?) {
         print("自訂 Undo 被觸發")
+        undo()
     }
+    
     @objc func redo(_ sender: Any?) {
         print("自訂 Redo 被觸發")
+        redo()
     }
+    
     @objc func delete(_ sender: Any?) {
         print("自訂 Delete 被觸發")
         if let index = components.firstIndex(where: { $0.isSelected }) {
             components.remove(at: index)
         }
+        pushComponent()
         itemCollectionView.reloadData()
         reDrawComponts()
     }
     @objc func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
+
         switch item.action {
         case #selector(undo(_:)):
-            return componentsHistory.count > 1
+            return componentsHistoryIndex > 1
         case #selector(redo(_:)):
             return  componentsHistory.count > componentsHistoryIndex
         case #selector(delete(_:)):
@@ -511,14 +506,30 @@ class MainViewController: NSViewController {
 
     //MARK: Undo/Redo 實作
     func undo(){
-        
+        componentsHistoryIndex -= 1
+        print("c:u  \(componentsHistory.count),i:\(componentsHistoryIndex)")
+        components = componentsHistory[componentsHistoryIndex - 1]
+        print(components)
+        itemCollectionView.reloadData()
+        reDrawComponts()
+
     }
     func redo(){
-        
+        componentsHistoryIndex += 1
+        print("c:r \(componentsHistory.count),i:\(componentsHistoryIndex)")
+        components = componentsHistory[componentsHistoryIndex - 1]
+        itemCollectionView.reloadData()
+        reDrawComponts()
     }
+    
     func pushComponent(){
-        
+        //清除 undo 的 過期資料
+        componentsHistory = Array(componentsHistory.prefix(componentsHistoryIndex))
+        componentsHistoryIndex += 1
+        //新增
+        componentsHistory.append(components)
     }
+    
     
     //MARK:設定線寬
     @IBAction func changeLineWidth(_ sender: Any) {
@@ -527,6 +538,7 @@ class MainViewController: NSViewController {
         
         if let index = components.firstIndex(where: { $0.isSelected }) {
             components[index].boardWidth = documentView.boardWidth
+            pushComponent()
             reDrawComponts()
         }
         
@@ -538,6 +550,7 @@ class MainViewController: NSViewController {
         documentView.redraw()
         if let index = components.firstIndex(where: { $0.isSelected }) {
             components[index].cornerRadius = documentView.cornerRadius
+            pushComponent()
             reDrawComponts()
         }
     }
@@ -590,8 +603,10 @@ class MainViewController: NSViewController {
             if let image{
                 self?.editingImage = image
                 self?.components.removeAll()
+                self?.componentsHistory.removeAll()
+                self?.componentsHistoryIndex = 0
                 self?.itemCollectionView.reloadData()
-                self?.openFile()
+                self?.createNewFile()
                 self?.setFitWindowRatio(self as Any)
             }
         }
@@ -744,6 +759,7 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
         
         componentViewItem.mouseOverEnterAction = {
             print("on Main Enter:\($0)")
+
             if self.components[$0].isSelected != true{
                 self.components[$0].isMouseOverMode = true
                 self.reDrawComponts()
@@ -751,14 +767,19 @@ extension MainViewController:NSCollectionViewDelegate,NSCollectionViewDataSource
             componentViewItem.deleteButton.isHidden = false
         }
         componentViewItem.mouseOverExitAction = {
-            print("on Main Exit:\($0)")
-            self.components[$0].isMouseOverMode = false
+            print("on Main Exit:\($0)")            
+            for index in self.components.indices {
+                self.components[index].isMouseOverMode = false
+            }
+            collectionView.visibleItems().forEach { item in
+                (item as? ComponentViewItem)?.deleteButton.isHidden = true
+            }
             componentViewItem.deleteButton.isHidden = true
             self.reDrawComponts()
         }
         componentViewItem.deleteAction = {
-            
             self.components.remove(at: indexPath.item)
+            self.pushComponent()
             self.itemCollectionView.reloadData()
             self.reDrawComponts()
         }

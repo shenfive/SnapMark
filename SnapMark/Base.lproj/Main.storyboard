@@ -66,8 +66,11 @@
                                                 <action selector="redo:" target="Ady-hI-5gd" id="oIA-Rs-6OD"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Delete" keyEquivalent="" id="pa3-QI-u2k">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem isSeparatorItem="YES" id="Jvk-hY-Wqq"/>
+                                        <menuItem title="Delete" id="pa3-QI-u2k">
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
                                             <connections>
                                                 <action selector="delete:" target="Ady-hI-5gd" id="0Mk-Ml-PaM"/>
                                             </connections>

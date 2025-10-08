@@ -32,7 +32,7 @@ class PreviewView: NSView {
         
         let options: NSTrackingArea.Options = [
             .mouseEnteredAndExited,
-            .activeInActiveApp,
+            .activeAlways,
             .inVisibleRect
         ]
         

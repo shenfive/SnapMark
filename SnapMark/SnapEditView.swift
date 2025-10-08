@@ -162,7 +162,7 @@ class SnapEditView: NSView {
 
 
     override func draw(_ dirtyRect: NSRect) {
-        print("Draw")
+//        print("Draw")
     }
     
     func getComponet(ratio:Double) -> Component{
