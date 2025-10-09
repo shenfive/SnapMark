@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F8CA41B42E97957D00B1F039 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8CA41B32E97957D00B1F039 /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		F81852022E376B6A00183060 /* SnapMark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapMark.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8CA41B32E97957D00B1F039 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -45,6 +50,7 @@
 		F81851F92E376B6A00183060 = {
 			isa = PBXGroup;
 			children = (
+				F8CA41B32E97957D00B1F039 /* README.md */,
 				F81852042E376B6A00183060 /* SnapMark */,
 				F81852032E376B6A00183060 /* Products */,
 			);
@@ -125,6 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8CA41B42E97957D00B1F039 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
