@@ -2,12 +2,12 @@
   "sourceLanguage" : "en",
   "strings" : {
     "SnapMark" : {
-      "extractionState" : "manual",
+      "comment" : "Window 標題",
       "localizations" : {
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Snap Mark ! "
+            "value" : "SnapMark"
           }
         }
       }

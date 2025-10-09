@@ -1,0 +1,153 @@
+
+/* Class = "NSMenuItem"; title = "SnapMark"; ObjectID = "1Xt-HY-uBw"; */
+"1Xt-HY-uBw.title" = "SnapMark";
+
+/* Class = "NSMenuItem"; title = "Item 1"; ObjectID = "3rU-Si-Eve"; */
+"3rU-Si-Eve.title" = "Item 1";
+
+/* Class = "NSTextFieldCell"; title = "Aa"; ObjectID = "4L5-aa-8Yu"; */
+"4L5-aa-8Yu.title" = "Aa";
+
+/* Class = "NSMenuItem"; title = "Quit SnapMark"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "Quit SnapMark";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "5QF-Oa-p0T"; */
+"5QF-Oa-p0T.title" = "Edit";
+
+/* Class = "NSTextFieldCell"; title = "file"; ObjectID = "5YZ-VD-tuv"; */
+"5YZ-VD-tuv.title" = "file";
+
+/* Class = "NSMenuItem"; title = "About SnapMark"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "About SnapMark";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "6dh-zS-Vam"; */
+"6dh-zS-Vam.title" = "Redo";
+
+/* Class = "NSTextFieldCell"; title = "40"; ObjectID = "6zL-az-Jwk"; */
+"6zL-az-Jwk.title" = "40";
+
+/* Class = "NSButtonCell"; title = "Image File"; ObjectID = "7nl-Jv-Qx6"; */
+"7nl-Jv-Qx6.title" = "Image File";
+
+/* Class = "NSBox"; title = "Font Setting"; ObjectID = "A5C-oJ-ae4"; */
+"A5C-oJ-ae4.title" = "Font Setting";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "Main Menu";
+
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "BOF-NM-1cW"; */
+"BOF-NM-1cW.title" = "Preferences…";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "CN9-Mq-KUA"; */
+"CN9-Mq-KUA.title" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "100%"; ObjectID = "Dis-f5-Abb"; */
+"Dis-f5-Abb.title" = "100%";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "DwW-UX-xqM"; */
+"DwW-UX-xqM.title" = "Box";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
+"F2S-fz-NVQ.title" = "Help";
+
+/* Class = "NSMenuItem"; title = "SnapMark Help"; ObjectID = "FKE-Sm-Kum"; */
+"FKE-Sm-Kum.title" = "SnapMark Help";
+
+/* Class = "NSMenuItem"; title = "20 pt"; ObjectID = "HFk-Fj-A2c"; */
+"HFk-Fj-A2c.title" = "20 pt";
+
+/* Class = "NSMenuItem"; title = "5 pt"; ObjectID = "HhI-NQ-GIk"; */
+"HhI-NQ-GIk.title" = "5 pt";
+
+/* Class = "NSWindow"; title = "SnapMark"; ObjectID = "IQv-IB-iLA"; */
+"IQv-IB-iLA.title" = "SnapMark";
+
+/* Class = "NSMenuItem"; title = "0 pt"; ObjectID = "Ia0-72-ze1"; */
+"Ia0-72-ze1.title" = "0 pt";
+
+/* Class = "NSMenuItem"; title = "5 pt"; ObjectID = "Kes-LI-KBd"; */
+"Kes-LI-KBd.title" = "5 pt";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "S9X-oa-8k4"; */
+"S9X-oa-8k4.title" = "Item 3";
+
+/* Class = "NSButtonCell"; title = "New Snap"; ObjectID = "TME-Ba-1D6"; */
+"TME-Ba-1D6.title" = "New Snap";
+
+/* Class = "NSBox"; title = "MarkType"; ObjectID = "UYn-g2-aEW"; */
+"UYn-g2-aEW.title" = "MarkType";
+
+/* Class = "NSMenuItem"; title = "20 pt"; ObjectID = "Ure-lc-5GA"; */
+"Ure-lc-5GA.title" = "20 pt";
+
+/* Class = "NSTextFieldCell"; title = "Border Line Width"; ObjectID = "V2T-tf-kCI"; */
+"V2T-tf-kCI.title" = "Border Line Width";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "Vdc-ME-uMM"; */
+"Vdc-ME-uMM.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "VtD-Tu-rv3"; */
+"VtD-Tu-rv3.title" = "Box";
+
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "W48-6f-4Dl"; */
+"W48-6f-4Dl.title" = "Edit";
+
+/* Class = "NSMenuItem"; title = "New Snap"; ObjectID = "Was-JA-tGl"; */
+"Was-JA-tGl.title" = "New Snap";
+
+/* Class = "NSMenuItem"; title = "10 pt"; ObjectID = "XPw-fc-2iK"; */
+"XPw-fc-2iK.title" = "10 pt";
+
+/* Class = "NSMenuItem"; title = "30 pt"; ObjectID = "YlF-GO-hXl"; */
+"YlF-GO-hXl.title" = "30 pt";
+
+/* Class = "NSTextFieldCell"; title = "Corner Radius"; ObjectID = "Zjd-Tt-laX"; */
+"Zjd-Tt-laX.title" = "Corner Radius";
+
+/* Class = "NSMenuItem"; title = "Pill-Shape"; ObjectID = "aq0-ca-tUf"; */
+"aq0-ca-tUf.title" = "Pill-Shape";
+
+/* Class = "NSMenu"; title = "File"; ObjectID = "bib-Uj-vzu"; */
+"bib-Uj-vzu.title" = "File";
+
+/* Class = "NSMenuItem"; title = "2 pt"; ObjectID = "brF-co-on1"; */
+"brF-co-on1.title" = "2 pt";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "cAS-Ca-q2s"; */
+"cAS-Ca-q2s.title" = "Box";
+
+/* Class = "NSMenuItem"; title = "File"; ObjectID = "dMs-cI-mzQ"; */
+"dMs-cI-mzQ.title" = "File";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "dRJ-4n-Yzg"; */
+"dRJ-4n-Yzg.title" = "Undo";
+
+/* Class = "NSBox"; title = "Corner & Line Width"; ObjectID = "gtx-c2-sPX"; */
+"gtx-c2-sPX.title" = "Corner & Line Width";
+
+/* Class = "NSButtonCell"; title = "Open SnapMark File"; ObjectID = "jAU-ra-XlW"; */
+"jAU-ra-XlW.title" = "Open SnapMark File";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "jtf-N3-J4U"; */
+"jtf-N3-J4U.title" = "Item 2";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "pa3-QI-u2k"; */
+"pa3-QI-u2k.title" = "Delete";
+
+/* Class = "NSBox"; title = "Color"; ObjectID = "sqb-T4-dIs"; */
+"sqb-T4-dIs.title" = "Color";
+
+/* Class = "NSMenuItem"; title = "Open Recent"; ObjectID = "tXI-mr-wws"; */
+"tXI-mr-wws.title" = "Open Recent";
+
+/* Class = "NSMenu"; title = "SnapMark"; ObjectID = "uQy-DD-JDr"; */
+"uQy-DD-JDr.title" = "SnapMark";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
+"wpr-3q-Mcd.title" = "Help";
+
+/* Class = "NSMenuItem"; title = "10 pt"; ObjectID = "xYL-PU-nKs"; */
+"xYL-PU-nKs.title" = "10 pt";
+
+/* Class = "NSButtonCell"; title = "Open Recent"; ObjectID = "yPa-NO-iYR"; */
+"yPa-NO-iYR.title" = "Open Recent";

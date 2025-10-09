@@ -16,11 +16,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         
-        statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusBarItem?.image = NSImage(systemSymbolName: "laptopcomputer.and.arrow.down", accessibilityDescription: nil)
+        statusBarItem = NSStatusBar.system.statusItem(withLength: 24)
+        
+        let config = NSImage.SymbolConfiguration(paletteColors: [NSColor.white.withAlphaComponent(0.8)])
+        let image = NSImage(systemSymbolName: "dot.scope.display", accessibilityDescription: nil)?
+            .withSymbolConfiguration(config)
+        statusBarItem?.button?.image = image
+        NSStatusBar.system.statusItem(withLength: 24)
+
         let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Open File", action: #selector(openHistoy), keyEquivalent: ""))
         menu.addItem(NSMenuItem(title: "New Snap", action: #selector(newSnap), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "Open Recent", action: #selector(openHistoy), keyEquivalent: ""))
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(NSMenuItem(title: "About Snap Mark", action: #selector(about), keyEquivalent: ""))
         statusBarItem?.menu = menu
     }
     
@@ -136,7 +144,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //避免重複開啟
     var aboutWindowController: NSWindowController?
 
-    @IBAction func aboutSnapMarkAction(_ sender: Any) {
+    @objc func about(_ sender: Any){
         //避免重複開啟
         if let controller = aboutWindowController {
             controller.showWindow(nil)
@@ -160,6 +168,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
         
         aboutWindowController = controller
+    }
+    
+    @IBAction func aboutSnapMarkAction(_ sender: Any) {
+        about(sender)
     }
 
     
