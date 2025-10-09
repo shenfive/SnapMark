@@ -17,20 +17,39 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0gw-EB-azC">
-                    <rect key="frame" x="182" y="128" width="116" height="16"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Abuout Snap Mark" id="dhr-US-Rcf">
-                        <font key="font" usesAppearanceFont="YES"/>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dwU-Yh-kJg">
+                    <rect key="frame" x="224" y="165" width="32" height="32"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSApplicationIcon" id="8mh-bw-iij"/>
+                </imageView>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F4M-hf-vPa">
+                    <rect key="frame" x="172" y="117" width="137" height="28"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Snap &amp; Mark" id="HHp-cS-cJG">
+                        <font key="font" metaFont="system" size="24"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rSI-x7-vZD">
+                    <rect key="frame" x="167" y="91" width="147" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Ver 1.0 By Jun Wu Shen" id="vkx-Z9-GXE">
+                        <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="0gw-EB-azC" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="5ub-w3-ULw"/>
-                <constraint firstItem="0gw-EB-azC" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="Blj-4z-tfl"/>
+                <constraint firstItem="dwU-Yh-kJg" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" multiplier="1:1.5" id="67u-Qi-M3x"/>
+                <constraint firstItem="rSI-x7-vZD" firstAttribute="top" secondItem="F4M-hf-vPa" secondAttribute="bottom" constant="10" id="AWM-W5-nJm"/>
+                <constraint firstItem="dwU-Yh-kJg" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="Lf6-w2-q6s"/>
+                <constraint firstItem="F4M-hf-vPa" firstAttribute="top" secondItem="dwU-Yh-kJg" secondAttribute="bottom" constant="20" id="Ua0-UW-4qa"/>
+                <constraint firstItem="rSI-x7-vZD" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="dAb-9d-Qww"/>
+                <constraint firstItem="F4M-hf-vPa" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="g8G-bM-YT2"/>
             </constraints>
-            <point key="canvasLocation" x="116" y="133"/>
+            <point key="canvasLocation" x="309" y="260"/>
         </customView>
     </objects>
+    <resources>
+        <image name="NSApplicationIcon" width="32" height="32"/>
+    </resources>
 </document>
