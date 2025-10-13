@@ -64,16 +64,10 @@ class OverlayController {
     }
 
     func show() {
-//        window.level = .screenSaver
-//        window.ignoresMouseEvents = false
-//        window.isOpaque = false
-//        window.backgroundColor = .clear
+
         window.makeKeyAndOrderFront(nil)
         window.level = .screenSaver // 確保在最上層
         NSApp.activate(ignoringOtherApps: true) // 強制 App 成為焦點
-
-        
-//        window.makeKeyAndOrderFront(nil)
     }
 
 

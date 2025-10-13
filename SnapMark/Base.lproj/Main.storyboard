@@ -133,56 +133,43 @@ CA
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="hay-e7-BCX">
-                                <rect key="frame" x="220" y="123" width="100" height="145"/>
+                                <rect key="frame" x="510" y="165" width="100" height="145"/>
                                 <buttonCell key="cell" type="square" title="New Snap" bezelStyle="shadowlessSquare" image="dot.scope" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TME-Ba-1D6">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="RZq-Hp-5Qr"/>
-                                    <constraint firstAttribute="height" constant="140" id="yBm-D5-35p"/>
+                                    <constraint firstAttribute="width" constant="100" id="3CE-Qh-tdm"/>
+                                    <constraint firstAttribute="height" constant="140" id="x4Z-8l-voX"/>
                                 </constraints>
                                 <connections>
                                     <action selector="actionWithNewSnap:" target="R18-HF-aZU" id="B3o-Vj-5bJ"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KIO-cf-c01">
-                                <rect key="frame" x="360" y="123" width="100" height="143"/>
-                                <buttonCell key="cell" type="square" title="Image File" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="7nl-Jv-Qx6">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U7A-e0-2rO">
+                                <rect key="frame" x="356" y="39" width="284" height="18"/>
+                                <buttonCell key="cell" type="check" title=" Show this Window when the app launches" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="YQD-0d-1MP">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="140" id="7NC-Jv-nmG"/>
-                                    <constraint firstAttribute="width" constant="100" id="QfN-aI-DCu"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="actionWithReadFile:" target="R18-HF-aZU" id="hhF-1B-GbS"/>
-                                </connections>
                             </button>
-                            <button hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uBB-i2-AG1">
-                                <rect key="frame" x="500" y="123" width="100" height="143"/>
-                                <buttonCell key="cell" type="square" title="Open SnapMark File" bezelStyle="shadowlessSquare" image="moonphase.new.moon.inverse" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jAU-ra-XlW">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F9F-MF-gf7">
+                                <rect key="frame" x="50" y="143" width="200" height="200"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="140" id="Ul0-bJ-CXj"/>
-                                    <constraint firstAttribute="width" constant="100" id="a7E-tj-4M8"/>
+                                    <constraint firstAttribute="width" constant="200" id="7ha-tU-df0"/>
+                                    <constraint firstAttribute="height" constant="200" id="B7r-Gd-B96"/>
                                 </constraints>
-                                <connections>
-                                    <action selector="actionReadCurrentFile:" target="R18-HF-aZU" id="j2U-xc-CPC"/>
-                                </connections>
-                            </button>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSApplicationIcon" id="4Ih-aV-47c"/>
+                            </imageView>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="KAw-Zi-1cY">
-                                <rect key="frame" x="80" y="123" width="100" height="143"/>
+                                <rect key="frame" x="380" y="165" width="100" height="143"/>
                                 <buttonCell key="cell" type="square" title="Open Recent" bezelStyle="shadowlessSquare" image="folder.circle" catalog="system" imagePosition="above" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="yPa-NO-iYR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="IXp-eh-hEk"/>
-                                    <constraint firstAttribute="height" constant="140" id="p8y-KZ-sZE"/>
+                                    <constraint firstAttribute="height" constant="140" id="Eu2-aq-Ubg"/>
+                                    <constraint firstAttribute="width" constant="100" id="sAQ-OY-NiT"/>
                                 </constraints>
                                 <connections>
                                     <action selector="action:" target="R18-HF-aZU" id="7fq-1W-Qf5"/>
@@ -190,14 +177,14 @@ CA
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="uBB-i2-AG1" firstAttribute="leading" secondItem="KIO-cf-c01" secondAttribute="trailing" constant="40" id="Fdh-LX-9Dm"/>
-                            <constraint firstItem="KIO-cf-c01" firstAttribute="leading" secondItem="hay-e7-BCX" secondAttribute="trailing" constant="40" id="Ipg-NB-Q7k"/>
-                            <constraint firstItem="KAw-Zi-1cY" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="Mx3-9u-2qm"/>
-                            <constraint firstItem="hay-e7-BCX" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="Nsj-Ox-qUk"/>
-                            <constraint firstItem="hay-e7-BCX" firstAttribute="centerX" secondItem="w95-pC-OM1" secondAttribute="centerX" constant="-80" id="O0Y-ES-Vve"/>
-                            <constraint firstItem="KIO-cf-c01" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="X1c-4o-Age"/>
-                            <constraint firstItem="uBB-i2-AG1" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" id="aiA-xc-wxh"/>
-                            <constraint firstItem="hay-e7-BCX" firstAttribute="leading" secondItem="KAw-Zi-1cY" secondAttribute="trailing" constant="40" id="jMO-ON-aqx"/>
+                            <constraint firstItem="F9F-MF-gf7" firstAttribute="centerY" secondItem="w95-pC-OM1" secondAttribute="centerY" constant="-50" id="0E3-0e-2fL"/>
+                            <constraint firstAttribute="trailing" secondItem="U7A-e0-2rO" secondAttribute="trailing" constant="60" id="DaA-tZ-aFL"/>
+                            <constraint firstItem="hay-e7-BCX" firstAttribute="leading" secondItem="KAw-Zi-1cY" secondAttribute="trailing" constant="30" id="Hfy-sX-cJO"/>
+                            <constraint firstAttribute="bottom" secondItem="U7A-e0-2rO" secondAttribute="bottom" constant="40" id="Nme-WU-fec"/>
+                            <constraint firstAttribute="trailing" secondItem="hay-e7-BCX" secondAttribute="trailing" constant="90" id="Rg9-Dy-Uh1"/>
+                            <constraint firstItem="KAw-Zi-1cY" firstAttribute="top" secondItem="w95-pC-OM1" secondAttribute="top" constant="80" id="TCe-yf-hgr"/>
+                            <constraint firstItem="F9F-MF-gf7" firstAttribute="leading" secondItem="w95-pC-OM1" secondAttribute="leading" constant="50" id="cp3-HT-gla"/>
+                            <constraint firstItem="hay-e7-BCX" firstAttribute="top" secondItem="w95-pC-OM1" secondAttribute="top" constant="80" id="pEt-s1-GPG"/>
                         </constraints>
                     </view>
                     <connections>
@@ -821,13 +808,13 @@ CA
     </scenes>
     <resources>
         <image name="1.square" catalog="system" width="19" height="17"/>
+        <image name="NSApplicationIcon" width="32" height="32"/>
         <image name="arrow.up.forward" catalog="system" width="14" height="12"/>
         <image name="arrow.up.left.and.arrow.down.right" catalog="system" width="20" height="18"/>
         <image name="character.textbox" catalog="system" width="20" height="14"/>
         <image name="dot.scope" catalog="system" width="18" height="18"/>
         <image name="dot.scope.display" catalog="system" width="24" height="19"/>
-        <image name="folder.circle" catalog="system" width="15" height="15"/>
-        <image name="moonphase.new.moon.inverse" catalog="system" width="15" height="15"/>
+        <image name="folder.circle" catalog="system" width="19" height="19"/>
         <image name="photo.badge.arrow.down" catalog="system" width="26" height="20"/>
         <image name="square" catalog="system" width="16" height="14"/>
     </resources>
