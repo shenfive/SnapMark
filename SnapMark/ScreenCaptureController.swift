@@ -35,14 +35,14 @@ class ScreenCaptureController: NSObject {
             let controller = OverlayController(screen: screen)
             
             controller.onFullCapture = { [weak self] screen in
-                self?.captureFullScreen(screen)
-//                ScreenCaptureController.share.onDelayFullCapture(screen: NSScreen.main!, delay: 5.0)
+//                self?.captureFullScreen(screen)
+                ScreenCaptureController.share.onDelayFullCapture(screen: screen, delay: 2.0)
 
             }
 
             controller.onPartialCapture = { [weak self] screen in
-                self?.startPartialCapture(on: screen)
-//                ScreenCaptureController.share.onDelayPartialCapture(screen: NSScreen.main!, delay: 5.0)
+//                self?.startPartialCapture(on: screen)
+                ScreenCaptureController.share.onDelayPartialCapture(screen: screen, delay: 2.0)
             }
             
             controller.onCancel = { [weak self] in
@@ -121,10 +121,27 @@ class ScreenCaptureController: NSObject {
                 // Step 1: 截全螢幕
                 let fullImage = CGWindowListCreateImage(screen.frame, .optionOnScreenOnly, kCGNullWindowID, .bestResolution)
                 guard let cgImage = fullImage else { return }
-
+      
                 let nsImage = NSImage(cgImage: cgImage, size: screen.frame.size)
-
                 // Step 2: 建立覆蓋視窗貼上截圖
+//                let overlay = NSWindow(
+//                    contentRect: screen.frame,
+//                    styleMask: [.borderless],
+//                    backing: .buffered,
+//                    defer: false
+//                )
+//                overlay.isOpaque = false
+//                overlay.backgroundColor = .red
+//                overlay.level = .screenSaver
+//                overlay.ignoresMouseEvents = false
+//                let imageView = NSImageView(frame:screen.frame)
+//                let imageView = NSImageView(frame: NSRect(origin: .zero, size: screen.frame.size))
+//                imageView.image = nsImage
+//                imageView.imageScaling = .scaleNone
+//                overlay.contentView = imageView
+//                overlay.makeKeyAndOrderFront(nil)
+            
+
                 let overlay = NSWindow(
                     contentRect: screen.frame,
                     styleMask: [.borderless],
@@ -132,20 +149,26 @@ class ScreenCaptureController: NSObject {
                     defer: false
                 )
                 overlay.isOpaque = false
-                overlay.backgroundColor = .clear
+                overlay.backgroundColor = .red
                 overlay.level = .screenSaver
                 overlay.ignoresMouseEvents = false
 
-                let imageView = NSImageView(frame: screen.frame)
+                let imageView = NSImageView(frame: NSRect(origin: .zero, size: screen.frame.size))
                 imageView.image = nsImage
-                imageView.imageScaling = .scaleAxesIndependently
+                imageView.imageScaling = .scaleProportionallyUpOrDown
                 overlay.contentView = imageView
                 overlay.makeKeyAndOrderFront(nil)
 
                 self?.delayPartialCaptureOverlayWindow = overlay
+                
+                
+                print("Overlay frame: \(overlay.frame)")
+                print("ContentView frame: \(overlay.contentView?.frame ?? .zero)")
+                print("ImageView frame: \(imageView.frame)")
+
 
                 // Step 3: 開始選取區域
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 
                     self?.startPartialCapture(on: screen)
 //                    self?.overlayWindow?.orderOut(nil)
@@ -159,7 +182,7 @@ class ScreenCaptureController: NSObject {
     //顯示延時畫面
     private func showCountdownOverlay(on screen: NSScreen, seconds: Int, completion: @escaping () -> Void) {
         // 計算顯示位置：螢幕中央上方 1/3 處
-        let windowSize = NSSize(width: 200, height: 80)
+        let windowSize = NSSize(width: 400, height: 160)
         let centerX = screen.frame.midX - windowSize.width / 2
         let centerY = screen.frame.maxY - screen.frame.height / 3
 
@@ -180,9 +203,9 @@ class ScreenCaptureController: NSObject {
         // 建立倒數 Label
         let label = NSTextField(labelWithString: "\(seconds)")
         label.alignment = .center
-        label.font = NSFont.systemFont(ofSize: 50, weight: .bold)
+        label.font = NSFont.systemFont(ofSize: 100, weight: .bold)
         label.textColor = .white
-        label.backgroundColor = NSColor.black.withAlphaComponent(0.7)
+        label.backgroundColor = NSColor.black.withAlphaComponent(0.5)
         label.wantsLayer = true
         label.layer?.cornerRadius = 12
         label.layer?.masksToBounds = true
@@ -197,9 +220,25 @@ class ScreenCaptureController: NSObject {
             remaining -= 1
             label.stringValue = "\(remaining)"
             if remaining <= 0 {
+                label.stringValue = ""
                 window.orderOut(nil)
                 timer.invalidate()
+                label.displayIfNeeded()
+
                 completion()
+                
+//                CATransaction.begin()
+//                CATransaction.setCompletionBlock {
+//                    print("View 已完成繪製")
+//                    // 在這裡執行後續操作，例如截圖、動畫、轉場等
+//                    
+//                }
+//                CATransaction.commit()
+
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                    completion()
+                }
             }
         }
         RunLoop.current.add(timer, forMode: .common)
